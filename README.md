@@ -36,6 +36,9 @@ Stretch Goals
 4. Score based on completed objects
 5. Mobile friendly
 6. Result with board snap shot
+7. multiplayer
+8. themes
+9. randomly render river
 
 
 Conflict Plan:
