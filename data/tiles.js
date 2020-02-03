@@ -435,19 +435,21 @@ export const tiles = {
     },
     109: {
         id: 109,
-        image: 'Null0.png'
+
+        image: '../tiles/RoadJunctionSmall0.png'
     },
     110: {
         id: 110,
-        image: 'Null1.png'
+        image: '../tiles/RoadJunctionSmall1.png'
     },
     111: {
         id: 111,
-        image: 'Null2.png'
+        image: '../tiles/RoadJunctionSmall2.png'
     },
     112: {
         id: 112,
-        image: 'Null3.png'
+        image: '../tiles/RoadJunctionSmall3.png'
+
     },
     113: {
         id: 113,
@@ -546,7 +548,7 @@ export const tiles = {
         image: 'RoadJunctionLarge3.png'
     },
     137: {
-        id: 133,
+        id: 137,
         image: 'RoadJunctionSmall0.png'
     },
     138: {
@@ -565,5 +567,4 @@ export const tiles = {
 
     
 
-
-}
+};
