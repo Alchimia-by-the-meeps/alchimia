@@ -23,8 +23,9 @@
     margin: 0 auto;
 }
 
-#grid-0-0 {
-    background-image: url("../common/CastleCenter0.png");
-    opacity: 1 !important;
-    z-index: 1;
+#player-tile {
+    height: 50px;
+    width: 50px;
+    margin: 30px auto;
+    border: solid black 1px;
 }
