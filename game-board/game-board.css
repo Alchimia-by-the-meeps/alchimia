@@ -1,0 +1,30 @@
+#grid div {
+    border: solid black 1px;
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    background-color: red;
+    opacity: .3;
+    margin: 0; 
+}
+.row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+#grid {
+    background-image: url("../common/grass.jpeg");
+    width: 600px;
+    height: 400px;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+#grid-0-0 {
+    background-image: url("../common/CastleCenter0.png");
+    opacity: 1 !important;
+    z-index: 1;
+}
