@@ -29,7 +29,11 @@ const grid = document.getElementById('grid');
 renderGrid(grid);
 
 grid.addEventListener('click', (e) => {
-    // TBD
+    const currentTile = e.target;
+    console.log(currentTile.id);
+    currentTile.style.opacity = 1;
+    currentTile.style.backgroundImage = `url("../tiles/${retrievedTile.image}")`;
+    getRandomTile();
 });
 
 
