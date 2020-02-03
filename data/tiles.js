@@ -435,19 +435,19 @@ const tiles = {
     },
     109: {
         id: 109,
-        image: '../tiles/Null0.png'
+        image: '../tiles/RoadJunctionSmall0.png'
     },
     110: {
         id: 110,
-        image: '../tiles/Null1.png'
+        image: '../tiles/RoadJunctionSmall1.png'
     },
     111: {
         id: 111,
-        image: '../tiles/Null2.png'
+        image: '../tiles/RoadJunctionSmall2.png'
     },
     112: {
         id: 112,
-        image: '../tiles/Null3.png'
+        image: '../tiles/RoadJunctionSmall3.png'
     },
     113: {
         id: 113,
@@ -544,26 +544,6 @@ const tiles = {
     136: {
         id: 136,
         image: '../tiles/RoadJunctionLarge3.png'
-    },
-    137: {
-        id: 133,
-        image: '../tiles/RoadJunctionSmall0.png'
-    },
-    138: {
-        id: 138,
-        image: '../tiles/RoadJunctionSmall1.png'
-    },
-    139: {
-        id: 139,
-        image: '../tiles/RoadJunctionSmall2.png'
-    },
-    140: {
-        id: 140,
-        image: '../tiles/RoadJunctionSmall3.png'
-    },
+    }
 
-
-    
-
-
-}
+};
