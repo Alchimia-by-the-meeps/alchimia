@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+}
+
+header {
+    margin-bottom: 5rem;
+}
+
+
+table { 
+    margin: 30px auto; 
+}
+
+th, tr, td {
+    padding: 5px;
+    border: 1px solid #666;
+}
