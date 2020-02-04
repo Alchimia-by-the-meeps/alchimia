@@ -313,26 +313,26 @@ export const tiles = {
     },
     79: {
         id: 79,
-        image: 'River3.jpg'
+        image: 'River4-rotated.jpg'
     },
     80: {
         id: 80,
-        image: 'River3.jpg'
+        image: 'River5.jpg'
     },
     81: {
         id: 81,
-        image: 'River3.jpg'
+        image: 'River6.jpg'
     },
     82: {
         id: 82,
-        image: 'River3.jpg'
+        image: 'River7-rotated.jpg'
     },
     83: {
         id: 83,
-        image: 'River3.jpg'
+        image: 'River8-rotated.jpg'
     },
     84: {
         id: 84,
-        image: 'River3.jpg'
+        image: 'River9.jpg'
     }
 };
