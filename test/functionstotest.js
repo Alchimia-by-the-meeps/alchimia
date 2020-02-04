@@ -21,7 +21,7 @@ export function getUnplayedTiles(input, tileids) {
     return unplayedTiles;
 }
 
-export function makeBlankGameState() {
+export function makeBlankGameState(maxRows, maxColumns) {
     let gameState = [];
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {

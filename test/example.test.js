@@ -29,3 +29,17 @@ test('get all unplaced tiles from deck', function(assert) {
     assert.deepEqual(getUnplayedTiles(input, tileids), expected);
 });
 
+test('create blank game state', function(assert) {
+    const expected = [
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+    ];
+    
+    assert.deepEqual(makeBlankGameState(7, 14), expected);
+});
+
