@@ -5,7 +5,7 @@ const maxColumns = 12;
 const maxRows = 8;
 
 //initialize new game board state variable (array) thing
-let gameArray = [];
+let gameState = [];
 
 
 export function makeBlankGameState() {
@@ -13,10 +13,10 @@ export function makeBlankGameState() {
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {
         //make new array for every row in grid array
-        gameArray.push(new Array());
+        gameState.push(new Array());
         //make null placeholder for each cell in grid
         for (let j = 0; j < maxColumns; j++) {
-            gameArray[i].push(null);
+            gameState[i].push(null);
         }
     }
 }  
@@ -60,13 +60,18 @@ grid.addEventListener('click', (e) => {
 
     //change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
+    //change '#-#' to ["#", "#"]
     currentTileId = currentTileId.split('-');
 
+    //store ["#", "#"][0] to row, ["#", "#"][1]
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
-    gameArray[row][column] = topDeckTile.id;
-    console.log(gameArray);
+
+    gameState[row][column] = topDeckTile.id;
+    // console.log(gameState);
+
+
     
     //if tile already has background image, do not run
     if (currentTile.style.backgroundImage) return;
@@ -77,17 +82,45 @@ grid.addEventListener('click', (e) => {
     //draw and display new tile at bottom of page
     renderTopDeckTile();
 
-    
+    // getPlacedTiles();
 
 });
+
+
+function getPlacedTiles() {
+    let placedTilesArray = [];
+
+    //loop through all played tile ids in gameState
+    gameState.forEach(row => {
+        row.forEach(cell => {
+            if (cell) placedTilesArray.push(cell);
+        });
+    });
+    console.log('placedTilesArray: ' + placedTilesArray);
+    return placedTilesArray;
+}
+
+
+function getUnplayedTiles() {
+    const placedTiles = getPlacedTiles();
+    let unplayedTiles = Object.keys(tiles).filter(id => {
+        return placedTiles.indexOf(Number(id)) < 0;
+    });
+    console.log('unplayedTiles: ' + unplayedTiles);
+    return unplayedTiles;
+}
+
 
 
 // place starting river tiles ~8
 
 // create deck / get tile function 
 function getTileFromDeck() {
-    const randomTile = Math.ceil(Math.random() * Object.keys(tiles).length);
-    return tiles[randomTile];
+    const unplayedTiles = getUnplayedTiles();
+    const unplayedTilesIndex = Math.ceil(Math.random() * unplayedTiles.length);
+    console.log('unplayedTilesIndex: ' + unplayedTilesIndex);
+    console.log('the unplayed tiles index has the id of the actual tiles object, which is this: ' + tiles[unplayedTiles[unplayedTilesIndex]].id);
+    return tiles[unplayedTiles[unplayedTilesIndex]];
 }
 
 
