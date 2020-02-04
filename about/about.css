@@ -1,0 +1,35 @@
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    
+}
+#groupPic {
+    width: 30%;
+    height: auto;
+    align-content: center;
+    border: 2px outset rgba(222, 184, 135, 0.7);
+    box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
+    margin-bottom: 20px;
+    margin-right: 0px;
+}
+img {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
+section {
+    flex-direction: column;
+    display: inline-block;
+
+}
+div {
+    width: 400px;
+    justify-content: center;
+    /* .,'lk;okj;lk */
+}
+.containerDiv {
+    display: flex;
+}
