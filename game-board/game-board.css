@@ -1,13 +1,34 @@
 #grid div {
-    border: solid grey 1px;
     height: 50px;
-    width: 50px;
+    width: 100%;
     display: inline-block;
     /* background-color: red; */
-    opacity: .3;
+    /* opacity: .3; */
     margin: 0; 
     background-size: cover;
+
+    /* scotts css edit */
+    /* old */
+    /* border: solid grey 1px; */
+
+    /* new */
+    border: 1px outset rgba(222, 184, 135, 0.5);
+    transition: 0.4s;
 }
+
+
+
+/* scott css edit */
+#grid div:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+/* scotts css edit */
+
+
+
+
 .row {
     display: flex;
     justify-content: center;
@@ -15,19 +36,46 @@
 }
 
 #grid {
-    /* background-image: url("../common/grass.jpeg"); */
     width: 600px;
     height: 400px;
-    z-index: -1;
-    background-repeat: no-repeat;
-    background-size: cover;
     margin: 0 auto;
-    background-color: rgb(185, 167, 133);
+    z-index: -1;
+
+    /* scotts css */
+    /* background-repeat: no-repeat;
+    background-size: cover; */
+    background-color: rgb(185, 167, 133, 0.5);
+    box-sizing: content-box;
+    border: 4px outset rgba(222, 184, 135, 0.7);
+    box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
 }
 
-#player-tile {
-    height: 50px;
-    width: 50px;
-    margin: 30px auto;
-    border: solid grey 1px;
+
+
+/* scotts css  */
+#grid-background {
+    width: 600px;
+    height: 400px;
+    z-index: -2;
+    position: absolute;
+    size: cover;
+    /* display: none; */
 }
+/* scotts css */
+
+#player-tile {
+    margin: 30px auto;
+
+    /* scotts css edit */
+    /* old */
+    /*height: 50px;
+    width: 50px;
+    border: solid grey 1px; */
+
+    /* new */
+    height: 75px;
+    width: 75px;
+    border: 3px outset rgba(100, 77, 46, 0.5);
+}
+
+
