@@ -1,11 +1,6 @@
 // import { maxRows, maxColumns } from '../game-board/game-board.js';
 import { tiles } from '../data/tiles.js';
-
-// Get results container
-const resultsBoard = document.getElementById('grid');
-
-// Render full game board in targeted element
-renderGameBoard(resultsBoard);
+import { get, getGameState } from '../common/api.js';
 
 function renderGameBoard(parent) {
     console.log('running');
@@ -23,8 +18,7 @@ function renderGameBoard(parent) {
         [null, null, null, null, null, 110, null, 120, null, null, 58, null]];
     
     // Get boardState from localStorage
-    // DEPENDENT ON LOCALSTORAGE
-    // const gameState = getFromLocalStorage();
+    const gameState = getGameState();
 
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {
@@ -50,3 +44,25 @@ function renderGameBoard(parent) {
         parent.appendChild(row);
     }
 }  
+
+
+
+// Run On Load
+
+// Get results container
+const resultsBoard = document.getElementById('grid');
+
+// Get user from localStorage and add to DOM
+const user = getUser;
+const username = document.getElementById('username-span');
+const userTiles = document.getElementById('tile-count-span');
+
+
+// Render full game board in targeted element
+renderGameBoard(resultsBoard);
+
+// Build play again button
+const playAgainButton = document.getElementById('play-again-button');
+playAgainButton.addEventListener('click', () => {
+    location.href = '/';
+});
