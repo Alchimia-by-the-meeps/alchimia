@@ -36,11 +36,17 @@ renderTopDeckTile();
 grid.addEventListener('click', (e) => {
     //grab click location, div id
     const currentTile = e.target;
+    
+    //if tile already has background image, do not run
+    if (currentTile.style.backgroundImage) return;
+
     //render tile in grid, update background image
     currentTile.style.opacity = 1;
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     //draw and display new tile at bottom of page
     renderTopDeckTile();
+
+
 });
 
 

@@ -1,9 +1,9 @@
 #grid div {
-    border: solid black 1px;
+    border: solid grey 1px;
     height: 50px;
     width: 50px;
     display: inline-block;
-    background-color: red;
+    /* background-color: red; */
     opacity: .3;
     margin: 0; 
     background-size: cover;
@@ -15,18 +15,19 @@
 }
 
 #grid {
-    background-image: url("../common/grass.jpeg");
+    /* background-image: url("../common/grass.jpeg"); */
     width: 600px;
     height: 400px;
     z-index: -1;
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0 auto;
+    background-color: rgb(185, 167, 133);
 }
 
 #player-tile {
     height: 50px;
     width: 50px;
     margin: 30px auto;
-    border: solid black 1px;
+    border: solid grey 1px;
 }
