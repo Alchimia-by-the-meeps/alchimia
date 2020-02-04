@@ -1,4 +1,4 @@
-import { tiles } from '../data/tiles.js';
+// import { tiles } from '../data/tiles.js';
 
 export function getPlacedTiles(gameState) {
     let placedTilesArray = [];
