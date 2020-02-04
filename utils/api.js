@@ -14,3 +14,13 @@ export function getUser() {
     //parse user info
     return user;
 }
+
+export function getGameState() {
+    const gameStateData = localStorage.getItem('gameState');
+
+    if (!gameStateData) return;
+
+    return JSON.parse(gameStateData);
+    
+}
+
