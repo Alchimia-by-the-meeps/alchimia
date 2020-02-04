@@ -1,14 +1,5 @@
-//Login page
-
-//set up link in "by the meeps" to meet-the-meeps-page
-
-//get username and meeple from form
-
-    //push that to local storage
-
-//on submit pop up instructions and "play game" button
-import { saveUser } from './api.js';
-import makeUser from './make-user.js';
+import { saveUser } from './utils/api.js';
+import makeUser from './utils/make-user.js';
 
 //grab our form from home page so we can access on submit
 const userSignUp = document.getElementById('user-sign-up');
@@ -21,7 +12,29 @@ userSignUp.addEventListener('submit', function(event) {
     const user = makeUser(formData);
     //save user in local storage
     saveUser(user);
+
+    initializeGameState();
+
     //send to game-board page to start adventure
     window.location = 'game-board';
         
 });
+
+function initializeGameState() {
+    
+    const maxColumns = 12;
+    const maxRows = 8;
+    let gameState = [];
+
+    for (let i = 0; i < maxRows; i++) {
+        //make new array for every row in grid array
+        gameState.push(new Array());
+        //make null placeholder for each cell in grid
+        for (let j = 0; j < maxColumns; j++) {
+            gameState[i].push(null);
+        }
+    } 
+    gameState = JSON.stringify(gameState);
+    localStorage.setItem('gameState', gameState);
+}
+

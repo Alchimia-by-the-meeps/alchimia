@@ -1,16 +1,17 @@
 // import the tiles
+import { getGameState } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 const maxColumns = 12;
 const maxRows = 8;
 
 //initialize new game board state variable (array) thing
-let gameState = [];
+let gameState = getGameState();
 
 
 
 //do stuff
-makeBlankGameState();
+// makeBlankGameState();
 
 // create grid, 12 by 8
 //on load
@@ -28,6 +29,7 @@ grid.addEventListener('click', (e) => {
     //grab click location, div id
     const currentTile = e.target;
     let currentTileId = currentTile.id;
+    gameState = getGameState();
 
     //if clicked element was one of the containers (grid/row), exit
     if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
@@ -44,7 +46,7 @@ grid.addEventListener('click', (e) => {
 
     gameState[row][column] = topDeckTile.id;
     // console.log(gameState);
-
+    updateGameState(gameState);
     //if tile already has background image, do not run
     if (currentTile.style.backgroundImage) return;
 
@@ -145,18 +147,23 @@ export function renderGrid(parent) {
     }
 }  
 
-export function makeBlankGameState() {
+function updateGameState(gameState) {
+    const stringyGameState = JSON.stringify(gameState);
+    localStorage.setItem('gameState', stringyGameState);
+}
+
+// export function makeBlankGameState() {
     
-    // Loop through maxRows and create rows
-    for (let i = 0; i < maxRows; i++) {
-        //make new array for every row in grid array
-        gameState.push(new Array());
-        //make null placeholder for each cell in grid
-        for (let j = 0; j < maxColumns; j++) {
-            gameState[i].push(null);
-        }
-    }
-}  
+//     // Loop through maxRows and create rows
+//     for (let i = 0; i < maxRows; i++) {
+//         //make new array for every row in grid array
+//         gameState.push(new Array());
+//         //make null placeholder for each cell in grid
+//         for (let j = 0; j < maxColumns; j++) {
+//             gameState[i].push(null);
+//         }
+//     }
+// }  
 
 // on click, get grid space id and place tile
 
