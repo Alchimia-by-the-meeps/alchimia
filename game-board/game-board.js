@@ -1,48 +1,17 @@
 // import the tiles
+import { getGameState } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 const maxColumns = 12;
 const maxRows = 8;
 
 //initialize new game board state variable (array) thing
-let gameState = [];
+let gameState = getGameState();
 
 
-export function makeBlankGameState() {
-    
-    // Loop through maxRows and create rows
-    for (let i = 0; i < maxRows; i++) {
-        //make new array for every row in grid array
-        gameState.push(new Array());
-        //make null placeholder for each cell in grid
-        for (let j = 0; j < maxColumns; j++) {
-            gameState[i].push(null);
-        }
-    }
-}  
 
-makeBlankGameState();
-
-
-export function renderGrid(parent) {
-
-    // Loop through maxRows and create rows
-    for (let i = 0; i < maxRows; i++) {
-        const row = document.createElement('section');
-        row.id = `row-${i}`;
-        row.classList.add('row');
-        
-        // Loop through each row and create columns
-        for (let j = 0; j < maxColumns; j++) {
-            const cell = document.createElement('div');
-            cell.id = `grid-${i}-${j}`;
-            cell.classList.add('cell');
-            row.appendChild(cell);
-        }
-        // Add row to parent / passed element
-        parent.appendChild(row);
-    }
-}  
+//do stuff
+// makeBlankGameState();
 
 // create grid, 12 by 8
 //on load
@@ -52,11 +21,15 @@ renderGrid(grid);
 let topDeckTile;
 renderTopDeckTile();
 
+
+
+
 //on click
 grid.addEventListener('click', (e) => {
     //grab click location, div id
     const currentTile = e.target;
     let currentTileId = currentTile.id;
+    gameState = getGameState();
 
     //if clicked element was one of the containers (grid/row), exit
     if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
@@ -73,7 +46,7 @@ grid.addEventListener('click', (e) => {
 
     gameState[row][column] = topDeckTile.id;
     // console.log(gameState);
-
+    updateGameState(gameState);
     //if tile already has background image, do not run
     if (currentTile.style.backgroundImage) return;
 
@@ -126,9 +99,6 @@ function getUnplayedTiles() {
 }
 
 
-
-// place starting river tiles ~8
-
 // create deck / get tile function
 // returns random unplayed tile object
 function getTileFromDeck() {
@@ -146,19 +116,6 @@ function getTileFromDeck() {
     return tiles[unplayedTileId];
 }
 
-
-
-// on click, get grid space id and place tile
-
-// save game state
-
-// generate new tile from 'deck'
-
-//end game button
-
-// 
-
-
 function renderTopDeckTile() {
     //random tile deck at bottom of page
     const div = document.getElementById('player-tile');
@@ -169,3 +126,51 @@ function renderTopDeckTile() {
     div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     div.style.backgroundSize = 'cover';
 }
+
+export function renderGrid(parent) {
+
+    // Loop through maxRows and create rows
+    for (let i = 0; i < maxRows; i++) {
+        const row = document.createElement('section');
+        row.id = `row-${i}`;
+        row.classList.add('row');
+        
+        // Loop through each row and create columns
+        for (let j = 0; j < maxColumns; j++) {
+            const cell = document.createElement('div');
+            cell.id = `grid-${i}-${j}`;
+            cell.classList.add('cell');
+            row.appendChild(cell);
+        }
+        // Add row to parent / passed element
+        parent.appendChild(row);
+    }
+}  
+
+function updateGameState(gameState) {
+    const stringyGameState = JSON.stringify(gameState);
+    localStorage.setItem('gameState', stringyGameState);
+}
+
+// export function makeBlankGameState() {
+    
+//     // Loop through maxRows and create rows
+//     for (let i = 0; i < maxRows; i++) {
+//         //make new array for every row in grid array
+//         gameState.push(new Array());
+//         //make null placeholder for each cell in grid
+//         for (let j = 0; j < maxColumns; j++) {
+//             gameState[i].push(null);
+//         }
+//     }
+// }  
+
+// on click, get grid space id and place tile
+
+// save game state
+
+// generate new tile from 'deck'
+
+//end game button
+
+// 

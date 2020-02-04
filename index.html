@@ -7,33 +7,64 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./common/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./log-in.css">
+
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond&display=swap" rel="stylesheet">
     <title>Alchimia</title>
 
+
+
+   
     <link href="https://fonts.googleapis.com/css?family=Cinzel|Jim+Nightshade&display=swap" rel="stylesheet">
+
+
+
 </head>
 
 <body>
-
     <header>
         <h1>Alchimia</h1>
         <a href="./meet-the-meeps/"><h2>By the Meeps</h2></a>
     </header>
-
-    <form>
-        <label>
-            <p>Username: </p>
-            <input type="text" required>
-        </label>
-
-        <!-- temp for meeple input -->
-        <label>
-            <input type="radio" name="meeple">
-            <img src="" alt="">
-        </label>
-
-        <button type="submit">Submit</button>
-
+    
+    <form id="user-sign-up">
+        <p id="userInputName">
+            <label for="name">Enter your name here</label>
+            <input id="name" name="name" required>
+        </p>
+        <fieldset>
+            <legend>Choose your Meep</legend>
+            <p id="avatars">
+                <label>
+                    <input type="radio" name="meep" required value="black">
+                    <img id="avatar" src="./assets/meeples/meeple-black.png">
+                </label>
+                <label>
+                    <input type="radio" name="meep" required value="blue">
+                    <img id="avatar" src="./assets/meeples/meeple-blue.png">
+                </label>
+                <label>
+                    <input type="radio" name="meep" required value="green">
+                    <img id="avatar" src="./assets/meeples/meeple-green.png">
+                </label>
+                <label>
+                    <input type="radio" name="meep" required value="red">
+                    <img id="avatar" src="./assets/meeples/meeple-red.png">
+                </label>
+                <label>
+                    <input type="radio" name="meep" required value="orange">
+                    <img id="avatar" src="./assets/meeples/meeple-orange.png">
+                </label>
+                <label>
+                    <input type="radio" name="meep" required value="pink">
+                    <img id="avatar" src="./assets/meeples/meeple-pink.png">
+                </label>
+            </p>
+        </fieldset>
+        <button id="playButton">Play the game!</button>
     </form>
+
+ 
 
     <script type="module" src="app.js"></script>
 </body>

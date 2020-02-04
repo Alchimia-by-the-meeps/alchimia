@@ -2,7 +2,7 @@ function makeUser(formData){
     //get form data, create user array
     const user = {
         name: formData.get('name'),
-        meep: formData.get('meep'),
+        meep: formData.get('meep'), 
     };
     return user;
 }

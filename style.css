@@ -20,6 +20,10 @@ header {
     text-align: center;
     font-family: 'Jim Nightshade', cursive;
 }
+p {
+    font-family: 'EB Garamond', serif;
+    color: rgb(80, 56, 26);
+}
 
 h1 {
     font-size: 4em;

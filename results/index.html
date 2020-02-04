@@ -23,9 +23,15 @@
 
     <div id="results-container">
         <div id="results-message">
-            <h2>Congratulations, <span id="username-span"></span>!</h2>
-            <p>You placed <span id="tile-count-span"></span> tiles for a score of <span id="score-span"><em>stretch goal</em></span>.</p>
-            <table id="score-table">
+            <h2>Congratulations, <span id="username-span">LOCALSTORAGE</span>!</h2>
+            <p>You placed <span id="tile-count-span">LOCALSTORAGE</span> tiles for a score of <span id="score-span"><em>stretch goal</em></span>.</p>
+        </div>
+    </div>
+
+    <div id="score-and-map-container">
+
+        <div id="score-container">
+            <table>
                 <thead>
                     <tr>
                         <td></td>
@@ -35,31 +41,40 @@
                 <tbody>
                     <tr>
                         <td class="left">River</td>
-                        <td>2</td>
+                        <td id="tile-count-rivers">2</td>
                     </tr>
                     <tr>
                         <td class="left">Roads</td>
-                        <td>4</td>
+                        <td id="tile-count-roads">4</td>
                     </tr>
                     <tr>
                         <td class="left">Cities</td>
-                        <td>5</td>
+                        <td id="tile-count-cities">5</td>
                     </tr>
                     <tr>
                         <td class="left">Monasteries</td>
-                        <td>6</td>
+                        <td id="tile-count-monasteries">6</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td>Total tiles</td>
-                        <td>X</td>
+                        <td class="left">Total tiles</td>
+                        <td id="tile-count-total">X</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
-        <div id="grid"></div>
+
+        <div id="map-container">
+            <div id="grid"></div>
+        </div>
+
     </div>
+
+    <div id="button-container">
+        <button id="play-again-button">Play Again!</button>
+    </div>
+
 
     <script type="module" src="results.js"></script>
 </body>
