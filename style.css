@@ -39,11 +39,11 @@ h2 {
     color: rgba(71, 77, 46, 0.5);
     position: relative;
     top: -20px;
+    font-size: 1.2em;
     margin-bottom: -10px;
-
 }
 
-h2:hover {
+a:hover {
     text-decoration: underline rgba(71, 77, 46, 0.5);
 }
 

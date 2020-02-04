@@ -80,6 +80,9 @@ grid.addEventListener('click', (e) => {
     //render tile in grid, update background image
     currentTile.style.opacity = 1;
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
+    currentTile.classList.add('placed-tile');
+
+
     //draw and display new tile at bottom of page
     renderTopDeckTile();
 
@@ -142,6 +145,7 @@ function getTileFromDeck() {
     //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
 }
+
 
 
 // on click, get grid space id and place tile
