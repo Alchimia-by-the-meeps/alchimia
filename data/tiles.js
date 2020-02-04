@@ -163,19 +163,19 @@ export const tiles = {
     },
     41: {
         id: 41,
-        image: 'CastleSidesEdgeQuad0.png'
+        image: 'CastleSidesQuad0.png'
     },
     42: {
         id: 42,
-        image: 'CastleSidesEdgeQuad1.png'
+        image: 'CastleSidesQuad1.png'
     },
     43: {
         id: 43,
-        image: 'CastleSidesEdgeQuad2.png'
+        image: 'CastleSidesQuad2.png'
     },
     44: {
         id: 44,
-        image: 'CastleSidesEdgeQuad3.png'
+        image: 'CastleSidesQuad3.png'
     },
     45: {
         id: 45,
