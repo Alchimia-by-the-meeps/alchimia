@@ -59,7 +59,7 @@ grid.addEventListener('click', (e) => {
     let currentTileId = currentTile.id;
 
     //if clicked element was one of the containers (grid/row), exit
-    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exiting'); return;}
+    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
 
     //change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
@@ -87,7 +87,7 @@ grid.addEventListener('click', (e) => {
 
 });
 
-
+// returns array of placed tile ids
 function getPlacedTiles() {
     let placedTilesArray = [];
 
@@ -103,7 +103,7 @@ function getPlacedTiles() {
     return placedTilesArray;
 }
 
-
+// returns array of unplayed tile ids
 function getUnplayedTiles() {
     const placedTiles = getPlacedTiles();
 
@@ -126,7 +126,8 @@ function getUnplayedTiles() {
 
 // place starting river tiles ~8
 
-// create deck / get tile function 
+// create deck / get tile function
+// returns random unplayed tile object
 function getTileFromDeck() {
     //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
@@ -138,7 +139,7 @@ function getTileFromDeck() {
     console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
     console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
 
-    //return the tile object from the tiles object
+    //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
 }
 
