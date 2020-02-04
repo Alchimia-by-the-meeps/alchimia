@@ -1,4 +1,45 @@
 * {
     box-sizing: border-box;
-    font-family: fantasy;
+    /* font-family: fantasy; */
 }
+
+
+
+
+/* Scotts CSS changes */
+/* links too google fonts 'Cinzel', serif; and 'Jim Nightshade', cursive; are in in html headers */
+
+body {
+    background-color: rgb(229, 200, 149);
+    background-image: url('./assets/paper-bg4.jpg');
+    /* Background vector created by rawpixel.com - www.freepik.com */
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* could be put as a html object to give more control */
+}
+
+header {
+    text-align: center;
+    font-family: 'Jim Nightshade', cursive;
+    /* font-family: 'Cinzel', serif; */
+}
+
+h1 {
+    font-size: 4em;
+    color: rgb(65, 66, 44);
+    text-shadow: 2px 2px 3px whitesmoke;
+    position: relative;
+    top: 20px;
+}
+
+h2 {
+    color: rgba(71, 77, 46, 0.5);
+}
+
+h2:hover {
+    text-decoration: underline rgba(71, 77, 46, 0.5);
+}
+
+/* Scotts CSS changes */
+
