@@ -49,7 +49,7 @@ export function renderGrid(parent) {
 const grid = document.getElementById('grid');
 renderGrid(grid);
 
-let topDeckTile = getTileFromDeck();
+let topDeckTile;
 renderTopDeckTile();
 
 //on click
@@ -66,7 +66,7 @@ grid.addEventListener('click', (e) => {
     //change '#-#' to ["#", "#"]
     currentTileId = currentTileId.split('-');
 
-    //store ["#", "#"][0] to row, ["#", "#"][1]
+    //store ["#", "#"][0] to row, ["#", "#"][1] to column
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
