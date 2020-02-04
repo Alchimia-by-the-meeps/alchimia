@@ -1,11 +1,31 @@
 // import the tiles
 import { tiles } from '../data/tiles.js';
 
+const maxColumns = 12;
+const maxRows = 8;
+
+//initialize new game board state variable (array) thing
+let gameArray = [];
+
+
+export function makeBlankGameState() {
+    
+    // Loop through maxRows and create rows
+    for (let i = 0; i < maxRows; i++) {
+        //make new array for every row in grid array
+        gameArray.push(new Array());
+        //make null placeholder for each cell in grid
+        for (let j = 0; j < maxColumns; j++) {
+            gameArray[i].push(null);
+        }
+    }
+}  
+
+makeBlankGameState();
+
+
 export function renderGrid(parent) {
 
-    const maxColumns = 12;
-    const maxRows = 8;
-    
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {
         const row = document.createElement('section');
@@ -36,6 +56,17 @@ renderTopDeckTile();
 grid.addEventListener('click', (e) => {
     //grab click location, div id
     const currentTile = e.target;
+    let currentTileId = currentTile.id;
+
+    //change 'grid-#-#' string to '#-#'
+    currentTileId = currentTileId.replace('grid-', '');
+    currentTileId = currentTileId.split('-');
+
+    const row = Number(currentTileId[0]);
+    const column = Number(currentTileId[1]);
+
+    gameArray[row][column] = topDeckTile.id;
+    console.log(gameArray);
     
     //if tile already has background image, do not run
     if (currentTile.style.backgroundImage) return;
@@ -46,6 +77,7 @@ grid.addEventListener('click', (e) => {
     //draw and display new tile at bottom of page
     renderTopDeckTile();
 
+    
 
 });
 
