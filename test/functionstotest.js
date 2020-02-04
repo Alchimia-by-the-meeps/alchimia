@@ -1,3 +1,5 @@
+import { tiles } from '../data/tiles.js';
+
 export function getPlacedTiles(gameState) {
     let placedTilesArray = [];
 
@@ -11,15 +13,16 @@ export function getPlacedTiles(gameState) {
 }
 
 
-export function getUnplayedTiles() {
-    const placedTiles = getPlacedTiles();
-    let unplayedTiles = Object.keys(tiles).filter(id => {
+export function getUnplayedTiles(input, tileids) {
+    const placedTiles = input;
+    let unplayedTiles = tileids.filter(id => {
         return placedTiles.indexOf(Number(id)) < 0;
     });
+    return unplayedTiles;
 }
 
 export function makeBlankGameState() {
-    
+    let gameState = [];
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {
         //make new array for every row in grid array
@@ -29,4 +32,5 @@ export function makeBlankGameState() {
             gameState[i].push(null);
         }
     }
+    return gameState;
 }  
