@@ -1,13 +1,8 @@
 * {
     box-sizing: border-box;
-    /* font-family: fantasy; */
+
 }
 
-
-
-
-/* Scotts CSS changes */
-/* links too google fonts 'Cinzel', serif; and 'Jim Nightshade', cursive; are in in html headers */
 html {
     height: 100%;
 }
@@ -15,11 +10,10 @@ body {
     height: 100%;
     background-color: rgb(229, 200, 149);
     background-image: url('./assets/paper-bg4.jpg');
-    /* Background vector created by rawpixel.com - www.freepik.com */
     
     background-size: cover;
     background-repeat: no-repeat;
-    /* could be put as a html object to give more control */
+
 }
 
 header {
@@ -47,5 +41,5 @@ a:hover {
     text-decoration: underline rgba(71, 77, 46, 0.5);
 }
 
-/* Scotts CSS changes */
+
 
