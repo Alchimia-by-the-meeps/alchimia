@@ -58,6 +58,9 @@ grid.addEventListener('click', (e) => {
     const currentTile = e.target;
     let currentTileId = currentTile.id;
 
+    //if clicked element was one of the containers (grid/row), exit
+    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exiting'); return;}
+
     //change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
     //change '#-#' to ["#", "#"]
@@ -71,8 +74,6 @@ grid.addEventListener('click', (e) => {
     gameState[row][column] = topDeckTile.id;
     // console.log(gameState);
 
-
-    
     //if tile already has background image, do not run
     if (currentTile.style.backgroundImage) return;
 
@@ -90,23 +91,34 @@ grid.addEventListener('click', (e) => {
 function getPlacedTiles() {
     let placedTilesArray = [];
 
-    //loop through all played tile ids in gameState
+    //loop through all played tile Ids in gameState array, and put them in a single array called placedTilesArray
     gameState.forEach(row => {
         row.forEach(cell => {
             if (cell) placedTilesArray.push(cell);
         });
     });
+
     console.log('placedTilesArray: ' + placedTilesArray);
+
     return placedTilesArray;
 }
 
 
 function getUnplayedTiles() {
     const placedTiles = getPlacedTiles();
-    let unplayedTiles = Object.keys(tiles).filter(id => {
-        return placedTiles.indexOf(Number(id)) < 0;
+
+    //Take all the ids of our {tiles} object and put them into an array with Object.keys(tiles)
+    const allTileIds = Object.keys(tiles);
+
+    //The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+    //.filter() will loop through all tile Ids from our {tiles} object, and test it with an 'if' function, and if truthy, then push that to a new array via 'return' (in this case, unplayedTiles).
+    let unplayedTiles = allTileIds.filter(tileId => {
+        //.indexOf() will return -1 if an item is not in the array. If the current looped tile Id has not been placed (and is not in the placedTiles array), this function will return true with "-1 is < 0", and add that tile Id to the unplayedTiles array.
+        return placedTiles.indexOf(Number(tileId)) < 0;
     });
+
     console.log('unplayedTiles: ' + unplayedTiles);
+
     return unplayedTiles;
 }
 
@@ -116,11 +128,18 @@ function getUnplayedTiles() {
 
 // create deck / get tile function 
 function getTileFromDeck() {
+    //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
-    const unplayedTilesIndex = Math.ceil(Math.random() * unplayedTiles.length);
-    console.log('unplayedTilesIndex: ' + unplayedTilesIndex);
-    console.log('the unplayed tiles index has the id of the actual tiles object, which is this: ' + tiles[unplayedTiles[unplayedTilesIndex]].id);
-    return tiles[unplayedTiles[unplayedTilesIndex]];
+    //generate a random index between 0 and the length of unplayedTiles array
+    const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
+    //get the tile Id from the randomly picked index of unplayedTiles array
+    const unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
+
+    console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
+    console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
+
+    //return the tile object from the tiles object
+    return tiles[unplayedTileId];
 }
 
 
