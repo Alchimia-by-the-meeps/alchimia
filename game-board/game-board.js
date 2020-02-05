@@ -44,8 +44,8 @@ grid.addEventListener('click', (e) => {
     let currentTileId = currentTile.id;
     gameState = getGameState();
 
-    //if tile already has background image, do not run
-    if (currentTile.style.backgroundImage) return;
+    //if tile already has a placed tile, do not continue click event
+    if (currentTile.classList.contains('placed-tile')) return;
 
     //change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
@@ -77,6 +77,24 @@ grid.addEventListener('click', (e) => {
     renderTopDeckTile();
 
 });
+
+
+grid.addEventListener('mouseover', (e) => {
+    const myCell = e.target;
+    if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
+        myCell.style.opacity = 0.5;
+        myCell.style.transition = 'none';
+        myCell.style.backgroundImage = `url('../tiles/${topDeckTile.image}')`;
+    }
+});
+grid.addEventListener('mouseout', (e) => {
+    const myCell = e.target;
+    if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
+        myCell.style.opacity = 1;
+        myCell.style.backgroundImage = 'none';
+    }
+});
+
 
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
