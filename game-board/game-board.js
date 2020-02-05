@@ -67,8 +67,8 @@ const userName = document.getElementById('userName');
 
 
 userName.textContent = userProfile.name;
-meepChoice.src = `../assets/meeples/meeple-${userProfile.meep}.png`;
-// meepChoice.src = `../assets/meeples/{userProfile.meep}`;
+
+meepChoice.src = `../assets/meeples/{userProfile.meep}`;
 
 
 
