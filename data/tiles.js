@@ -289,50 +289,62 @@ export const tiles = {
     },
     73: {
         id: 73,
-        image: 'River0.jpg'
+        image: 'River0.jpg',
+        river: true
     },
     74: {
         id: 74,
-        image: 'River1.jpg'
+        image: 'River1.jpg',
+        river: true
     },
     75: {
         id: 75,
-        image: 'River1.jpg'
+        image: 'River1.jpg',
+        river: true
     },
     76: {
         id: 76,
-        image: 'River2.jpg'
+        image: 'River2.jpg',
+        river: true
     },
     77: {
         id: 77,
-        image: 'River2.jpg'
+        image: 'River2.jpg',
+        river: true
     },
     78: {
         id: 78,
-        image: 'River3.jpg'
+        image: 'River3.jpg',
+        river: true
     },
     79: {
         id: 79,
-        image: 'River4-rotated.jpg'
+        image: 'River4-rotated.jpg',
+        river: true
     },
     80: {
         id: 80,
-        image: 'River5.jpg'
+        image: 'River5.jpg',
+        river: true
     },
     81: {
         id: 81,
-        image: 'River6.jpg'
+        image: 'River6.jpg',
+        river: true
     },
     82: {
         id: 82,
-        image: 'River7-rotated.jpg'
+        image: 'River7-rotated.jpg',
+        river: true
     },
     83: {
         id: 83,
-        image: 'River8-rotated.jpg'
+        image: 'River8-rotated.jpg',
+        river: true
     },
     84: {
         id: 84,
-        image: 'River9.jpg'
+        image: 'River9.jpg',
+        river: true
     }
 };
