@@ -22,6 +22,12 @@ renderTopDeckTile();
 
 renderRiver();
 
+// Get and listen for quit button in DOM
+const quitButton = document.getElementById('quit-button');
+quitButton.addEventListener('click', () => {
+    location.href = '/results';
+});
+
 
 //on click
 grid.addEventListener('click', (e) => {

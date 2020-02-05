@@ -1,49 +1,105 @@
-* {
-    box-sizing: border-box;
-
-}
-
 html {
     height: 100%;
 }
+
 body {
     height: 100%;
+    font-family: 'EB Garamond', serif;
     background-color: rgb(229, 200, 149);
     background-image: url('./assets/paper-bg4.jpg');
-    
     background-size: cover;
     background-repeat: no-repeat;
-
 }
 
-header {
-    text-align: center;
-    font-family: 'Jim Nightshade', cursive;
-}
 p {
     font-family: 'EB Garamond', serif;
     color: rgb(80, 56, 26);
 }
 
 h1 {
-    font-size: 4em;
-    color: rgb(65, 66, 44);
-    text-shadow: 2px 2px 3px whitesmoke;
-    margin-bottom: -10px;
-  
+    font-family: 'EB Garamond', serif;
+    color: rgb(65, 66, 44);  
 }
 
 h2 {
+    font-family: 'EB Garamond', serif;
     color: rgba(71, 77, 46, 0.5);
+}
+
+h3, h4, h5, h6 {
+    font-family: 'EB Garamond', serif;
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Jim Nightshade', cursive;
+    font-size: 4em;
+    text-shadow: 2px 2px 3px whitesmoke;
+    margin-bottom: -10px;  
+}
+
+header h2 {
+    font-family: 'Jim Nightshade', cursive;
+    font-size: 1.2em;
     position: relative;
     top: -20px;
-    font-size: 1.2em;
     margin-bottom: -10px;
 }
 
+header h2 a {
+    color: rgba(71, 77, 46, 0.75);
+}
+
+header h1 a:hover {
+    text-shadow: 2px 2px 3px rgba(71, 77, 46, 0.5);
+    text-decoration: none;
+}
+
+header h2 a:hover {
+    color: rgba(71, 77, 46, 1);
+    text-decoration: none;
+}
+
+
+a {
+    color: rgb(71, 77, 46);
+}
+
 a:hover {
+    color: rgb(71, 77, 46);
     text-decoration: underline rgba(71, 77, 46, 0.5);
 }
 
+#button-container {
+    text-align: center;
+}
+
+button.button {
+    font-family: 'Jim Nightshade', cursive;
+    background-color: rgba(71, 77, 46, .9);
+    border: none;
+    color: #eddcb5;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2rem;
+    /* text-transform: uppercase; */
+    font-weight: bold;
+    margin: 1rem auto;
+    border-radius: 6px;
+    box-shadow: rgba(0,0,0,0.3) 2px 2px 3px;
+}
+
+button.button:hover {
+    background-color: rgba(71, 77, 46, .9);
+    color: #eddcb5;
+    transform: scale(1.05);
+    transition: scale ease-in-out 0.3s;
+    box-shadow: rgba(0,0,0,0.3) 4px 4px 5px;
+}
 
 
