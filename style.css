@@ -7,6 +7,7 @@ body {
     font-family: 'EB Garamond', serif;
     background-color: rgb(229, 200, 149);
     background-image: url('./assets/paper-bg4.jpg');
+    background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
 }
