@@ -10,7 +10,7 @@ export const makeNewUser = (formData) => ({
     //get form data, create new user from data
     name: formData.get('name'),
     meep: formData.get('meep'),
-  
+
 });
 
 export default makeUser;

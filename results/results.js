@@ -44,11 +44,14 @@ const resultsBoard = document.getElementById('grid');
 
 // Get user from localStorage and add to DOM
 const user = getUser();
-const username = document.getElementById('username-span');
-// username.textContent = user.name;
-const userTiles = document.getElementById('tile-count-span');
-// userTiles.textContent = user.meep;
-
+if (user) {
+    const username = document.getElementById('username-span');
+    username.textContent = user.name;
+    const avatar = document.getElementById('avatar');
+    avatar.src = `../assets/meeples/${user.meep}`;
+    //const userTiles = document.getElementById('tile-count-span');
+   // userTiles.textContent = user.meep;
+}
 // Render full game board in targeted element
 renderGameBoard(resultsBoard);
 

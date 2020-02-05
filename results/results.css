@@ -1,13 +1,20 @@
-body {
-    text-align: center;
-    color: rgba(71, 77, 46, 1.0)
-}
-
 header {
     margin-bottom: 3rem;
 }
 
-table { 
+#results-message {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+#grid div:hover {
+    box-shadow: none;
+    cursor: inherit;
+}
+
+/* Saving this for if we use the table to render score results
+
+/* table { 
     margin: 0 auto;
     empty-cells: hide;
 }
@@ -31,32 +38,4 @@ tr {
     background-color: rgba(71, 77, 46, 0.05);
     border-bottom: 1px solid rgba(71, 77, 46, 0.2);
     ;
-}
-
-#results-message {
-    margin-bottom: 3rem;
-}
-
-#score-and-map-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-#score-container {
-    margin-right: 3rem;
-}
-
-#grid {
-    width: 500px;
-    height: 335px; /* width * .67 for a 12x8 grid */
-}
-
-#grid div {
-    height: 42px; /* grid height / 8 rows */
-}
-
-#grid div:hover {
-    box-shadow: none;
-    cursor: inherit;
-}
+} */
