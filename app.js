@@ -1,4 +1,4 @@
-import { saveUser } from './utils/api.js';
+import { saveUser, initializeGameState } from './utils/api.js';
 import makeUser from './utils/make-user.js';
 
 //grab our form from home page so we can access on submit
@@ -19,22 +19,3 @@ userSignUp.addEventListener('submit', function(event) {
     window.location = 'game-board';
         
 });
-
-function initializeGameState() {
-    
-    const maxColumns = 12;
-    const maxRows = 8;
-    let gameState = [];
-
-    for (let i = 0; i < maxRows; i++) {
-        //make new array for every row in grid array
-        gameState.push(new Array());
-        //make null placeholder for each cell in grid
-        for (let j = 0; j < maxColumns; j++) {
-            gameState[i].push(null);
-        }
-    } 
-    gameState = JSON.stringify(gameState);
-    localStorage.setItem('gameState', gameState);
-}
-

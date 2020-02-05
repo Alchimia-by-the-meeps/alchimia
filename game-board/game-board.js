@@ -1,13 +1,12 @@
 // import the tiles
-import { getGameState } from '../utils/api.js';
+import { getGameState, initializeGameState, updateGameState } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 const maxColumns = 12;
 const maxRows = 8;
 
-//initialize new game board state variable (array) thing
-let gameState = getGameState();
-
+//if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
+let gameState = getGameState() ? getGameState() : initializeGameState();
 
 
 //do stuff
@@ -21,7 +20,11 @@ renderGrid(grid);
 let topDeckTile;
 renderTopDeckTile();
 
-
+// Get and listen for quit button in DOM
+const quitButton = document.getElementById('quit-button');
+quitButton.addEventListener('click', () => {
+    location.href = '/results';
+});
 
 
 //on click
@@ -67,6 +70,7 @@ grid.addEventListener('click', (e) => {
 function getPlacedTiles() {
     let placedTilesArray = [];
 
+    gameState = getGameState();
     //loop through all played tile Ids in gameState array, and put them in a single array called placedTilesArray
     gameState.forEach(row => {
         row.forEach(cell => {
@@ -146,31 +150,3 @@ export function renderGrid(parent) {
         parent.appendChild(row);
     }
 }  
-
-function updateGameState(gameState) {
-    const stringyGameState = JSON.stringify(gameState);
-    localStorage.setItem('gameState', stringyGameState);
-}
-
-// export function makeBlankGameState() {
-    
-//     // Loop through maxRows and create rows
-//     for (let i = 0; i < maxRows; i++) {
-//         //make new array for every row in grid array
-//         gameState.push(new Array());
-//         //make null placeholder for each cell in grid
-//         for (let j = 0; j < maxColumns; j++) {
-//             gameState[i].push(null);
-//         }
-//     }
-// }  
-
-// on click, get grid space id and place tile
-
-// save game state
-
-// generate new tile from 'deck'
-
-//end game button
-
-// 

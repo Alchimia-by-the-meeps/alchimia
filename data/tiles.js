@@ -1,570 +1,518 @@
 export const tiles = {
     1: {
         id: 1,
-        image: 'CastleCenter0.png'
+        image: 'CastleCenter0.png',
+        sides: ['city', 'city', 'city', 'city'],
+        rotation: 0
     },
     2: {
         id: 2,
-        image: 'CastleCenter1.png'
+        image: 'CastleCenterEntry0.png',
+        sides: ['city', 'city', 'road', 'city'],
+        rotation: 0
     },
     3: {
         id: 3,
-        image: 'CastleCenter2.png'
+        image: 'CastleCenterEntry0.png',
+        sides: ['city', 'city', 'road', 'city'],
+        rotation: 0
     },
     4: {
         id: 4,
-        image: 'CastleCenter3.png'
+        image: 'CastleCenterEntry0.png',
+        sides: ['city', 'city', 'road', 'city'],
+        rotation: 0
     },
     5: {
         id: 5,
-        image: 'CastleCenterEntry0.png'
+        image: 'CastleCenterSide0.png',
+        sides: ['grass', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     6: {
         id: 6,
-        image: 'CastleCenterEntry1.png'
+        image: 'CastleCenterSide0.png',
+        sides: ['grass', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     7: {
         id: 7,
-        image: 'CastleCenterEntry2.png'
-        
+        image: 'CastleCenterSide0.png',
+        sides: ['grass', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     8: {
         id: 8,
-        image: 'CastleCenterEntry3.png'
+        image: 'CastleCenterSide0.png',
+        sides: ['grass', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     9: {
         id: 9,
-        image: 'CastleCenterSide0.png'
+        image: 'CastleEdge0.png',
+        sides: ['city', 'city', 'grass', 'grass'],
+        rotation: 0
     },
     10: {
         id: 10,
-        image: 'CastleCenterSide1.png'
+        image: 'CastleEdge0.png',
+        sides: ['city', 'city', 'grass', 'grass'],
+        rotation: 0
     },
     11: {
         id: 11,
-        image: 'CastleCenterSide2.png'
+        image: 'CastleEdge0.png',
+        sides: ['city', 'city', 'grass', 'grass'],
+        rotation: 0
     },
     12: {
         id: 12,
-        image: 'CastleCenterSide3.png'
-        
+        image: 'CastleEdge0.png',
+        sides: ['city', 'city', 'grass', 'grass'],
+        rotation: 0
     },
     13: {
         id: 13,
-        image: 'CastleCenterSides0.png'
+        image: 'CastleEdge0.png',
+        sides: ['city', 'city', 'grass', 'grass'],
+        rotation: 0
     },
     14: {
         id: 14,
-        image: 'CastleCenterSides1.png'
+        image: 'CastleEdgeRoad0.png',
+        sides: ['city', 'city', 'road', 'road'],
+        rotation: 0
     },
     15: {
         id: 15,
-        image: 'CastleCenterSides2.png'
+        image: 'CastleEdgeRoad0.png',
+        sides: ['city', 'city', 'road', 'road'],
+        rotation: 0
     },
     16: {
         id: 16,
-        image: 'CastleCenterSides3.png'
+        image: 'CastleEdgeRoad0.png',
+        sides: ['city', 'city', 'road', 'road'],
+        rotation: 0
     },
     17: {
         id: 17,
-        image: 'CastleEdge0.png'
+        image: 'CastleEdgeRoad0.png',
+        sides: ['city', 'city', 'road', 'road'],
+        rotation: 0
     },
     18: {
         id: 18,
-        image: 'CastleEdge1.png'
+        image: 'CastleEdgeRoad0.png',
+        sides: ['city', 'city', 'road', 'road'],
+        rotation: 0
     },
     19: {
         id: 19,
-        image: 'CastleEdge2.png'
+        image: 'CastleSides0.png',
+        sides: ['city', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     20: {
         id: 20,
-        image: 'CastleEdge3.png'
+        image: 'CastleSides0.png',
+        sides: ['city', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     21: {
         id: 21,
-        image: 'CastleEdgeRoad0.png'
+        image: 'CastleSides0.png',
+        sides: ['city', 'grass', 'city', 'grass'],
+        rotation: 0
     },
     22: {
         id: 22,
-        image: 'CastleEdgeRoad1.png'
+        image: 'CastleSidesEdge0.png',
+        sides: ['city', 'grass', 'grass', 'city'],
+        rotation: 0
     },
     23: {
         id: 23,
-        image: 'CastleEdgeRoad2.png'
+        image: 'CastleSidesEdge0.png',
+        sides: ['city', 'grass', 'grass', 'city'],
+        rotation: 0
     },
     24: {
         id: 24,
-        image: 'CastleEdgeRoad3.png'
+        image: 'CastleTube0.png',
+        sides: ['grass', 'city', 'grass', 'city'],
+        rotation: 0
     },
     25: {
         id: 25,
-        image: 'CastleMini0.png'
+        image: 'CastleTube0.png',
+        sides: ['grass', 'city', 'grass', 'city'],
+        rotation: 0
     },
     26: {
         id: 26,
-        image: 'CastleMini1.png'
+        image: 'CastleTube0.png',
+        sides: ['grass', 'city', 'grass', 'city'],
+        rotation: 0
     },
     27: {
         id: 27,
-        image: 'CastleMini2.png'
+        image: 'CastleWall0.png',
+        sides: ['city', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     28: {
         id: 28,
-        image: 'CastleMini3.png'
+        image: 'CastleWall0.png',
+        sides: ['city', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     29: {
         id: 29,
-        image: 'CastleSides0.png'
+        image: 'CastleWall0.png',
+        sides: ['city', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     30: {
         id: 30,
-        image: 'CastleSides1.png'
+        image: 'CastleWall0.png',
+        sides: ['city', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     31: {
         id: 31,
-        image: 'CastleSides2.png'
+        image: 'CastleWall0.png',
+        sides: ['city', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     32: {
         id: 32,
-        image: 'CastleSides3.png'
+        image: 'CastleWallCurveLeft0.png',
+        sides: ['city', 'grass', 'road', 'road'],
+        rotation: 0
     },
     33: {
         id: 33,
-        image: 'CastleSidesEdge0.png'
+        image: 'CastleWallCurveLeft0.png',
+        sides: ['city', 'grass', 'road', 'road'],
+        rotation: 0
     },
     34: {
         id: 34,
-        image: 'CastleSidesEdge1.png'
+        image: 'CastleWallCurveLeft0.png',
+        sides: ['city', 'grass', 'road', 'road'],
+        rotation: 0
     },
     35: {
         id: 35,
-        image: 'CastleSidesEdge2.png'
+        image: 'CastleWallCurveRight0.png',
+        sides: ['city', 'road', 'road', 'grass'],
+        rotation: 0
     },
     36: {
         id: 36,
-        image: 'CastleSidesEdge3.png'
+        image: 'CastleWallCurveRight0.png',
+        sides: ['city', 'road', 'road', 'grass'],
+        rotation: 0
     },
     37: {
         id: 37,
-        image: 'CastleSidesEdgeRoad0.png'
+        image: 'CastleWallCurveRight0.png',
+        sides: ['city', 'road', 'road', 'grass'],
+        rotation: 0
     },
     38: {
         id: 38,
-        image: 'CastleSidesEdgeRoad1.png'
+        image: 'CastleWallJunction0.png',
+        sides: ['city', 'road', 'road', 'road'],
+        rotation: 0
     },
     39: {
         id: 39,
-        image: 'CastleSidesEdgeRoad2.png'
+        image: 'CastleWallJunction0.png',
+        sides: ['city', 'road', 'road', 'road'],
+        rotation: 0
     },
     40: {
         id: 40,
-        image: 'CastleSidesEdgeRoad3.png'
+        image: 'CastleWallJunction0.png',
+        sides: ['city', 'road', 'road', 'road'],
+        rotation: 0
     },
     41: {
         id: 41,
-        image: 'CastleSidesQuad0.png'
+        image: 'CastleWallRoad0.png',
+        sides: ['city', 'road', 'grass', 'road'],
+        rotation: 0
     },
     42: {
         id: 42,
-        image: 'CastleSidesQuad1.png'
+        image: 'CastleWallRoad0.png',
+        sides: ['city', 'road', 'grass', 'road'],
+        rotation: 0
     },
     43: {
         id: 43,
-        image: 'CastleSidesQuad2.png'
+        image: 'CastleWallRoad0.png',
+        sides: ['city', 'road', 'grass', 'road'],
+        rotation: 0
     },
     44: {
         id: 44,
-        image: 'CastleSidesQuad3.png'
+        image: 'CastleWallRoad0.png',
+        sides: ['city', 'road', 'grass', 'road'],
+        rotation: 0
     },
     45: {
         id: 45,
-        image: 'CastleSidesRoad0.png'
+        image: 'Monastery0.png',
+        sides: ['grass', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     46: {
         id: 46,
-        image: 'CastleSidesRoad1.png'
+        image: 'Monastery0.png',
+        sides: ['grass', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     47: {
         id: 47,
-        image: 'CastleSidesRoad2.png'
+        image: 'Monastery0.png',
+        sides: ['grass', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     48: {
         id: 48,
-        image: 'CastleSidesRoad3.png'
+        image: 'Monastery0.png',
+        sides: ['grass', 'grass', 'grass', 'grass'],
+        rotation: 0
     },
     49: {
         id: 49,
-        image: 'CastleTube0.png'
+        image: 'MonasteryRoad0.png',
+        sides: ['grass', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     50: {
         id: 50,
-        image: 'CastleTube1.png'
+        image: 'MonasteryRoad0.png',
+        sides: ['grass', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     51: {
         id: 51,
-        image: 'CastleTube2.png'
+        image: 'RoadCrossSmall0.png',
+        sides: ['grass', 'road', 'road', 'road'],
+        rotation: 0
     },
     52: {
         id: 52,
-        image: 'CastleTube3.png'
+        image: 'RoadCrossSmall0.png',
+        sides: ['grass', 'road', 'road', 'road'],
+        rotation: 0
     },
     53: {
         id: 53,
-        image: 'CastleTubeEntries0.png'
+        image: 'RoadCrossSmall0.png',
+        sides: ['grass', 'road', 'road', 'road'],
+        rotation: 0
     },
     54: {
         id: 54,
-        image: 'CastleTubeEntries1.png'
+        image: 'RoadCrossSmall0.png',
+        sides: ['grass', 'road', 'road', 'road'],
+        rotation: 0
     },
     55: {
         id: 55,
-        image: 'CastleTubeEntries2.png'
+        image: 'RoadCrossLarge0.png',
+        sides: ['road', 'road', 'road', 'road'],
+        rotation: 0
     },
     56: {
         id: 56,
-        image: 'CastleTubeEntries3.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     57: {
         id: 57,
-        image: 'CastleTubeEntry0.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     58: {
         id: 58,
-        image: 'CastleTubeEntry1.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     59: {
         id: 59,
-        image: 'CastleTubeEntry2.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     60: {
         id: 60,
-        image: 'CastleTubeEntry3.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     61: {
         id: 61,
-        image: 'CastleWall0.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     62: {
         id: 62,
-        image: 'CastleWall1.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     63: {
         id: 63,
-        image: 'CastleWall2.png'
+        image: 'Road0.png',
+        sides: ['road', 'grass', 'road', 'grass'],
+        rotation: 0
     },
     64: {
         id: 64,
-        image: 'CastleWall3.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     65: {
         id: 65,
-        image: 'CastleWallCurveLeft0.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     66: {
         id: 66,
-        image: 'CastleWallCurveLeft1.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     67: {
         id: 67,
-        image: 'CastleWallCurveLeft2.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     68: {
         id: 68,
-        image: 'CastleWallCurveLeft3.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     69: {
         id: 69,
-        image: 'CastleWallCurveRight0.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     70: {
         id: 70,
-        image: 'CastleWallCurveRight1.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     71: {
         id: 71,
-        image: 'CastleWallCurveRight2.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     72: {
         id: 72,
-        image: 'CastleWallCurveRight3.png'
+        image: 'RoadCurve0.png',
+        sides: ['grass', 'grass', 'road', 'road'],
+        rotation: 0
     },
     73: {
         id: 73,
-        image: 'CastleWallEntry0.png'
+        image: 'River0.jpg',
+        sides: ['grass', 'river', 'grass', 'grass'],
+        rotation: 0,
+        river: true
     },
     74: {
         id: 74,
-        image: 'CastleWallEntry1.png'
+        image: 'River1.jpg',
+        sides: ['grass', 'river', 'grass', 'river'],
+        rotation: 0,
+        river: true
     },
     75: {
         id: 75,
-        image: 'CastleWallEntry2.png'
+        image: 'River1.jpg',
+        sides: ['grass', 'river', 'grass', 'river'],
+        rotation: 0,
+        river: true
     },
     76: {
         id: 76,
-        image: 'CastleWallEntry3.png'
+        image: 'River2.jpg',
+        sides: ['grass', 'grass', 'river', 'river'],
+        rotation: 0,
+        river: true
     },
     77: {
         id: 77,
-        image: 'CastleWallEntryLeft0.png'
+        image: 'River2.jpg',
+        sides: ['grass', 'grass', 'river', 'river'],
+        rotation: 0,
+        river: true
     },
     78: {
         id: 78,
-        image: 'CastleWallEntryLeft1.png'
+        image: 'River3.jpg',
+        sides: ['road', 'road', 'river', 'river'],
+        rotation: 0,
+        river: true
     },
     79: {
         id: 79,
-        image: 'CastleWallEntryLeft2.png'
+        image: 'River4-rotated.jpg',
+        sides: ['river', 'river', 'city', 'city'],
+        rotation: 0,
+        river: true
     },
     80: {
         id: 80,
-        image: 'CastleWallEntryLeft3.png'
+        image: 'River5.jpg',
+        sides: ['grass', 'river', 'road', 'river'],
+        rotation: 0,
+        river: true
     },
     81: {
         id: 81,
-        image: 'CastleWallEntryRight0.png'
+        image: 'River6.jpg',
+        sides: ['city', 'river', 'road', 'river'],
+        rotation: 0,
+        river: true
     },
     82: {
         id: 82,
-        image: 'CastleWallEntryRight1.png'
+        image: 'River7-rotated.jpg',
+        sides: ['river', 'city', 'river', 'city'],
+        rotation: 0,
+        river: true
     },
     83: {
         id: 83,
-        image: 'CastleWallEntryRight2.png'
+        image: 'River8-rotated.jpg',
+        sides: ['river', 'road', 'river', 'road'],
+        rotation: 0,
+        river: true
     },
     84: {
         id: 84,
-        image: 'CastleWallEntryRight3.png'
-    },
-    85: {
-        id: 85,
-        image: 'CastleWallJunction0.png'
-    },
-    86: {
-        id: 86,
-        image: 'CastleWallJunction1.png'
-    },
-    87: {
-        id: 87,
-        image: 'CastleWallJunction2.png'
-    },
-    88: {
-        id: 88,
-        image: 'CastleWallJunction3.png'
-    },
-    89: {
-        id: 89,
-        image: 'CastleWallRoad0.png'
-    },
-    90: {
-        id: 90,
-        image: 'CastleWallRoad1.png'
-    },
-    91: {
-        id: 91,
-        image: 'CastleWallRoad2.png'
-    },
-    92: {
-        id: 92,
-        image: 'CastleWallRoad3.png'
-    },
-    93: {
-        id: 93,
-        image: 'Monastery0.png'
-    },
-    94: {
-        id: 94,
-        image: 'Monastery1.png'
-    },
-    95: {
-        id: 95,
-        image: 'Monastery2.png'
-    },
-    96: {
-        id: 96,
-        image: 'Monastery3.png'
-    },
-    97: {
-        id: 97,
-        image: 'MonasteryCastle0.png'
-    },
-    98: {
-        id: 98,
-        image: 'MonasteryCastle1.png'
-    },
-    99: {
-        id: 99,
-        image: 'MonasteryCastle2.png'
-    },
-    100: {
-        id: 100,
-        image: 'MonasteryCastle3.png'
-    },
-    101: {
-        id: 101,
-        image: 'MonasteryJunction0.png'
-    },
-    102: {
-        id: 102,
-        image: 'MonasteryJunction1.png'
-    },
-    103: {
-        id: 103,
-        image: 'MonasteryJunction2.png'
-    },
-    104: {
-        id: 104,
-        image: 'MonasteryJunction3.png'
-    },
-    105: {
-        id: 105,
-        image: 'MonasteryRoad0.png'
-    },
-    106: {
-        id: 106,
-        image: 'MonasteryRoad1.png'
-    },
-    107: {
-        id: 107,
-        image: 'MonasteryRoad2.png'
-    },
-    108: {
-        id: 108,
-        image: 'MonasteryRoad3.png'
-    },
-    109: {
-        id: 109,
-
-        image: '../tiles/RoadJunctionSmall0.png'
-    },
-    110: {
-        id: 110,
-        image: '../tiles/RoadJunctionSmall1.png'
-    },
-    111: {
-        id: 111,
-        image: '../tiles/RoadJunctionSmall2.png'
-    },
-    112: {
-        id: 112,
-        image: '../tiles/RoadJunctionSmall3.png'
-
-    },
-    113: {
-        id: 113,
-        image: 'Road0.png'
-    },
-    114: {
-        id: 114,
-        image: 'Road1.png'
-    },
-    115: {
-        id: 115,
-        image: 'Road2.png'
-    },
-    116: {
-        id: 116,
-        image: 'Road3.png'
-    },
-    117: {
-        id: 117,
-        image: 'RoadCrossLarge0.png'
-    },
-    118: {
-        id: 118,
-        image: 'RoadCrossLarge1.png'
-    },
-    119: {
-        id: 119,
-        image: 'RoadCrossLarge2.png'
-    },
-    120: {
-        id: 120,
-        image: 'RoadCrossLarge3.png'
-    },
-    121: {
-        id: 121,
-        image: 'RoadCrossSmall0.png'
-    },
-    122: {
-        id: 122,
-        image: 'RoadCrossSmall1.png'
-    },
-    123: {
-        id: 123,
-        image: 'RoadCrossSmall2.png'
-    },
-    124: {
-        id: 124,
-        image: 'RoadCrossSmall3.png'
-    },
-    125: {
-        id: 125,
-        image: 'RoadCurve0.png'
-    },
-    126: {
-        id: 126,
-        image: 'RoadCurve1.png'
-    },
-    127: {
-        id: 127,
-        image: 'RoadCurve2.png'
-    },
-    128: {
-        id: 128,
-        image: 'RoadCurve3.png'
-    },
-    129: {
-        id: 129,
-        image: 'RoadEnd0.png'
-    },
-    130: {
-        id: 130,
-        image: 'RoadEnd1.png'
-    },
-    131: {
-        id: 131,
-        image: 'RoadEnd2.png'
-    },
-    132: {
-        id: 132,
-        image: 'RoadEnd3.png'
-    },
-    133: {
-        id: 133,
-        image: 'RoadJunctionLarge0.png'
-    },
-    134: {
-        id: 134,
-        image: 'RoadJunctionLarge1.png'
-    },
-    135: {
-        id: 135,
-        image: 'RoadJunctionLarge2.png'
-    },
-    136: {
-        id: 136,
-        image: 'RoadJunctionLarge3.png'
-    },
-    137: {
-        id: 137,
-        image: 'RoadJunctionSmall0.png'
-    },
-    138: {
-        id: 138,
-        image: 'RoadJunctionSmall1.png'
-    },
-    139: {
-        id: 139,
-        image: 'RoadJunctionSmall2.png'
-    },
-    140: {
-        id: 140,
-        image: 'RoadJunctionSmall3.png'
-    },
-
-
-    
-
+        image: 'River9.jpg',
+        sides: ['grass', 'grass', 'grass', 'river'],
+        rotation: 0,
+        river: true
+    }
 };
