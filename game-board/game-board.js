@@ -1,12 +1,12 @@
 // import the tiles
-import { getGameState, initializeGameState, updateGameState } from '../utils/api.js';
+import { getGameState, updateGameState, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 const maxColumns = 12;
 const maxRows = 8;
 
 //if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
-let gameState = getGameState() ? getGameState() : initializeGameState();
+let gameState = getGameState();
 
 
 //do stuff
@@ -19,6 +19,8 @@ renderGrid(grid);
 
 let topDeckTile;
 renderTopDeckTile();
+
+renderRiver();
 
 // Get and listen for quit button in DOM
 const quitButton = document.getElementById('quit-button');
@@ -46,6 +48,12 @@ grid.addEventListener('click', (e) => {
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
+    // These next 3 lines are for unfinished validation
+    // const adjacentSides = getAdjacentTiles(row, column);
+    // const checkMatch = checkAdjacentsMatch(adjacentSides, topDeckTile);
+    // if (!checkMatch) return;
+
+    updatePlacedTiles(topDeckTile);
 
     gameState[row][column] = topDeckTile.id;
     // console.log(gameState);
@@ -78,7 +86,7 @@ function getPlacedTiles() {
         });
     });
 
-    console.log('placedTilesArray: ' + placedTilesArray);
+    // console.log('placedTilesArray: ' + placedTilesArray);
 
     return placedTilesArray;
 }
@@ -97,7 +105,7 @@ function getUnplayedTiles() {
         return placedTiles.indexOf(Number(tileId)) < 0;
     });
 
-    console.log('unplayedTiles: ' + unplayedTiles);
+    // console.log('unplayedTiles: ' + unplayedTiles);
 
     return unplayedTiles;
 }
@@ -105,17 +113,27 @@ function getUnplayedTiles() {
 
 // create deck / get tile function
 // returns random unplayed tile object
+
 function getTileFromDeck() {
     //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
     //generate a random index between 0 and the length of unplayedTiles array
-    const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
+   // const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
     //get the tile Id from the randomly picked index of unplayedTiles array
-    const unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
-
+    let unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
+    let unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
+    // if the river property exists
+    if (tiles[unplayedTileId].river) {
+        //while it has the property
+        while (tiles[unplayedTileId].river) {
+    // redo random index 
+            unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
+            unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
+        } 
+    }
+    
     console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
     console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
-
     //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
 }
@@ -129,6 +147,33 @@ function renderTopDeckTile() {
     div.style.opacity = 1;
     div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     div.style.backgroundSize = 'cover';
+}
+
+export function renderRiver() {
+    const river1 = document.getElementById('grid-2-3');
+    const river2 = document.getElementById('grid-2-4');
+    const river3 = document.getElementById('grid-2-5');
+    const river4 = document.getElementById('grid-3-5');
+    const river5 = document.getElementById('grid-4-5');
+    const river6 = document.getElementById('grid-5-5');
+    const river7 = document.getElementById('grid-5-6');
+    const river8 = document.getElementById('grid-5-7');
+    river1.style.backgroundImage = 'url("../tiles/River0.jpg")';
+    river2.style.backgroundImage = 'url("../tiles/River1.jpg")';
+    river3.style.backgroundImage = 'url("../tiles/River2.jpg")';
+    river4.style.backgroundImage = 'url("../tiles/River7-rotated.jpg")';
+    river5.style.backgroundImage = 'url("../tiles/River8-rotated.jpg")';
+    river6.style.backgroundImage = 'url("../tiles/River4-rotated.jpg")';
+    river7.style.backgroundImage = 'url("../tiles/River6.jpg")';
+    river8.style.backgroundImage = 'url("../tiles/River9.jpg")';
+    river1.classList.add('placed-tile');
+    river2.classList.add('placed-tile');
+    river3.classList.add('placed-tile');
+    river4.classList.add('placed-tile');
+    river5.classList.add('placed-tile');
+    river6.classList.add('placed-tile');
+    river7.classList.add('placed-tile');
+    river8.classList.add('placed-tile');
 }
 
 export function renderGrid(parent) {
