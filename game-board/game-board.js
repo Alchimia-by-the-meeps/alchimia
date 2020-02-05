@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 //on load
@@ -28,6 +28,51 @@ const quitButton = document.getElementById('quit-button');
 quitButton.addEventListener('click', () => {
     location.href = '/results';
 });
+
+const container = document.getElementById('container');
+
+function instructionsModal() {
+    const modal = document.getElementById('instructionsModal');
+    const instructionsButton = document.getElementById('instructionsButton');
+    const span = document.getElementById('close');
+    
+    instructionsButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        container.classList.add('is-blurred');
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener('click', () => {
+        modal.style.display = 'none';
+        container.classList.remove('is-blurred');
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            container.classList.remove('is-blurred');
+
+        }
+    });
+}
+
+instructionsModal();
+container.classList.add('is-blurred');
+
+const userProfile = getUser();
+
+const meepChoice = document.getElementById('meepChoice');
+const userName = document.getElementById('userName');
+
+
+userName.textContent = userProfile.name;
+meepChoice.src = `../assets/meeples/meeple-${userProfile.meep}.png`;
+// meepChoice.src = `../assets/meeples/{userProfile.meep}`;
+
+
+
+
 
 
 //on click
