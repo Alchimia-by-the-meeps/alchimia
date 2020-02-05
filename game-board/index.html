@@ -13,25 +13,35 @@
 
    
     <link href="https://fonts.googleapis.com/css?family=Cinzel|Jim+Nightshade&display=swap" rel="stylesheet">
-
+    
 </head>
 
 <body>
+    <div id="instructionsModal" class="modal">
+    
+        <div class="modal-content">
+          <span id="close">&times;</span>
+          <p>Instructions</p>
+        </div>
+      
+      </div>
+    <div id="container">
+        <header>   
+            <h1><a href="/">Alchimia</a></h1>
+            <h2><a href="./about">By the Meeps</a></h2> 
+        </header>
+        <button id="instructionsButton">Instructions</button>
 
-    <header>
+        <div id="grid">
+            <img src="../assets/paper-bg3.jpg" id="grid-background">
+        </div>
+        <div id="player-tile"></div>
 
-        <h1><a href="/">Alchimia</a></h1>
-        <h2><a href="./about">By the Meeps</a></h2>
-
-    </header>
-    <div id="grid">
-        <img src="../assets/paper-bg3.jpg" id="grid-background">
+        <div id="button-container">
+            <button id="quit-button" class="button">Stop Playing</button>
+        </div>
     </div>
-    <div id="player-tile"></div>
-
-    <div id="button-container">
-        <button id="quit-button" class="button">Stop Playing</button>
-    </div>
+ 
 
     <script type="module" src="game-board.js"></script>
 </body>

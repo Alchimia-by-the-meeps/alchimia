@@ -29,6 +29,38 @@ quitButton.addEventListener('click', () => {
     location.href = '/results';
 });
 
+const container = document.getElementById('container');
+
+function instructionsModal() {
+    const modal = document.getElementById('instructionsModal');
+    const instructionsButton = document.getElementById('instructionsButton');
+    const span = document.getElementById('close');
+    
+    instructionsButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        container.classList.add('is-blurred');
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener('click', () => {
+        modal.style.display = 'none';
+        container.classList.remove('is-blurred');
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            container.classList.remove('is-blurred');
+
+        }
+    });
+}
+
+instructionsModal();
+container.classList.add('is-blurred');
+
+
 
 //on click
 grid.addEventListener('click', (e) => {
