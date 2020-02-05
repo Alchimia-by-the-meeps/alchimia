@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 //on load
@@ -59,6 +59,19 @@ function instructionsModal() {
 
 instructionsModal();
 container.classList.add('is-blurred');
+
+const userProfile = getUser();
+
+const meepChoice = document.getElementById('meepChoice');
+const userName = document.getElementById('userName');
+
+
+userName.textContent = userProfile.name;
+meepChoice.src = `../assets/meeples/meeple-${userProfile.meep}.png`;
+// meepChoice.src = `../assets/meeples/{userProfile.meep}`;
+
+
+
 
 
 
