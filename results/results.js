@@ -1,12 +1,11 @@
-// import { maxRows, maxColumns } from '../game-board/game-board.js';
+//import { maxRows, maxColumns } from '../game-board/game-board.js';
 import { tiles } from '../data/tiles.js';
 import { getUser, getGameState } from '../utils/api.js';
 
-const maxColumns = 12;
-const maxRows = 8;
 
 function renderGameBoard(parent) {
-    console.log('running');
+    const maxColumns = 12;
+    const maxRows = 8;
     
     // Get boardState from localStorage
     const gameState = getGameState();

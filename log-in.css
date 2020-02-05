@@ -2,13 +2,13 @@
 
     font-family: 'Jim Nightshade', cursive;
 }
-h1{
+header h1{
     font-size: 8em;
     color: rgb(65, 66, 44);
     text-shadow: 2px 2px 3px whitesmoke;
     margin-bottom: -10px;
 }
-h2{
+header h2{
     font-size: 35px;
     margin-top: -20px;
     color: rgb(65, 66, 44);
