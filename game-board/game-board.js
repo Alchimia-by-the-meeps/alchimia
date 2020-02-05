@@ -140,6 +140,10 @@ function renderTopDeckTile() {
         // don't do this stuff here, bad UX? The last tile won't render first if you alert or leave here.
         // alert('All tiles have been played!');
         // window.location.href = '/results';
+        div.style.opacity = 1;
+        div.style.backgroundImage = `url("../tiles/Null1.png")`;
+        div.style.backgroundSize = 'cover';
+        // div.style.transform = 'rotate(0deg)';
         return false;
     }
 
