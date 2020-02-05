@@ -1,12 +1,12 @@
 // import the tiles
-import { getGameState, initializeGameState, updateGameState } from '../utils/api.js';
+import { getGameState, updateGameState, updatePlacedTiles } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 const maxColumns = 12;
 const maxRows = 8;
 
 //if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
-let gameState = getGameState() ? getGameState() : initializeGameState();
+let gameState = getGameState();
 
 
 //do stuff
@@ -42,6 +42,7 @@ grid.addEventListener('click', (e) => {
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
+    updatePlacedTiles(topDeckTile);
 
     gameState[row][column] = topDeckTile.id;
     // console.log(gameState);

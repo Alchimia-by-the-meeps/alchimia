@@ -1,3 +1,5 @@
+import { tiles } from '../data/tiles.js';
+
 //add user to local storage
 export function saveUser(user) {
     const json = JSON.stringify(user);
@@ -16,7 +18,8 @@ export function getUser() {
 }
 
 export function getGameState() {
-    const gameStateData = localStorage.getItem('gameState');
+    //if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
+    const gameStateData = localStorage.getItem('gameState') ? localStorage.getItem('gameState') : initializeGameState();
 
     if (!gameStateData) return;
 
@@ -46,4 +49,26 @@ export function initializeGameState() {
 export function updateGameState(gameState) {
     const stringyGameState = JSON.stringify(gameState);
     localStorage.setItem('gameState', stringyGameState);
+}
+
+export function getPlacedTiles() {
+    let placedTiles = localStorage.getItem('placedTiles');
+    //if placedTiles exists in localStorage, set placedTiles to that function, else initialize and set it to new placedTiles
+    placedTiles = placedTiles ? JSON.parse(placedTiles) : {};
+
+    return placedTiles;
+}
+
+export function updatePlacedTiles(lastPlacedTile) {
+    let placedTiles = getPlacedTiles();
+
+    placedTiles[lastPlacedTile.id] = {
+        id: lastPlacedTile.id,
+        sides: lastPlacedTile.sides
+    };
+    localStorage.setItem('placedTiles', JSON.stringify(placedTiles));
+}
+
+export function getAdjacentTiles() {
+    //filler
 }
