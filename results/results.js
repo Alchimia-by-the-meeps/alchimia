@@ -22,11 +22,12 @@ function renderGameBoard(parent) {
             cell.id = `grid-${i}-${j}`;
             cell.classList.add('cell');
             // Get ID of corresponding gameState array of arrays
-            // DEPENDENT ON LOCALSTORAGE
+            
             if (gameState[i][j]) {
                 const thisCellId = gameState[i][j];
                 console.log(thisCellId);
                 cell.style.backgroundImage = `url('../tiles/${tiles[thisCellId].image}')`;
+                cell.classList.add('placed-tile');
             }
             row.appendChild(cell);
         }
