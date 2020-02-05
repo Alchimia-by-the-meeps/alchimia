@@ -55,7 +55,6 @@ export function getPlacedTiles() {
     let placedTiles = localStorage.getItem('placedTiles');
     //if placedTiles exists in localStorage, set placedTiles to that function, else initialize and set it to new placedTiles
     placedTiles = placedTiles ? JSON.parse(placedTiles) : {};
-
     return placedTiles;
 }
 
@@ -64,9 +63,14 @@ export function updatePlacedTiles(lastPlacedTile) {
 
     placedTiles[lastPlacedTile.id] = {
         id: lastPlacedTile.id,
-        sides: lastPlacedTile.sides
+        sides: lastPlacedTile.sides,
+        rotation: lastPlacedTile.rotation
     };
     localStorage.setItem('placedTiles', JSON.stringify(placedTiles));
+}
+
+export function initializePlacedTiles() {
+    localStorage.setItem('placedTiles', {});
 }
 
 export function getAdjacentTiles() {
