@@ -24,3 +24,26 @@ export function getGameState() {
     
 }
 
+export function initializeGameState() {
+    
+    const maxColumns = 12;
+    const maxRows = 8;
+    let gameState = [];
+
+    for (let i = 0; i < maxRows; i++) {
+        //make new array for every row in grid array
+        gameState.push(new Array());
+        //make null placeholder for each cell in grid
+        for (let j = 0; j < maxColumns; j++) {
+            gameState[i].push(null);
+        }
+    } 
+    gameState = JSON.stringify(gameState);
+    localStorage.setItem('gameState', gameState);
+    return JSON.parse(gameState);
+}
+
+export function updateGameState(gameState) {
+    const stringyGameState = JSON.stringify(gameState);
+    localStorage.setItem('gameState', stringyGameState);
+}
