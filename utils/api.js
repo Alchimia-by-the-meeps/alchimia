@@ -1,5 +1,16 @@
 import { tiles } from '../data/tiles.js';
 
+export const maxColumns = 12;
+export const maxRows = 8;
+
+//add river tiles to placed tiles on initial
+export function addRiverToPlacedTiles() {
+    for (let i = 73; i <= 84; i++) {
+        updatePlacedTiles(tiles[i]);
+    }
+}
+
+
 //add user to local storage
 export function saveUser(user) {
     const json = JSON.stringify(user);
@@ -30,8 +41,6 @@ export function getGameState() {
 export function initializeGameState() {
     
     const riverTiles = tiles;
-    const maxColumns = 12;
-    const maxRows = 8;
     let gameState = [];
 
     for (let i = 0; i < maxRows; i++) {
@@ -46,7 +55,7 @@ export function initializeGameState() {
     gameState[2][3] = riverTiles['73'].id;
     gameState[2][4] = riverTiles['74'].id;
     gameState[2][5] = riverTiles['76'].id;
-    gameState[3][5] = riverTiles['77'].id;
+    gameState[3][5] = riverTiles['82'].id;
     gameState[4][5] = riverTiles['83'].id;
     gameState[5][5] = riverTiles['79'].id;
     gameState[5][6] = riverTiles['81'].id;
@@ -82,7 +91,7 @@ export function updatePlacedTiles(lastPlacedTile) {
 }
 
 export function initializePlacedTiles() {
-    localStorage.setItem('placedTiles', {});
+    localStorage.setItem('placedTiles', '{}');
 }
 
 export function getAdjacentTiles(row, column) {

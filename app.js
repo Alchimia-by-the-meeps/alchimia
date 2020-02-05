@@ -1,4 +1,4 @@
-import { saveUser, initializeGameState, initializePlacedTiles } from './utils/api.js';
+import { saveUser, initializeGameState, initializePlacedTiles, addRiverToPlacedTiles } from './utils/api.js';
 import makeUser from './utils/make-user.js';
 
 //grab our form from home page so we can access on submit
@@ -15,6 +15,7 @@ userSignUp.addEventListener('submit', function(event) {
 
     initializeGameState();
     initializePlacedTiles();
+    addRiverToPlacedTiles();
 
     //send to game-board page to start adventure
     window.location = 'game-board';
