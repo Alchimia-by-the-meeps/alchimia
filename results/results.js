@@ -22,11 +22,12 @@ function renderGameBoard(parent) {
             cell.id = `grid-${i}-${j}`;
             cell.classList.add('cell');
             // Get ID of corresponding gameState array of arrays
-            // DEPENDENT ON LOCALSTORAGE
+            
             if (gameState[i][j]) {
                 const thisCellId = gameState[i][j];
                 console.log(thisCellId);
                 cell.style.backgroundImage = `url('../tiles/${tiles[thisCellId].image}')`;
+                cell.classList.add('placed-tile');
             }
             row.appendChild(cell);
         }
@@ -44,11 +45,14 @@ const resultsBoard = document.getElementById('grid');
 
 // Get user from localStorage and add to DOM
 const user = getUser();
-const username = document.getElementById('username-span');
-// username.textContent = user.name;
-const userTiles = document.getElementById('tile-count-span');
-// userTiles.textContent = user.meep;
-
+if (user) {
+    const username = document.getElementById('username-span');
+    username.textContent = user.name;
+    const avatar = document.getElementById('avatar');
+    avatar.src = `../assets/meeples/${user.meep}`;
+    //const userTiles = document.getElementById('tile-count-span');
+   // userTiles.textContent = user.meep;
+}
 // Render full game board in targeted element
 renderGameBoard(resultsBoard);
 

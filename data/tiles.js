@@ -433,84 +433,84 @@ export const tiles = {
     },
     73: {
         id: 73,
-        image: 'River0.jpg',
+        image: 'River0.png',
         sides: ['grass', 'river', 'grass', 'grass'],
         rotation: 0,
         river: true
     },
     74: {
         id: 74,
-        image: 'River1.jpg',
+        image: 'River1.png',
         sides: ['grass', 'river', 'grass', 'river'],
         rotation: 0,
         river: true
     },
     75: {
         id: 75,
-        image: 'River1.jpg',
+        image: 'River1.png',
         sides: ['grass', 'river', 'grass', 'river'],
         rotation: 0,
         river: true
     },
     76: {
         id: 76,
-        image: 'River2.jpg',
+        image: 'River2.png',
         sides: ['grass', 'grass', 'river', 'river'],
         rotation: 0,
         river: true
     },
     77: {
         id: 77,
-        image: 'River2.jpg',
+        image: 'River2.png',
         sides: ['grass', 'grass', 'river', 'river'],
         rotation: 0,
         river: true
     },
     78: {
         id: 78,
-        image: 'River3.jpg',
+        image: 'River3.png',
         sides: ['road', 'road', 'river', 'river'],
         rotation: 0,
         river: true
     },
     79: {
         id: 79,
-        image: 'River4-rotated.jpg',
+        image: 'River4-rotated.png',
         sides: ['river', 'river', 'city', 'city'],
         rotation: 0,
         river: true
     },
     80: {
         id: 80,
-        image: 'River5.jpg',
+        image: 'River5.png',
         sides: ['grass', 'river', 'road', 'river'],
         rotation: 0,
         river: true
     },
     81: {
         id: 81,
-        image: 'River6.jpg',
+        image: 'River6.png',
         sides: ['city', 'river', 'road', 'river'],
         rotation: 0,
         river: true
     },
     82: {
         id: 82,
-        image: 'River7-rotated.jpg',
-        sides: ['river', 'city', 'river', 'city'],
+        image: 'River7-rotated.png',
+        sides: ['city', 'river', 'city', 'river'],
         rotation: 0,
         river: true
     },
     83: {
         id: 83,
-        image: 'River8-rotated.jpg',
+        image: 'River8-rotated.png',
         sides: ['river', 'road', 'river', 'road'],
         rotation: 0,
         river: true
     },
     84: {
         id: 84,
-        image: 'River9.jpg',
+        image: 'River9.png',
         sides: ['grass', 'grass', 'grass', 'river'],
         rotation: 0,
         river: true
