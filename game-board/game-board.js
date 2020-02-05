@@ -1,26 +1,27 @@
 // import the tiles
-import { getGameState, updateGameState, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
-const maxColumns = 12;
-const maxRows = 8;
-
-//if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
+//on load
+// reset gameState onload, for now
+initializeGameState();
 let gameState = getGameState();
 
+// reset placedTiles localStorage onload, for now. 
+initializePlacedTiles();
+// add preset river tiles to placedTiles onload, for now.
+addRiverToPlacedTiles();
 
-//do stuff
-// makeBlankGameState();
-
-// create grid, 12 by 8
-//on load
+//grab the main grid element and start by rendering the base grid elements
 const grid = document.getElementById('grid');
 renderGrid(grid);
 
+//render the preset river tile layout
+renderRiver();
+
+//topDeckTile probably should be in storage... but globalize it here to use in eventListener on every new draw
 let topDeckTile;
 renderTopDeckTile();
-
-renderRiver();
 
 // Get and listen for quit button in DOM
 const quitButton = document.getElementById('quit-button');
@@ -31,19 +32,25 @@ quitButton.addEventListener('click', () => {
 
 //on click
 grid.addEventListener('click', (e) => {
+
+    //if clicked element was one of the containers (grid/row), exit
+    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
+
+    //if topDeckTile returned false, aka no more tiles to draw, do this
+    if (!topDeckTile) {console.log('no more tiles, oh no!'); return;}
+
     //grab click location, div id
     const currentTile = e.target;
     let currentTileId = currentTile.id;
     gameState = getGameState();
 
-    //if clicked element was one of the containers (grid/row), exit
-    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
+    //if tile already has background image, do not run
+    if (currentTile.style.backgroundImage) return;
 
     //change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
     //change '#-#' to ["#", "#"]
     currentTileId = currentTileId.split('-');
-
     //store ["#", "#"][0] to row, ["#", "#"][1] to column
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
@@ -53,13 +60,12 @@ grid.addEventListener('click', (e) => {
     // const checkMatch = checkAdjacentsMatch(adjacentSides, topDeckTile);
     // if (!checkMatch) return;
 
+    //add currently drawn tile id to placed tiles
     updatePlacedTiles(topDeckTile);
 
+    //update gameState with currently drawn tile id
     gameState[row][column] = topDeckTile.id;
-    // console.log(gameState);
     updateGameState(gameState);
-    //if tile already has background image, do not run
-    if (currentTile.style.backgroundImage) return;
 
     //render tile in grid, update background image
     currentTile.style.opacity = 1;
@@ -70,30 +76,14 @@ grid.addEventListener('click', (e) => {
     //draw and display new tile at bottom of page
     renderTopDeckTile();
 
-    // getPlacedTiles();
-
 });
-
-// returns array of placed tile ids
-function getPlacedTiles() {
-    let placedTilesArray = [];
-
-    gameState = getGameState();
-    //loop through all played tile Ids in gameState array, and put them in a single array called placedTilesArray
-    gameState.forEach(row => {
-        row.forEach(cell => {
-            if (cell) placedTilesArray.push(cell);
-        });
-    });
-
-    // console.log('placedTilesArray: ' + placedTilesArray);
-
-    return placedTilesArray;
-}
 
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
     const placedTiles = getPlacedTiles();
+    const placedTilesIds = Object.keys(placedTiles);
+
+    // console.log('placedTilesIds: ' + placedTilesIds);
 
     //Take all the ids of our {tiles} object and put them into an array with Object.keys(tiles)
     const allTileIds = Object.keys(tiles);
@@ -102,7 +92,7 @@ function getUnplayedTiles() {
     //.filter() will loop through all tile Ids from our {tiles} object, and test it with an 'if' function, and if truthy, then push that to a new array via 'return' (in this case, unplayedTiles).
     let unplayedTiles = allTileIds.filter(tileId => {
         //.indexOf() will return -1 if an item is not in the array. If the current looped tile Id has not been placed (and is not in the placedTiles array), this function will return true with "-1 is < 0", and add that tile Id to the unplayedTiles array.
-        return placedTiles.indexOf(Number(tileId)) < 0;
+        return placedTilesIds.indexOf(tileId) < 0;
     });
 
     // console.log('unplayedTiles: ' + unplayedTiles);
@@ -117,6 +107,7 @@ function getUnplayedTiles() {
 function getTileFromDeck() {
     //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
+    if (unplayedTiles.length < 1) return false;
     //generate a random index between 0 and the length of unplayedTiles array
    // const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
     //get the tile Id from the randomly picked index of unplayedTiles array
@@ -132,8 +123,8 @@ function getTileFromDeck() {
         } 
     }
     
-    console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
-    console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
+    // console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
+    // console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
     //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
 }
@@ -143,6 +134,15 @@ function renderTopDeckTile() {
     const div = document.getElementById('player-tile');
     //select random tile
     topDeckTile = getTileFromDeck();
+
+    if (!topDeckTile) {
+        // out of tiles! Should maybe 'disable' all unplayed grid tiles, like remove hover and stuff...
+        // don't do this stuff here, bad UX? The last tile won't render first if you alert or leave here.
+        // alert('All tiles have been played!');
+        // window.location.href = '/results';
+        return false;
+    }
+
     //update and display random tile background 
     div.style.opacity = 1;
     div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
@@ -150,6 +150,7 @@ function renderTopDeckTile() {
 }
 
 export function renderRiver() {
+    //choose grid tiles for river
     const river1 = document.getElementById('grid-2-3');
     const river2 = document.getElementById('grid-2-4');
     const river3 = document.getElementById('grid-2-5');
@@ -158,6 +159,7 @@ export function renderRiver() {
     const river6 = document.getElementById('grid-5-5');
     const river7 = document.getElementById('grid-5-6');
     const river8 = document.getElementById('grid-5-7');
+    //place river tiles in selected grid tiles
     river1.style.backgroundImage = 'url("../tiles/River0.jpg")';
     river2.style.backgroundImage = 'url("../tiles/River1.jpg")';
     river3.style.backgroundImage = 'url("../tiles/River2.jpg")';
@@ -166,6 +168,7 @@ export function renderRiver() {
     river6.style.backgroundImage = 'url("../tiles/River4-rotated.jpg")';
     river7.style.backgroundImage = 'url("../tiles/River6.jpg")';
     river8.style.backgroundImage = 'url("../tiles/River9.jpg")';
+    //updated placed river tiles to have placed-tile class
     river1.classList.add('placed-tile');
     river2.classList.add('placed-tile');
     river3.classList.add('placed-tile');

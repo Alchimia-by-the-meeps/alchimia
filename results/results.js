@@ -45,9 +45,9 @@ const resultsBoard = document.getElementById('grid');
 // Get user from localStorage and add to DOM
 const user = getUser();
 const username = document.getElementById('username-span');
-username.textContent = user.name;
+// username.textContent = user.name;
 const userTiles = document.getElementById('tile-count-span');
-userTiles.textContent = user.meep;
+// userTiles.textContent = user.meep;
 
 // Render full game board in targeted element
 renderGameBoard(resultsBoard);
