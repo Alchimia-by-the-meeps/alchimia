@@ -85,7 +85,7 @@ export function updatePlacedTiles(lastPlacedTile) {
     placedTiles[lastPlacedTile.id] = {
         id: lastPlacedTile.id,
         sides: lastPlacedTile.sides,
-        rotation: lastPlacedTile.rotation
+        rotation: lastPlacedTile.rotation ? lastPlacedTile.rotation : 0
     };
     localStorage.setItem('placedTiles', JSON.stringify(placedTiles));
 }
@@ -99,11 +99,15 @@ export function getAdjacentTiles(row, column) {
     const gameState = getGameState();
     const placedTiles = getPlacedTiles();
 
-    const top = gameState[row - 1][column] ? gameState[row - 1][column] : null;
+    //check specifically for existing row or column, whichever is getting mathed, then return the actual cell
+    const top = gameState[row - 1] ? gameState[row - 1][column] : null;
     const right = gameState[row][column + 1] ? gameState[row][column + 1] : null;
-    const bottom = gameState[row + 1][column] ? gameState[row + 1][column] : null;
+    const bottom = gameState[row + 1] ? gameState[row + 1][column] : null;
     const left = gameState[row][column - 1] ? gameState[row][column - 1] : null;
 
+    // console.log(top, right, bottom, left);
+
+    //if tile id was gotten, get the sides of that tile from the placedTiles object (specify opposite of side, using [t, r, b, l])
     const topSide = top ? placedTiles[top].sides[2] : null;
     const rightSide = right ? placedTiles[right].sides[3] : null;
     const bottomSide = bottom ? placedTiles[bottom].sides[0] : null;
@@ -112,16 +116,18 @@ export function getAdjacentTiles(row, column) {
     return [topSide, rightSide, bottomSide, leftSide];
 }
 
-export function checkAdjacentsMatch(adjacentSides, placedTile) {
+export function checkAdjacentsMatch(adjacentSides) {
     let match;
-    // console.log(placedTile.sides);
+    const playerTile = getPlayerTile();
+
+    // console.log(playerTile.sides);
     // console.log(adjacentSides);
 
-    adjacentSides.map((side, i) => {
+    adjacentSides.forEach((side, i) => {
         // console.log(side);
         // console.log(placedTile.sides[i]);
         // console.log(side == null || side === placedTile.sides[i]);
-        if (side == null || side === placedTile.sides[i]) {
+        if (side == null || side === playerTile.sides[i]) {
             if (match === false) {
                 match = false;
             } else {
@@ -129,9 +135,91 @@ export function checkAdjacentsMatch(adjacentSides, placedTile) {
             }
         } else {
             match = false;
-            return match;
         }
     });
 
+    if (adjacentSides.toString() === ',,,') match = false;
+
     return match;
+}
+
+export function getPlayerTile() {
+    let playerTile = localStorage.getItem('playerTile');
+    //if placedTiles exists in localStorage, set placedTiles to that function, else initialize and set it to new placedTiles
+    playerTile = playerTile ? JSON.parse(playerTile) : {};
+    return playerTile;
+}
+
+export function setPlayerTile(topDeckTile) {
+
+    let playerTile = {
+        id: topDeckTile.id,
+        sides: topDeckTile.sides,
+        rotation: topDeckTile.rotation,
+        cssRotation: topDeckTile.cssRotation
+    };
+
+    localStorage.setItem('playerTile', JSON.stringify(playerTile));
+
+    return playerTile;
+}
+
+export function initializePlayerTile(topDeckTile) {
+
+    let playerTile = {
+        id: topDeckTile.id,
+        sides: topDeckTile.sides,
+        rotation: 0,
+        cssRotation: 0
+    };
+
+    localStorage.setItem('playerTile', JSON.stringify(playerTile));
+
+    return playerTile;
+}
+
+
+export function addRotationElements() {
+    const body = document.getElementsByTagName('body')[0];
+    let playerTile = getPlayerTile();
+    let displayedplayerTile = document.getElementById('player-tile');
+
+    const leftspan = document.getElementById('rotate-left');
+    const rightspan = document.getElementById('rotate-right');
+
+
+
+    leftspan.addEventListener('click', () => {
+        playerTile = getPlayerTile();
+
+        playerTile.rotation = [3, 0, 1, 2][playerTile.rotation];
+
+        let newSides = playerTile.sides.map((side, i) => {
+            return playerTile.sides[[1, 2, 3, 0][i]];
+        });
+        playerTile.sides = newSides;
+
+        playerTile.cssRotation = playerTile.cssRotation - 90;
+
+        displayedplayerTile.style.transform = 'rotate(' + playerTile.cssRotation + 'deg)';
+
+        setPlayerTile(playerTile);
+    });
+
+    rightspan.addEventListener('click', () => {
+        playerTile = getPlayerTile();
+
+        playerTile.rotation = [1, 2, 3, 0][playerTile.rotation];
+
+        let newSides = playerTile.sides.map((side, i) => {
+            return playerTile.sides[[3, 0, 1, 2][i]];
+        });
+        playerTile.sides = newSides;
+
+        playerTile.cssRotation = playerTile.cssRotation + 90;
+
+        displayedplayerTile.style.transform = 'rotate(' + playerTile.cssRotation + 'deg)';
+
+        setPlayerTile(playerTile);
+    });
 }

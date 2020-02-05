@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, addRotationElements, getPlayerTile, initializePlayerTile } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 //on load
@@ -56,21 +56,24 @@ grid.addEventListener('click', (e) => {
     const column = Number(currentTileId[1]);
 
     // These next 3 lines are for unfinished validation
-    // const adjacentSides = getAdjacentTiles(row, column);
-    // const checkMatch = checkAdjacentsMatch(adjacentSides, topDeckTile);
-    // if (!checkMatch) return;
+    const adjacentSides = getAdjacentTiles(row, column);
+    const checkMatch = checkAdjacentsMatch(adjacentSides, topDeckTile);
+    if (!checkMatch) return;
 
-    //add currently drawn tile id to placed tiles
-    updatePlacedTiles(topDeckTile);
-
-    //update gameState with currently drawn tile id
+        //update gameState with currently drawn tile id
     gameState[row][column] = topDeckTile.id;
     updateGameState(gameState);
+
+    const playerTile = getPlayerTile();
+
+    //add currently drawn tile id to placed tiles
+    updatePlacedTiles(playerTile);
 
     //render tile in grid, update background image
     currentTile.style.opacity = 1;
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     currentTile.classList.add('placed-tile');
+    currentTile.style.transform = 'rotate(' + [0, 90, 180, 270][playerTile.rotation] + 'deg)';
 
 
     //draw and display new tile at bottom of page
@@ -140,6 +143,10 @@ function renderTopDeckTile() {
         // don't do this stuff here, bad UX? The last tile won't render first if you alert or leave here.
         // alert('All tiles have been played!');
         // window.location.href = '/results';
+        div.style.opacity = 1;
+        div.style.backgroundImage = `url("../tiles/Null1.png")`;
+        div.style.backgroundSize = 'cover';
+        div.style.transform = 'rotate(0deg)';
         return false;
     }
 
@@ -147,6 +154,10 @@ function renderTopDeckTile() {
     div.style.opacity = 1;
     div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     div.style.backgroundSize = 'cover';
+    div.style.transform = 'rotate(0deg)';
+    div.style.transition = '.3s';
+
+    initializePlayerTile(topDeckTile);
 }
 
 export function renderRiver() {
@@ -198,3 +209,5 @@ export function renderGrid(parent) {
         parent.appendChild(row);
     }
 }  
+
+addRotationElements();
