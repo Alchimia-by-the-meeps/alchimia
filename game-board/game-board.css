@@ -34,7 +34,7 @@
     height: 400px;
     margin: 30px auto;
     z-index: -1;
-    background-color: rgb(185, 167, 133, 0.5);
+    /* background-color: rgb(185, 167, 133, 0.5); */
     box-sizing: content-box;
     border: 4px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
