@@ -1,35 +1,45 @@
 main {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    /* justify-content: center; */
+    /* flex-direction: column; */
+    /* align-items: center; */
     
     
 }
 #groupPic {
+    display: block;
     width: 30%;
     height: auto;
     align-content: center;
     border: 2px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
     margin-bottom: 20px;
-    margin-right: 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
-img {
+.bio > img {
     width: 20px;
     height: 20px;
     margin-right: 20px;
 }
-section {
-    flex-direction: column;
-    display: inline-block;
 
+section {
+    margin: auto 20px;
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
 }
-div {
-    width: 400px;
-    justify-content: center;
-    /* .,'lk;okj;lk */
+
+.bio > * {
+    display: inline;
 }
-.containerDiv {
-    display: flex;
+
+#allBios {
+    display: block;
+    align-content: center;
+    padding: 0px 10%;
+}
+
+#allBios > * {
+    display: inline-block;
+    text-align: left;
 }
