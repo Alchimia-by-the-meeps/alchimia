@@ -206,6 +206,7 @@ function renderTopDeckTile() {
         div.style.opacity = 1;
         div.style.backgroundImage = `url("../tiles/Null1.png")`;
         div.style.backgroundSize = 'cover';
+        displayGameOver();
         // div.style.transform = 'rotate(0deg)';
         return false;
     }
@@ -265,3 +266,14 @@ export function renderGrid(parent) {
         parent.appendChild(row);
     }
 }  
+
+
+function displayGameOver() {
+    const gameOverDiv = document.getElementById('game-over');
+    gameOverDiv.style.display = 'block'; 
+    const gridTiles = document.querySelectorAll('.cell')
+    gridTiles.forEach(tile => {
+        tile.classList.add('placed-tile');
+    });
+
+}

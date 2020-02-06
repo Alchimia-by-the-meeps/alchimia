@@ -13,11 +13,11 @@ header h2{
     margin-top: -20px;
     color: rgb(65, 66, 44);
 }
-a{
+/* a{
     text-decoration: none;
     font-size: 2em;
     margin-top: -80px;
-}
+} */
 a:hover{
     text-decoration: underline;
     color: rgba(71, 77, 46, 0.5);

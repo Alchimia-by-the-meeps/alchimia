@@ -34,7 +34,7 @@
     height: 400px;
     margin: 30px auto;
     z-index: -1;
-    background-color: rgb(185, 167, 133, 0.5);
+    /* background-color: rgb(185, 167, 133, 0.5); */
     box-sizing: content-box;
     border: 4px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
@@ -178,3 +178,18 @@
     border: 3px outset rgba(122, 93, 55, 0.5);
 }
 
+#game-over {
+    background-color: rgba(222, 184, 135, 0.767);
+    color: rgb(71, 77, 46);
+    width: 300px;
+    border-radius: 6px;
+    text-align: center;
+    position: absolute;
+    padding: 15px;
+    top: 50%;
+    margin-top: 60px;
+    left: 50%;
+    margin-left: -150px;
+    z-index: 5;
+    display: none;
+}
