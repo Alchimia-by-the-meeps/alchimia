@@ -59,5 +59,5 @@ renderGameBoard(resultsBoard);
 // Build play again button
 const playAgainButton = document.getElementById('play-again-button');
 playAgainButton.addEventListener('click', () => {
-    location.href = '/';
+    location.href = '../';
 });
