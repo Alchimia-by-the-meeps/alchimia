@@ -17,20 +17,22 @@
 <body>
 
     <header>
-        <h1><a href="/">Alchimia</a></h1>
-        <h2><a href="./about">By the Meeps</a></h2>
+        <h1><a href="../">Alchimia</a></h1>
+        <h2><a href="../about">By the Meeps</a></h2>
     </header>
 
     <div id="results-container">
         <div id="results-message">
-            <h2>Congratulations, <span id="username-span">LOCALSTORAGE</span>!</h2>
-            <p>You placed <span id="tile-count-span">LOCALSTORAGE</span> tiles for a score of <span id="score-span"><em>stretch goal</em></span>.</p>
+            <h2>Thanks for playing:</h2>
+            <h2 id="meepleUser"><img id="avatar" src="">  <span id="username-span">Player</span></h2>
+            <!-- <p>You placed <span id="tile-count-span">Player</span> tiles for a score of <span id="score-span"><em>stretch goal</em></span>.</p> -->
+            <h3>I've never seen such a gorgeous Kingdom!</h3>
         </div>
     </div>
 
     <div id="score-and-map-container">
 
-        <div id="score-container">
+        <!-- <div id="score-container">
             <table>
                 <thead>
                     <tr>
@@ -41,19 +43,19 @@
                 <tbody>
                     <tr>
                         <td class="left">River</td>
-                        <td id="tile-count-rivers">2</td>
+                        <td id="tile-count-rivers">x</td>
                     </tr>
                     <tr>
                         <td class="left">Roads</td>
-                        <td id="tile-count-roads">4</td>
+                        <td id="tile-count-roads">x</td>
                     </tr>
                     <tr>
                         <td class="left">Cities</td>
-                        <td id="tile-count-cities">5</td>
+                        <td id="tile-count-cities">x</td>
                     </tr>
                     <tr>
                         <td class="left">Monasteries</td>
-                        <td id="tile-count-monasteries">6</td>
+                        <td id="tile-count-monasteries">x</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -63,10 +65,12 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
+        </div> -->
 
         <div id="map-container">
-            <div id="grid"></div>
+            <div id="grid">
+                <img id="grid-background" src="../assets/paper-bg3-lighter.jpg"/>
+            </div>
         </div>
 
     </div>
@@ -75,7 +79,7 @@
         <button id="play-again-button" class="button">Play Again!</button>
     </div>
 
-
+    <footer></footer>
     <script type="module" src="results.js"></script>
 </body>
 

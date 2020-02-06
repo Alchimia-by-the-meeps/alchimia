@@ -1,13 +1,43 @@
-body {
-    text-align: center;
-    color: rgba(71, 77, 46, 1.0)
-}
-
-header {
+/* header {
     margin-bottom: 3rem;
+} */
+
+#results-message {
+    /* margin-bottom: 3rem; */
+    text-align: center;
 }
 
-table { 
+#grid div:hover {
+    box-shadow: none;
+    cursor: inherit;
+}
+
+#username-span {
+    font-size: 1.5em;
+}
+
+#avatar {
+    height: 30px;
+    width: 30px;
+    -webkit-filter: drop-shadow(2px 2px 5px #222);
+    filter: drop-shadow(2px 2px 5px #222);
+    margin-right: 15px;
+    /* box-shadow: 2px 2px 2px black; */
+}
+
+#meepleUser {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2 {
+    color:rgb(88, 90, 61); 
+}
+
+/* Saving this for if we use the table to render score results
+
+/* table { 
     margin: 0 auto;
     empty-cells: hide;
 }
@@ -31,32 +61,4 @@ tr {
     background-color: rgba(71, 77, 46, 0.05);
     border-bottom: 1px solid rgba(71, 77, 46, 0.2);
     ;
-}
-
-#results-message {
-    margin-bottom: 3rem;
-}
-
-#score-and-map-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-#score-container {
-    margin-right: 3rem;
-}
-
-#grid {
-    width: 500px;
-    height: 335px; /* width * .67 for a 12x8 grid */
-}
-
-#grid div {
-    height: 42px; /* grid height / 8 rows */
-}
-
-#grid div:hover {
-    box-shadow: none;
-    cursor: inherit;
-}
+} */

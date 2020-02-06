@@ -1,45 +1,57 @@
-main {
-    /* justify-content: center; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    
-    
-}
 #groupPic {
-    display: block;
-    width: 30%;
-    height: auto;
-    align-content: center;
+    width: 50%;
     border: 2px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.bio > img {
-    width: 20px;
-    height: 20px;
-    margin-right: 20px;
+    margin: 20px auto;
+} 
+
+h3 {
+    text-align: center;
 }
 
-section {
-    margin: auto 20px;
-    display: inline-block;
-    width: 40%;
-    vertical-align: top;
+.outer-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.bio {
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.bio img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: relative;
+    top: -2px;
+}
+
+.bio p {
+ margin: 0 0 7px 0;
+ line-height: 1.2em;
 }
 
 .bio > * {
     display: inline;
 }
 
-#allBios {
-    display: block;
-    align-content: center;
-    padding: 0px 10%;
+
+section {
+    /* width: 40%; */
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#allBios > * {
-    display: inline-block;
-    text-align: left;
+.bio p span {
+    font-weight: bold;
 }
+
+
