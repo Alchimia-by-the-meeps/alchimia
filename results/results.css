@@ -17,10 +17,10 @@ header {
 }
 
 #avatar {
-    height: 50px;
-    width: 50px;
-    -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter: drop-shadow(5px 5px 5px #222);
+    height: 30px;
+    width: 30px;
+    -webkit-filter: drop-shadow(2px 2px 5px #222);
+    filter: drop-shadow(2px 2px 5px #222);
     margin-right: 15px;
     /* box-shadow: 2px 2px 2px black; */
 }

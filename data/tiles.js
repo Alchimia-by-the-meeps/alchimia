@@ -32,19 +32,19 @@ export const tiles = {
     6: {
         id: 6,
         image: 'CastleCenterSide0.png',
-        sides: ['grass', 'grass', 'city', 'grass'],
+        sides: ['city', 'city', 'grass', 'city'],
         rotation: 0
     },
     7: {
         id: 7,
         image: 'CastleCenterSide0.png',
-        sides: ['grass', 'grass', 'city', 'grass'],
+        sides: ['city', 'city', 'grass', 'city'],
         rotation: 0
     },
     8: {
         id: 8,
         image: 'CastleCenterSide0.png',
-        sides: ['grass', 'grass', 'city', 'grass'],
+        sides: ['city', 'city', 'grass', 'city'],
         rotation: 0
     },
     9: {
@@ -497,7 +497,7 @@ export const tiles = {
     82: {
         id: 82,
         image: 'River7-rotated.png',
-        sides: ['city', 'river', 'city', 'river'],
+        sides: ['river', 'city', 'river', 'city'],
         rotation: 0,
         river: true
     },

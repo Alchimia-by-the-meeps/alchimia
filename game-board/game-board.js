@@ -67,8 +67,8 @@ const userName = document.getElementById('userName');
 
 
 userName.textContent = userProfile.name;
-meepChoice.src = `../assets/meeples/meeple-${userProfile.meep}.png`;
-// meepChoice.src = `../assets/meeples/{userProfile.meep}`;
+
+meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
 
@@ -227,14 +227,14 @@ export function renderRiver() {
     const river7 = document.getElementById('grid-5-6');
     const river8 = document.getElementById('grid-5-7');
     //place river tiles in selected grid tiles
-    river1.style.backgroundImage = 'url("../tiles/River0.jpg")';
-    river2.style.backgroundImage = 'url("../tiles/River1.jpg")';
-    river3.style.backgroundImage = 'url("../tiles/River2.jpg")';
-    river4.style.backgroundImage = 'url("../tiles/River7-rotated.jpg")';
-    river5.style.backgroundImage = 'url("../tiles/River8-rotated.jpg")';
-    river6.style.backgroundImage = 'url("../tiles/River4-rotated.jpg")';
-    river7.style.backgroundImage = 'url("../tiles/River6.jpg")';
-    river8.style.backgroundImage = 'url("../tiles/River9.jpg")';
+    river1.style.backgroundImage = 'url("../tiles/River0.png")';
+    river2.style.backgroundImage = 'url("../tiles/River1.png")';
+    river3.style.backgroundImage = 'url("../tiles/River2.png")';
+    river4.style.backgroundImage = 'url("../tiles/River7-rotated.png")';
+    river5.style.backgroundImage = 'url("../tiles/River8-rotated.png")';
+    river6.style.backgroundImage = 'url("../tiles/River4-rotated.png")';
+    river7.style.backgroundImage = 'url("../tiles/River6.png")';
+    river8.style.backgroundImage = 'url("../tiles/River9.png")';
     //updated placed river tiles to have placed-tile class
     river1.classList.add('placed-tile');
     river2.classList.add('placed-tile');
