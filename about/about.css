@@ -35,7 +35,10 @@ h3 {
 .bio p {
  margin: 0 0 7px 0;
  line-height: 1.2em;
+}
 
+.bio > * {
+    display: inline;
 }
 
 

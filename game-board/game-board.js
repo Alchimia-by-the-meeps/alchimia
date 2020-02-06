@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 //on load
@@ -77,7 +77,7 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 //on click
 grid.addEventListener('click', (e) => {
-
+    
     //if clicked element was one of the containers (grid/row), exit
     if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
 
@@ -99,11 +99,14 @@ grid.addEventListener('click', (e) => {
     //store ["#", "#"][0] to row, ["#", "#"][1] to column
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
-
-    // These next 3 lines are for unfinished validation
-    // const adjacentSides = getAdjacentTiles(row, column);
-    // const checkMatch = checkAdjacentsMatch(adjacentSides, topDeckTile);
-    // if (!checkMatch) return;
+    
+    const tileValidMatch = getTileValidation(row, column, topDeckTile);
+    if (!tileValidMatch){
+        currentTile.classList.add('shake');
+        setTimeout(function(){currentTile.classList.remove('shake');}, 800);
+        
+        return false;
+    }
 
     //add currently drawn tile id to placed tiles
     updatePlacedTiles(topDeckTile);
@@ -120,6 +123,7 @@ grid.addEventListener('click', (e) => {
 
     //draw and display new tile at bottom of page
     renderTopDeckTile();
+
 
 });
 
