@@ -271,9 +271,11 @@ export function renderGrid(parent) {
 function displayGameOver() {
     const gameOverDiv = document.getElementById('game-over');
     gameOverDiv.style.display = 'block'; 
-    const gridTiles = document.querySelectorAll('.cell')
+    const gridTiles = document.querySelectorAll('.cell');
     gridTiles.forEach(tile => {
         tile.classList.add('placed-tile');
     });
 
+    const tileStack = document.getElementById('tile-stack');
+    tileStack.style.visibility = 'hidden';
 }
