@@ -17,6 +17,11 @@
 </head>
 
 <body>
+    <header>   
+        <h1 id="title"><a href="/">Alchimia</a></h1>
+        <h2><a href="./about">By the Meeps</a></h2>            
+    </header>
+
     <div id="instructionsModal" class="modal">
     
         <div class="modal-content">
@@ -34,41 +39,34 @@
                   After you have placed the last tile the game will end
                   and you will be able to see your generated Empire
               </li>
-
           </ul>
         </div>
-      
-      </div>
-      <div id="container">
-          <header>   
-              <h1 id="title"><a href="/">Alchimia</a></h1>
-              <h2><a href="./about">By the Meeps</a></h2> 
-              
-            </header>
-            <div id="button-container">
-                  <button id="instructionsButton">Instructions</button>
-                  <button id="quit-button" class="button">Results</button>
-                  <div id="user-profile">
-                      <img id="meepChoice">
-                      <span id="userName"></span>
-                  </div>
-            </div>
+    </div>
+
+    <div id="container">
+        <div id="button-container">
+                <button id="instructionsButton">Instructions</button>
+                <button id="quit-button" class="button">Results</button>
+                <div id="user-profile">
+                    <img id="meepChoice">
+                    <span id="userName"></span>
+                </div>
+        </div>
         
         
             
-            <div id="grid">
-                <h2 id="game-over">Game Over</h2>
-                <img src="../assets/paper-bg3.jpg" id="grid-background">
-            </div>
+        <div id="grid">
+            <h2 id="game-over">Game Over</h2>
+            <img src="../assets/paper-bg3.jpg" id="grid-background">
+        </div>
             
-            <div id="tile-stack">
-                <div id="deck-tile"></div>
-                <div id="player-tile"></div>
+        <div id="tile-stack">
+            <div id="deck-tile"></div>
+            <div id="player-tile"></div>
                 
-            </div>
+        </div>
     </div>
  
-
     <script type="module" src="game-board.js"></script>
 </body>
 

@@ -497,7 +497,7 @@ export const tiles = {
     82: {
         id: 82,
         image: 'River7-rotated.png',
-        sides: ['city', 'river', 'city', 'river'],
+        sides: ['river', 'city', 'river', 'city'],
         rotation: 0,
         river: true
     },

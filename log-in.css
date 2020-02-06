@@ -46,7 +46,7 @@ a:hover{
 
 input[type=radio]:checked ~ img{
     filter: drop-shadow(5px 5px 5px #222);
-
+    
     
 }
 [type=radio]{
@@ -56,7 +56,6 @@ input[type=radio]:checked ~ img{
 }
 #avatar:hover{
     cursor: pointer;
-
     -webkit-filter: drop-shadow(5px 5px 5px #222);
     filter: drop-shadow(5px 5px 5px #222);
 }
@@ -85,7 +84,7 @@ legend{
     z-index: 2;
     cursor: pointer;
 }
-#playButton:active{
+#playButton:active, #avatar:active{
     transform: translateY(3px);
 }
 fieldset{
