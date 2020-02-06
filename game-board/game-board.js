@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, addRotationElements, getPlayerTile, initializePlayerTile } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser, addRotationElements, getPlayerTile, initializePlayerTile } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 
 //on load
@@ -26,8 +26,53 @@ renderTopDeckTile();
 // Get and listen for quit button in DOM
 const quitButton = document.getElementById('quit-button');
 quitButton.addEventListener('click', () => {
-    location.href = '/results';
+    location.href = '../results';
 });
+
+const container = document.getElementById('container');
+
+function instructionsModal() {
+    const modal = document.getElementById('instructionsModal');
+    const instructionsButton = document.getElementById('instructionsButton');
+    const span = document.getElementById('close');
+    
+    instructionsButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        container.classList.add('is-blurred');
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.addEventListener('click', () => {
+        modal.style.display = 'none';
+        container.classList.remove('is-blurred');
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            container.classList.remove('is-blurred');
+
+        }
+    });
+}
+
+instructionsModal();
+container.classList.add('is-blurred');
+
+const userProfile = getUser();
+
+const meepChoice = document.getElementById('meepChoice');
+const userName = document.getElementById('userName');
+
+
+userName.textContent = userProfile.name;
+
+meepChoice.src = `../assets/meeples/${userProfile.meep}`;
+
+
+
+
 
 
 //on click
@@ -164,6 +209,7 @@ function renderTopDeckTile() {
         div.style.opacity = 1;
         div.style.backgroundImage = `url("../tiles/Null1.png")`;
         div.style.backgroundSize = 'cover';
+        displayGameOver();
         // div.style.transform = 'rotate(0deg)';
         return false;
     }
@@ -189,14 +235,14 @@ export function renderRiver() {
     const river7 = document.getElementById('grid-5-6');
     const river8 = document.getElementById('grid-5-7');
     //place river tiles in selected grid tiles
-    river1.style.backgroundImage = 'url("../tiles/River0.jpg")';
-    river2.style.backgroundImage = 'url("../tiles/River1.jpg")';
-    river3.style.backgroundImage = 'url("../tiles/River2.jpg")';
-    river4.style.backgroundImage = 'url("../tiles/River7-rotated.jpg")';
-    river5.style.backgroundImage = 'url("../tiles/River8-rotated.jpg")';
-    river6.style.backgroundImage = 'url("../tiles/River4-rotated.jpg")';
-    river7.style.backgroundImage = 'url("../tiles/River6.jpg")';
-    river8.style.backgroundImage = 'url("../tiles/River9.jpg")';
+    river1.style.backgroundImage = 'url("../tiles/River0.png")';
+    river2.style.backgroundImage = 'url("../tiles/River1.png")';
+    river3.style.backgroundImage = 'url("../tiles/River2.png")';
+    river4.style.backgroundImage = 'url("../tiles/River7-rotated.png")';
+    river5.style.backgroundImage = 'url("../tiles/River8-rotated.png")';
+    river6.style.backgroundImage = 'url("../tiles/River4-rotated.png")';
+    river7.style.backgroundImage = 'url("../tiles/River6.png")';
+    river8.style.backgroundImage = 'url("../tiles/River9.png")';
     //updated placed river tiles to have placed-tile class
     river1.classList.add('placed-tile');
     river2.classList.add('placed-tile');
@@ -229,3 +275,15 @@ export function renderGrid(parent) {
 }  
 
 addRotationElements();
+
+function displayGameOver() {
+    const gameOverDiv = document.getElementById('game-over');
+    gameOverDiv.style.display = 'block'; 
+    const gridTiles = document.querySelectorAll('.cell');
+    gridTiles.forEach(tile => {
+        tile.classList.add('placed-tile');
+    });
+
+    const tileStack = document.getElementById('tile-stack');
+    tileStack.style.visibility = 'hidden';
+}

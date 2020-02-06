@@ -16,48 +16,49 @@
 <body>
     <header>
         <h1>Alchimia</h1>
-
-        <a href="about/index.html"><h2>By the Meeps</h2></a>
-
+        <h2><a href="./about">By the Meeps</a></h2>
     </header>
     
     <form id="user-sign-up">
+        <div id="log-in-user">
         <p id="userInputName">
-            <label for="name">Enter your name here</label>
+            <label for="name">Enter your name:</label>
             <input id="name" name="name" required>
         </p>
         <fieldset>
             <legend>Choose your Meep</legend>
             <p id="avatars">
                 <label>
-                    <input type="radio" name="meep" required value="black">
+                    <input type="radio" name="meep" required value="meeple-black.png">
                     <img id="avatar" src="./assets/meeples/meeple-black.png">
                 </label>
                 <label>
-                    <input type="radio" name="meep" required value="blue">
+                    <input type="radio" name="meep" required value="meeple-blue.png">
                     <img id="avatar" src="./assets/meeples/meeple-blue.png">
                 </label>
                 <label>
-                    <input type="radio" name="meep" required value="green">
+                    <input type="radio" name="meep" required value="meeple-green.png">
                     <img id="avatar" src="./assets/meeples/meeple-green.png">
                 </label>
                 <label>
-                    <input type="radio" name="meep" required value="red">
+                    <input type="radio" name="meep" required value="meeple-red.png">
                     <img id="avatar" src="./assets/meeples/meeple-red.png">
                 </label>
                 <label>
-                    <input type="radio" name="meep" required value="orange">
+                    <input type="radio" name="meep" required value="meeple-orange.png">
                     <img id="avatar" src="./assets/meeples/meeple-orange.png">
                 </label>
                 <label>
-                    <input type="radio" name="meep" required value="pink">
+                    <input type="radio" name="meep" required value="meeple-pink.png">
                     <img id="avatar" src="./assets/meeples/meeple-pink.png">
                 </label>
             </p>
         </fieldset>
-        <button id="playButton">Play the game!</button>
+        </div>
+        <button id="playButton" class="button">Play the game!</button>
     </form>
 
+    <footer></footer>
  
 
     <script type="module" src="app.js"></script>
