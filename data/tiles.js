@@ -26,7 +26,7 @@ export const tiles = {
     5: {
         id: 5,
         image: 'CastleCenterSide0.png',
-        sides: ['grass', 'grass', 'city', 'grass'],
+        sides: ['city', 'city', 'grass', 'city'],
         rotation: 0
     },
     6: {
@@ -266,36 +266,42 @@ export const tiles = {
     45: {
         id: 45,
         image: 'Monastery0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'grass', 'grass'],
         rotation: 0
     },
     46: {
         id: 46,
         image: 'Monastery0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'grass', 'grass'],
         rotation: 0
     },
     47: {
         id: 47,
         image: 'Monastery0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'grass', 'grass'],
         rotation: 0
     },
     48: {
         id: 48,
         image: 'Monastery0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'grass', 'grass'],
         rotation: 0
     },
     49: {
         id: 49,
         image: 'MonasteryRoad0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'road', 'grass'],
         rotation: 0
     },
     50: {
         id: 50,
         image: 'MonasteryRoad0.png',
+        monastery: true,
         sides: ['grass', 'grass', 'road', 'grass'],
         rotation: 0
     },

@@ -1,6 +1,7 @@
 //import { maxRows, maxColumns } from '../game-board/game-board.js';
 import { tiles } from '../data/tiles.js';
 import { getUser, getGameState } from '../utils/api.js';
+import { renderResultsScore } from '../utils/scoring.js';
 
 
 function renderGameBoard(parent) {
@@ -53,6 +54,10 @@ if (user) {
     //const userTiles = document.getElementById('tile-count-span');
    // userTiles.textContent = user.meep;
 }
+
+// Render score in targeted element
+renderResultsScore();
+
 // Render full game board in targeted element
 renderGameBoard(resultsBoard);
 

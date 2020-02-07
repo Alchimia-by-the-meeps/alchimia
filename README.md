@@ -1,4 +1,86 @@
-# alchimia
+Alchimia, by the Meeps
+
+# Function Glossary
+
+## localStorage
+
+### gameState
+Tracks the state of each "cell" in the game board grid as an array of arrays containing tile IDs.
+
+### user 
+Tracks name and meeple image.
+
+### placedTiles
+Tracks all tile objects that have been played on the game board. 
+
+### Sample tile object:
+```
+{
+    10: { 
+        id: 10, 
+        sides: ["city", "city", "grass", "grass"], 
+        rotation: 0,
+        }, 
+    ...
+}
+```
+
+## utils/api.js
+
+### maxRows
+A number that defines the max game board rows
+
+### maxColumns
+A number that defines for max game board columns
+
+### addRiverToPlacedTiles()
+
+### saveUser(user)
+
+### getUser()
+
+### initializeGameState()
+Returns `gameState` object from localStorage.
+
+### getGameState()
+Returns `gameState` object from localStorage.
+
+### updateGameState(gameState)
+Updates `gameState` object in localStorage.<br>
+Parameters: 
+
+### initializePlacedTiles()
+Resets `placedTiles` object in localStorage to a new, blank object.
+
+### getPlacedTiles()
+Returns `placedTiles` object from localStorage.
+
+### updatePlacesTiles(lastPlacedTile)
+Updates `placesTiles` object in localStorage with `lastPlacedTile` 
+
+### getAdjacentTiles(row, column)
+** Keep? ** 
+
+### keepAdjacentsMatch(adjacentSides)
+Returns a boolean indicating whether tile is allowed to be placed per game rules
+** Keep? ** 
+
+
+## utils/make-user.js
+makeUser(formData)
+Creates a user object from form data.
+Returns a user object.
+
+makeNewUser(formData)
+
+** Do we use this? Delete? **
+
+
+
+***
+***
+
+
 Game Name: Alchimia
     by The Meeps
 Goals
