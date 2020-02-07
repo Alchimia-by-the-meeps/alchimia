@@ -138,7 +138,7 @@
     margin-right: 5px;
     margin-top: 10px;
     position: relative;
-    right: -50px;
+    right: -15px;
     top: 0px;
     font-size: 25px;
 
@@ -153,6 +153,8 @@
 #userName{
     margin-bottom: -20px;
     margin-left: 10px;
+    position: relative;
+    top: 4px;
 }
 #meepChoice{
     height: 40px;
@@ -160,7 +162,7 @@
 }
     
 #quit-button, #instructionsButton {
-    font-family: 'Jim Nightshade', cursive;
+    /* font-family: 'Jim Nightshade', cursive;
     background-color: rgb(71, 77, 46);
     border: none;
     color: #eddcb5;
@@ -170,19 +172,19 @@
     display: inline-block;
     font-size: 2rem;
     /* text-transform: uppercase; */
-    font-weight: bold;
-    margin: .5rem;
+    /* /* font-weight: bold; */
+    margin: 10px 10px;
     width: 160px;
-    border-radius: 6px;
-    box-shadow: rgba(0,0,0,0.3) 2px 2px 3px;
+    /* border-radius: 6px;
+    box-shadow: rgba(0,0,0,0.3) 2px 2px 3px; */
 }
 
 #instructionsButton:hover, #quit-button:hover {
     /* background-color: rgba(71, 77, 46, .9); */
-    color: #eddcb5;
+    /* color: #eddcb5;
     transform: scale(1.05);
     transition: scale ease-in-out 0.3s;
-    box-shadow: rgba(0,0,0,0.3) 4px 4px 5px;
+    box-shadow: rgba(0,0,0,0.3) 4px 4px 5px; */
 }
 #tile-stack, #legend {
     display: flex;
