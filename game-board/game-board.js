@@ -37,7 +37,7 @@ function instructionsModal() {
     const modal = document.getElementById('instructionsModal');
     const instructionsButton = document.getElementById('instructionsButton');
     const span = document.getElementById('close');
-    
+
     instructionsButton.addEventListener('click', () => {
         modal.style.display = 'block';
         container.classList.add('is-blurred');
@@ -71,13 +71,11 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
 
-
-//on click
 grid.addEventListener('click', (e) => {
-    
+
     //if clicked element was one of the containers (grid/row), exit
 
-    if (!e.target.classList.contains('cell')) {console.log('wrong element, exciting!'); return;}
+    if (!e.target.classList.contains('cell'));
 
 
     //if topDeckTile returned false, aka no more tiles to draw, do this
@@ -98,12 +96,12 @@ grid.addEventListener('click', (e) => {
     //store ["#", "#"][0] to row, ["#", "#"][1] to column
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
-    
+
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
-    if (!tileValidMatch){
+    if (!tileValidMatch) {
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
-        setTimeout(function(){currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360));}, 420);
-        
+        setTimeout(function () { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
+
         return false;
     }
 
@@ -121,7 +119,6 @@ grid.addEventListener('click', (e) => {
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     currentTile.classList.add('placed-tile');
-
 
     //draw and display new tile at bottom of page
     renderTopDeckTile();
@@ -161,21 +158,10 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// document.addEventListener('wheel', (e) => {
-//     if (e.deltaY > 0) { rightButton.click(); } 
-//     else if (e.deltaY < 0) { leftButton.click(); }
-    
-//     if (e.deltaY !== 0 && myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
-//         myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-//     }
-// });
-
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
     const placedTiles = getPlacedTiles();
     const placedTilesIds = Object.keys(placedTiles);
-
-    // console.log('placedTilesIds: ' + placedTilesIds);
 
     //Take all the ids of our {tiles} object and put them into an array with Object.keys(tiles)
     const allTileIds = Object.keys(tiles);
@@ -197,7 +183,7 @@ function getTileFromDeck() {
     const unplayedTiles = getUnplayedTiles();
     if (unplayedTiles.length < 1) return false;
     //generate a random index between 0 and the length of unplayedTiles array
-   // const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
+    // const unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
     //get the tile Id from the randomly picked index of unplayedTiles array
     let unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
     let unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
@@ -205,10 +191,10 @@ function getTileFromDeck() {
     if (tiles[unplayedTileId].river) {
         //while it has the property
         while (tiles[unplayedTileId].river) {
-    // redo random index 
+            // redo random index 
             unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
             unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
-        } 
+        }
     }
     //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
@@ -272,7 +258,7 @@ export function renderGrid(parent) {
         const row = document.createElement('section');
         row.id = `row-${i}`;
         row.classList.add('row');
-        
+
         // Loop through each row and create columns
         for (let j = 0; j < maxColumns; j++) {
             const cell = document.createElement('div');
@@ -283,12 +269,12 @@ export function renderGrid(parent) {
         // Add row to parent / passed element
         parent.appendChild(row);
     }
-}  
+}
 
 
 function displayGameOver() {
     const gameOverDiv = document.getElementById('game-over');
-    gameOverDiv.style.display = 'block'; 
+    gameOverDiv.style.display = 'block';
     const gridTiles = document.querySelectorAll('.cell');
     gridTiles.forEach(tile => {
         tile.classList.add('placed-tile');
