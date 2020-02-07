@@ -1,29 +1,31 @@
 #groupPic {
-    width: 50%;
+    width: 70%;
+    min-width: 300px;
     border: 2px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
     margin: 20px auto;
 } 
-
 h3 {
     text-align: center;
 }
-
 .outer-container {
     width: 80%;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    /* display: flex; */
+    /* justify-content: center; */
 }
-
 .bio {
-    height: 250px;
+    /* height: 250px; */
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 15px;
+    padding: 25px;
     margin-bottom: 20px;
     border-radius: 10px;
+    display: inline-block;
+    text-align: left;
+    width: 47%;
+    overflow: visible;
 }
-
 .bio img {
     width: 20px;
     height: 20px;
@@ -31,27 +33,17 @@ h3 {
     position: relative;
     top: -2px;
 }
-
 .bio p {
  margin: 0 0 7px 0;
  line-height: 1.2em;
 }
-
-.bio > * {
-    display: inline;
-}
-
-
 section {
     /* width: 40%; */
     margin: 20px;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    overflow: visible;
 }
-
 .bio p span {
     font-weight: bold;
 }
-
-
