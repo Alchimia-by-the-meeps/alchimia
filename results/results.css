@@ -62,8 +62,12 @@ thead {
     font-weight: bold;
 }
 
-tr, td {
-    padding: 9px;
+thead td {
+    padding: 6px;
+}
+
+td {
+    padding: 9px 15px;
 }
 
 td { 
@@ -73,4 +77,24 @@ td {
 tr {
     background-color: rgba(71, 77, 46, 0.05);
     border-bottom: 1px solid rgba(71, 77, 46, 0.2);
+}
+
+/* Adjust for smaller screens */
+@media screen and (max-width: 900px) {
+    #score-and-map-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 40px auto;
+    }
+
+    #score-container {
+        margin-right: 0px;
+        margin-bottom: 15px;
+    }
+    #map-container {
+        margin: 0 auto;
+    }
+       
 }
