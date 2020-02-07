@@ -1,7 +1,6 @@
 import { getUser, saveUser, getGameState, getPlacedTiles } from './api.js';
-import { tiles } from '../data/tiles.js';
 
-
+// Calculate 'connections' to neighbor tiles for scoring
 export function countConnections(row, column, topDeckTile) {
     const toBePlacedTile = topDeckTile;
     const toBePlacedTileSides = toBePlacedTile.sides;
@@ -23,8 +22,6 @@ export function countConnections(row, column, topDeckTile) {
     const user = getUser();
 
     let tileAboveId, tileRightId, tileBottomId, tileLeftId;
-
-    //checking for above tile
 
     //if neighboring tile exists, store its id
     if (currentGameState[tileAboveRow]) {
@@ -58,11 +55,9 @@ export function countConnections(row, column, topDeckTile) {
         if (aboveTileSides[2] === toBePlacedTileSides[0]) {
             // if array contains city or road
             if (toBePlacedTileSides[0] === 'city') {
-                console.log('city connected, adding 1');
                 user.cityConnections++;
             }
             if (toBePlacedTileSides[0] === 'road') {
-                console.log('road connected, adding 1');
                 user.roadConnections++;
             }
         } 
@@ -104,6 +99,43 @@ export function countConnections(row, column, topDeckTile) {
     saveUser(user);    
 }
 
+// Display pseudo-scoring on game board
+export function renderConnections() {
+    const user = getUser();
+    const cityCount = document.getElementById('city-count');
+    const roadCount = document.getElementById('road-count');
+    const monasteryCount = document.getElementById('monastery-count');
+
+    cityCount.textContent = user.cityConnections * 2;
+    roadCount.textContent = user.roadConnections;
+    monasteryCount.textContent = user.monasteries;
+}
+
+// Display pseudo-scoring in results table
+export function renderResultsScore() {
+    const user = getUser();
+    const cityScoreSpan = document.getElementById('score-cities');
+    const roadScoreSpan = document.getElementById('score-roads');
+    const monasteryScoreSpan = document.getElementById('score-monastery');
+    const totalScoreSpan = document.getElementById('score-total');
+
+    const cityScore = user.cityConnections * 2;
+    const roadScore = user.roadConnections;
+    const monasteryScore = user.monasteries * 4;
+    const totalScore = cityScore + roadScore + monasteryScore;
+
+    cityScoreSpan.textContent = cityScore;
+    roadScoreSpan.textContent = roadScore;
+    monasteryScoreSpan.textContent = monasteryScore;
+    totalScoreSpan.textContent = totalScore;
+}
+
+
+
+
+
+// Additional scoring stretch goals in progress!
+
 // export function getMonasteryArray() {
 //     const exisitingPlacedTiles = getPlacedTiles();
 //     //loop thrugh and find monisteries
@@ -112,7 +144,6 @@ export function countConnections(row, column, topDeckTile) {
 //         return exisitingPlacedTiles[tile].monastery === true;
 //     });
 //     return newArray;
-
 // }
 
 // export function loopThroughMonasteryArray() {
@@ -125,7 +156,6 @@ export function countConnections(row, column, topDeckTile) {
 // export function scoreMonastery(monasteryTileId) {
 
 //     // let monasteryScore = 0;
-
 
 //     //get row column coordnates from gamestate
 //     const row 
@@ -201,35 +231,3 @@ export function countConnections(row, column, topDeckTile) {
     
      
 // }
-
-
-
-
-export function renderConnections() {
-    const user = getUser();
-    const cityCount = document.getElementById('city-count');
-    const roadCount = document.getElementById('road-count');
-    const monasteryCount = document.getElementById('monastery-count');
-
-    cityCount.textContent = user.cityConnections * 2;
-    roadCount.textContent = user.roadConnections;
-    monasteryCount.textContent = user.monasteries;
-}
-
-export function renderResultsScore() {
-    const user = getUser();
-    const cityScoreSpan = document.getElementById('score-cities');
-    const roadScoreSpan = document.getElementById('score-roads');
-    const monasteryScoreSpan = document.getElementById('score-monastery');
-    const totalScoreSpan = document.getElementById('score-total');
-
-    const cityScore = user.cityConnections * 2;
-    const roadScore = user.roadConnections;
-    const monasteryScore = user.monasteries * 4;
-    const totalScore = cityScore + roadScore + monasteryScore;
-
-    cityScoreSpan.textContent = cityScore;
-    roadScoreSpan.textContent = roadScore;
-    monasteryScoreSpan.textContent = monasteryScore;
-    totalScoreSpan.textContent = totalScore;
-}
