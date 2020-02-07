@@ -8,6 +8,7 @@ https://seharlan.github.io/alchimia/
 
 ### gameState
 Tracks the state of each "cell" in the game board grid as an array of arrays containing tile IDs.
+
 const gameState = 
 [
    [null, null, 7, null, null, 154, null, null, null, null]
