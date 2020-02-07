@@ -1,6 +1,6 @@
 //import { maxRows, maxColumns } from '../game-board/game-board.js';
 import { tiles } from '../data/tiles.js';
-import { getUser, getGameState } from '../utils/api.js';
+import { getUser, getGameState, getPlacedTiles } from '../utils/api.js';
 import { renderResultsScore } from '../utils/scoring.js';
 
 
@@ -10,6 +10,7 @@ function renderGameBoard(parent) {
     
     // Get boardState from localStorage
     const gameState = getGameState();
+    const placedTiles = getPlacedTiles();
 
     // Loop through maxRows and create rows
     for (let i = 0; i < maxRows; i++) {
@@ -26,7 +27,8 @@ function renderGameBoard(parent) {
             
             if (gameState[i][j]) {
                 const thisCellId = gameState[i][j];
-                console.log(thisCellId);
+                // console.log(thisCellId);
+                cell.style.transform = 'rotate(' + placedTiles[thisCellId].rotation + 'deg)'
                 cell.style.backgroundImage = `url('../tiles/${tiles[thisCellId].image}')`;
                 cell.classList.add('placed-tile');
             }
