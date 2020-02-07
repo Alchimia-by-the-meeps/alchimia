@@ -96,8 +96,6 @@ export function initializePlacedTiles() {
 
 export function getTileValidation(row, column, topDeckTile) {
     const toBePlacedTile = topDeckTile;
-    // click on tile and check 4 adjacent tiles if no coordinates, ok to place
-    // sides array
     const toBePlacedTileSides = toBePlacedTile.sides;
     
     const tileAboveRow = row - 1;
@@ -143,7 +141,6 @@ export function getTileValidation(row, column, topDeckTile) {
     const rightTileSides = tileRightId ? exisitingPlacedTiles[tileRightId].sides : null;
     const bottomTileSides = tileBottomId ? exisitingPlacedTiles[tileBottomId].sides : null;
     const leftTileSides = tileLeftId ? exisitingPlacedTiles[tileLeftId].sides : null;
-    // const aboveTileSides = exisitingPlacedTiles[tileAboveId].sides;
 // ["grass", "city", "road", "city"]
 
     if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
