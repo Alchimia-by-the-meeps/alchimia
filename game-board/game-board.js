@@ -151,6 +151,7 @@ grid.addEventListener('mouseout', (e) => {
         myCell.style.opacity = 1;
         myCell.style.transform = 'rotate(0deg)';
         myCell.style.backgroundImage = 'none';
+        myCell.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360))
     }
 });
 

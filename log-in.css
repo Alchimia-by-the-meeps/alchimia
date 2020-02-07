@@ -33,6 +33,7 @@ a:hover{
 #avatars img {
     height: 70px;
     width: 70px;
+    user-select: none;
 }
 
 #avatars label {
@@ -43,14 +44,16 @@ a:hover{
 }
 
 #avatars input, #avatars img {
-    margin: 5px 5px 5px 5px;
+    /* margin: 5px; */
+    padding: 5px;
 }
 
 input[type=radio]:checked ~ img{
-    filter: drop-shadow(3px 3px 3px rgba(34, 34, 34, 0.536));
-    
-    
+    filter: drop-shadow(4px 4px 4px rgba(20, 20, 20, 0.836));
+    transform: scale(1.2);
+    transition: .2s;
 }
+
 [type=radio]{
     opacity: 0;
     height: 0px;
@@ -58,8 +61,7 @@ input[type=radio]:checked ~ img{
 }
 #avatar:hover{
     cursor: pointer;
-    -webkit-filter: drop-shadow(3px 3px 3px rgba(34, 34, 34, 0.536));
-    filter: drop-shadow(3px 3px 3px rgba(34, 34, 34, 0.536));
+    filter: drop-shadow(4px 4px 4px rgba(20, 20, 20, 0.836));
 }
 legend{
     color: rgb(65, 66, 44);
@@ -71,7 +73,8 @@ legend{
 #userInputName{
     text-align: center;
     font-size: 25px;
-    margin-top: 60px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     text-shadow: 2px 2px 3px whitesmoke;
     color: rgb(65, 66, 44);
     font-weight: bold;
@@ -85,7 +88,7 @@ legend{
     border: 4px outset rgba(222, 184, 135, 0.7);
     box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
     padding: 6px;
-    /* width: 1000px; */
+    min-width: 340px;
     margin: 30px auto;
     width: 40%; 
 }
@@ -102,7 +105,13 @@ legend{
 #name{
     background-color: #ebd39a;
     width: 100%;
-    max-width: 300px;
+    max-width: 250px;
+    text-align: center;
+}
+
+fieldset {
+    width: 330px;
+    margin: 0 auto;
 }
 
 
