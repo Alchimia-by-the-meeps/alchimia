@@ -26,7 +26,7 @@ export const tiles = {
     5: {
         id: 5,
         image: 'CastleCenterSide0.png',
-        sides: ['grass', 'grass', 'city', 'grass'],
+        sides: ['city', 'city', 'grass', 'city'],
         rotation: 0
     },
     6: {

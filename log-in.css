@@ -77,6 +77,35 @@ legend{
     font-weight: bold;
 
 }
+#log-in-user{
+    /* background-color: rgb(185, 167, 133, 0.5); */
+    background-image: url("./assets/log-in.png");
+   
+    box-sizing: content-box;
+    border: 4px outset rgba(222, 184, 135, 0.7);
+    box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
+    padding: 6px;
+    /* width: 1000px; */
+    margin: 30px auto;
+    width: 40%; 
+}
+
+@media (max-width: 500px) {
+    #log-in-user {
+        width: 70%;
+    }
+    header h1 {
+        font-size: 6em;
+    }
+}
+
+#name{
+    background-color: #ebd39a;
+    width: 100%;
+    max-width: 300px;
+}
+
+
 #playButton{
     display: flex;
     justify-content: center;

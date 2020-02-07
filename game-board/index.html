@@ -26,7 +26,7 @@
     
         <div class="modal-content">
           <span id="close">&times;</span>
-          <p>Instructions for playing Alchimia</p>
+          <h2 class="instructions-text">Instructions for playing Alchimia</h2>
           <ul>
               <li>
                   Place the drawn, face up, tile onto the game board
@@ -48,7 +48,21 @@
                   After you have placed the last tile the game will end
                   and you will be able to see your generated Kingdom
               </li>
-          </ul>
+              </ul>
+            <ul id="unbulleted-list-item"><h2 class="instructions-text">To score your Kingdom</h2>
+                  <ul>
+                      <li>
+                        Two points are awarded for a city tile that you connect
+                        to an adjacent city
+                      </li>
+                      <li>
+                        Connecting two tiles with a road is awarded two points.
+                        Each additional connecting road tile is another one point
+                      </li>
+                      <li>
+                        Monasteries are awarded four points for each 
+                      </li>
+                  </ul>
         </div>
 
       
@@ -74,7 +88,7 @@
             
         <div id="tile-stack">
             <div id="deck-tile"></div>
-            <div id="player-tile"></div>
+           <span id="rotate-left">&olarr;</span><div id="player-tile"></div><span id="rotate-right">&orarr;</span>
                 
         </div>
     </div>

@@ -49,9 +49,6 @@
     size: cover;
 }
 
-
-
-
 #player-tile {
     margin: 30px auto;
     height: 75px;
@@ -59,12 +56,24 @@
     border: 3px outset rgba(122, 93, 55, 0.5);
 }
 
-
 #grid .placed-tile, #grid .placed-tile:hover {
     box-shadow: inset 0 0 3px 1px rgba(248, 235, 112, 0.863);
 }
 
+#rotate-left, #rotate-right {
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+}
 
+#rotate-left {
+    margin-right: -20px;
+}
+
+#rotate-right {
+    margin-left: -20px;
+}
 
 /* The Modal (background) */
 .modal {
@@ -87,6 +96,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 60%; /* Could be more or less, depending on screen size */
+    font-size: 20px;
   }
   
   /* The Close Button */
@@ -194,10 +204,10 @@
     display: none;
 }
 
-.shake{
-    animation: shake 0.4s;
+.shake0{
+    animation: shake0 0.4s;
   }
-@keyframes shake {
+@keyframes shake0 {
     0% { transform: rotate(0deg); }
     17% { transform: rotate(-5deg); }
     33% { transform: rotate(5deg); }
@@ -206,3 +216,47 @@
     83% { transform: rotate(-5deg); }
     100% { transform: rotate(0deg); }
   }
+  .shake90{
+    animation: shake90 0.4s;
+  }
+@keyframes shake90 {
+    0% { transform: rotate(90deg); }
+    17% { transform: rotate(85deg); }
+    33% { transform: rotate(95deg); }
+    50% { transform: rotate(90deg); }
+    67% { transform: rotate(95deg); }
+    83% { transform: rotate(85deg); }
+    100% { transform: rotate(90deg); }
+  }
+  .shake180{
+    animation: shake180 0.4s;
+  }
+@keyframes shake180 {
+    0% { transform: rotate(180deg); }
+    17% { transform: rotate(175deg); }
+    33% { transform: rotate(185deg); }
+    50% { transform: rotate(180deg); }
+    67% { transform: rotate(185deg); }
+    83% { transform: rotate(175deg); }
+    100% { transform: rotate(180deg); }
+  }
+  .shake270{
+    animation: shake270 0.4s;
+  }
+@keyframes shake270 {
+    0% { transform: rotate(270deg); }
+    17% { transform: rotate(265deg); }
+    33% { transform: rotate(275deg); }
+    50% { transform: rotate(270deg); }
+    67% { transform: rotate(275deg); }
+    83% { transform: rotate(265deg); }
+    100% { transform: rotate(270deg); }
+  }
+  
+.instructions-text {
+    font-weight: bolder;
+}
+
+#unbulleted-list-item {
+    list-style: none;
+}
