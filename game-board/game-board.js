@@ -76,7 +76,9 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 grid.addEventListener('click', (e) => {
     
     //if clicked element was one of the containers (grid/row), exit
-    if (e.target.id.substr(0, 5) !== 'grid-');
+
+    if (!e.target.classList.contains('cell')) {console.log('wrong element, exciting!'); return;}
+
 
     //if topDeckTile returned false, aka no more tiles to draw, do this
     if (!topDeckTile);
@@ -129,9 +131,11 @@ grid.addEventListener('click', (e) => {
 
 });
 
+let myCell;
+
 
 grid.addEventListener('mouseover', (e) => {
-    const myCell = e.target;
+    myCell = e.target;
     if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
         myCell.style.opacity = 0.5;
         myCell.style.transition = 'none';
@@ -140,7 +144,7 @@ grid.addEventListener('mouseover', (e) => {
     }
 });
 grid.addEventListener('mouseout', (e) => {
-    const myCell = e.target;
+    myCell = e.target;
     if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
         myCell.style.opacity = 1;
         myCell.style.transform = 'rotate(0deg)';
@@ -149,6 +153,22 @@ grid.addEventListener('mouseout', (e) => {
     }
 });
 
+document.addEventListener('keydown', (e) => {
+    if (e.keyCode === 37) leftButton.click();
+    if (e.keyCode === 39) rightButton.click();
+    if (myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
+        myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+    }
+});
+
+// document.addEventListener('wheel', (e) => {
+//     if (e.deltaY > 0) { rightButton.click(); } 
+//     else if (e.deltaY < 0) { leftButton.click(); }
+    
+//     if (e.deltaY !== 0 && myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
+//         myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+//     }
+// });
 
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
