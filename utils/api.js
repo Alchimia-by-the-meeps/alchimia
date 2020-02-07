@@ -10,7 +10,6 @@ export function addRiverToPlacedTiles() {
     }
 }
 
-
 //add user to local storage
 export function saveUser(user) {
     const json = JSON.stringify(user);
@@ -95,58 +94,10 @@ export function initializePlacedTiles() {
     localStorage.setItem('placedTiles', '{}');
 }
 
-export function getAdjacentTiles(row, column) {
-    //filler
-    const gameState = getGameState();
-    const placedTiles = getPlacedTiles();
-
-    const top = gameState[row - 1][column] ? gameState[row - 1][column] : null;
-    const right = gameState[row][column + 1] ? gameState[row][column + 1] : null;
-    const bottom = gameState[row + 1][column] ? gameState[row + 1][column] : null;
-    const left = gameState[row][column - 1] ? gameState[row][column - 1] : null;
-
-    const topSide = top ? placedTiles[top].sides[2] : null;
-    const rightSide = right ? placedTiles[right].sides[3] : null;
-    const bottomSide = bottom ? placedTiles[bottom].sides[0] : null;
-    const leftSide = left ? placedTiles[left].sides[1] : null;
-
-    return [topSide, rightSide, bottomSide, leftSide];
-}
-
-export function checkAdjacentsMatch(adjacentSides, placedTile) {
-    let match;
-    // console.log(placedTile.sides);
-    // console.log(adjacentSides);
-
-    adjacentSides.map((side, i) => {
-        // console.log(side);
-        // console.log(placedTile.sides[i]);
-        // console.log(side == null || side === placedTile.sides[i]);
-        if (side === null || side === placedTile.sides[i]) {
-            if (match === false) {
-                match = false;
-            } else {
-                match = true;
-            }
-        } else {
-            match = false;
-            return match;
-        }
-    });
-
-    return match;
-}
-
-//validation
-
-
- 
-
 export function getTileValidation(row, column, topDeckTile) {
     const toBePlacedTile = topDeckTile;
     // click on tile and check 4 adjacent tiles if no coordinates, ok to place
     // sides array
-    // const placedTile = getPlacedTiles();
     const toBePlacedTileSides = toBePlacedTile.sides;
     
     const tileAboveRow = row - 1;
@@ -186,12 +137,7 @@ export function getTileValidation(row, column, topDeckTile) {
     if (currentGameState[tileLeftRow][tileLeftColumn]) {
         //if tile Left exists, store its id
         tileLeftId = currentGameState[tileLeftRow][tileLeftColumn];
-    };
-console.log('tile above', tileAboveId);
-// get properties from ids
-// match key with tile above id
-// get sides of placed tile 
-console.log(exisitingPlacedTiles[tileAboveId]);
+    }
 
     const aboveTileSides = tileAboveId ? exisitingPlacedTiles[tileAboveId].sides : null;
     const rightTileSides = tileRightId ? exisitingPlacedTiles[tileRightId].sides : null;
@@ -200,9 +146,9 @@ console.log(exisitingPlacedTiles[tileAboveId]);
     // const aboveTileSides = exisitingPlacedTiles[tileAboveId].sides;
 // ["grass", "city", "road", "city"]
 
-if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
-    return false;
-}
+    if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
+        return false;
+    }
 // if we have a tile above, grab its sides
     let match0 = true;
     let match1 = true;
@@ -228,18 +174,12 @@ if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
         if (leftTileSides[1] !== toBePlacedTileSides[3]) {
             match3 = false;
         } 
-     }
-     console.log(match0, match1, match2, match3);
+    }
      
-     if (match0 && match1 && match2 && match3) {
+    if (match0 && match1 && match2 && match3) {
         return true;
-     } else {
-         return false;
-     }
+    } else {
+        return false;
+    }
 
-    
-    // check each side for match or no match
-    // if no match return some type of alert (nathan)
-        // this function returns t/f we will make the output equal to a variable, check that variable before placing tile functions
-    
 }

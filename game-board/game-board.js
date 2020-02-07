@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
@@ -43,13 +43,11 @@ function instructionsModal() {
         container.classList.add('is-blurred');
     });
 
-    // When the user clicks on <span> (x), close the modal
     span.addEventListener('click', () => {
         modal.style.display = 'none';
         container.classList.remove('is-blurred');
     });
 
-    // When the user clicks anywhere outside of the modal, close it
     window.addEventListener('click', (event) => {
         if (event.target == modal) {
             modal.style.display = 'none';
@@ -67,12 +65,9 @@ const userProfile = getUser();
 const meepChoice = document.getElementById('meepChoice');
 const userName = document.getElementById('userName');
 
-
 userName.textContent = userProfile.name;
 
 meepChoice.src = `../assets/meeples/${userProfile.meep}`;
-
-
 
 
 
@@ -81,10 +76,10 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 grid.addEventListener('click', (e) => {
     
     //if clicked element was one of the containers (grid/row), exit
-    if (e.target.id.substr(0, 5) !== 'grid-') {console.log('wrong element, exciting!'); return;}
+    if (e.target.id.substr(0, 5) !== 'grid-');
 
     //if topDeckTile returned false, aka no more tiles to draw, do this
-    if (!topDeckTile) {console.log('no more tiles, oh no!'); return;}
+    if (!topDeckTile);
 
     //grab click location, div id
     const currentTile = e.target;
@@ -132,7 +127,6 @@ grid.addEventListener('click', (e) => {
     //draw and display new connections
     renderConnections();
 
-
 });
 
 
@@ -178,10 +172,6 @@ function getUnplayedTiles() {
     return unplayedTiles;
 }
 
-
-// create deck / get tile function
-// returns random unplayed tile object
-
 function getTileFromDeck() {
     //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
@@ -200,9 +190,6 @@ function getTileFromDeck() {
             unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
         } 
     }
-    
-    // console.log('unplayedTilesRandomIndex: ' + unplayedTilesRandomIndex);
-    // console.log('the unplayed tiles index has the id of the actual {tiles} object, which is this: ' + tiles[unplayedTiles[unplayedTilesRandomIndex]].id);
     //return the tile object from the tiles object - if id is 27, tiles[27] = tiles.27
     return tiles[unplayedTileId];
 }
@@ -214,15 +201,10 @@ function renderTopDeckTile() {
     topDeckTile = getTileFromDeck();
 
     if (!topDeckTile) {
-        // out of tiles! Should maybe 'disable' all unplayed grid tiles, like remove hover and stuff...
-        // don't do this stuff here, bad UX? The last tile won't render first if you alert or leave here.
-        // alert('All tiles have been played!');
-        // window.location.href = '/results';
         div.style.opacity = 1;
         div.style.backgroundImage = `url("../tiles/Null1.png")`;
         div.style.backgroundSize = 'cover';
         displayGameOver();
-        // div.style.transform = 'rotate(0deg)';
         return false;
     }
 
@@ -301,9 +283,7 @@ const rightButton = document.getElementById('rotate-right');
 const leftButton = document.getElementById('rotate-left');
 
 rightButton.addEventListener('click', () => {
-   // console.log(topDeckTile);
     topDeckTile = rotateTile(topDeckTile, 'right');
-  //  console.log(topDeckTile);
 });
 
 leftButton.addEventListener('click', () => {
