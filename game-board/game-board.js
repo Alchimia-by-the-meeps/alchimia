@@ -72,7 +72,7 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 grid.addEventListener('click', (e) => {
 
     // If clicked element was one of the containers (grid/row), exit
-    if (!e.target.classList.contains('cell'));
+    //if (!e.target.classList.contains('cell'));
 
     // Grab click location, div id
     const currentTile = e.target;
