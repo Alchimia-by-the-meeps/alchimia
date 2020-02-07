@@ -85,7 +85,8 @@ export function updatePlacedTiles(lastPlacedTile) {
     placedTiles[lastPlacedTile.id] = {
         id: lastPlacedTile.id,
         sides: lastPlacedTile.sides,
-        rotation: lastPlacedTile.rotation
+        rotation: lastPlacedTile.rotation,
+        monastery: lastPlacedTile.monastery ? true : false
     };
     localStorage.setItem('placedTiles', JSON.stringify(placedTiles));
 }

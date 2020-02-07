@@ -2,6 +2,7 @@
 import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
+import { countConnections, renderConnections } from '../utils/scoring.js';
 
 //on load
 // reset gameState onload, for now
@@ -109,6 +110,8 @@ grid.addEventListener('click', (e) => {
         return false;
     }
 
+    countConnections(row, column, topDeckTile);
+
     //add currently drawn tile id to placed tiles
     updatePlacedTiles(topDeckTile);
 
@@ -125,6 +128,9 @@ grid.addEventListener('click', (e) => {
 
     //draw and display new tile at bottom of page
     renderTopDeckTile();
+
+    //draw and display new connections
+    renderConnections();
 
 
 });
