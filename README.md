@@ -8,7 +8,12 @@ https://seharlan.github.io/alchimia/
 
 ### gameState
 Tracks the state of each "cell" in the game board grid as an array of arrays containing tile IDs.
-
+const gameState = 
+[
+   [null, null, 7, null, null, 154, null, null, null, null]
+   [null, null, null, null, null, null, null, 6, null, null]
+   [null, null, 67, 73, 74, 76, 45, 63, null, null, null]
+                                                             ]
 ### user 
 Tracks name and meeple image.
 
@@ -60,12 +65,12 @@ Returns `placedTiles` object from localStorage.
 ### updatePlacesTiles(lastPlacedTile)
 Updates `placesTiles` object in localStorage with `lastPlacedTile` 
 
-### getAdjacentTiles(row, column)
-** Keep? ** 
+### getTileValidation(row, column, topDeckTile)
+returns true or false for valid tile placement and matching sides
 
 ### keepAdjacentsMatch(adjacentSides)
 Returns a boolean indicating whether tile is allowed to be placed per game rules
-** Keep? ** 
+ 
 
 
 ## utils/make-user.js
@@ -73,12 +78,13 @@ makeUser(formData)
 Creates a user object from form data.
 Returns a user object.
 
-makeNewUser(formData)
-
-** Do we use this? Delete? **
-
-
-
+const user = {
+        name: formData.get('name'),
+        meep: formData.get('meep'), 
+        cityConnections: 0,
+        roadConnections: 0, 
+        monasteries: 0,
+    };
 ***
 ***
 
