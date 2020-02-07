@@ -102,22 +102,6 @@ button.button:hover {
     transition: scale ease-in-out 0.3s;
     box-shadow: rgba(0,0,0,0.3) 4px 4px 5px;
 }
-#log-in-user{
-    /* background-color: rgb(185, 167, 133, 0.5); */
-    background-image: url("./assets/log-in.png");
-   
-    box-sizing: content-box;
-    border: 4px outset rgba(222, 184, 135, 0.7);
-    box-shadow: 0 0 10px 5px rgba(100, 100, 80, 0.325);
-    padding: 6px;
-    /* width: 1000px; */
-    margin: 30px auto;
-    width: 40%;
-}
-#name{
-    background-color: #ebd39a;
-    
-}
 
 footer{
     width: 100%;

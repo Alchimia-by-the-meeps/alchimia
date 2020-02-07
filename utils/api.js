@@ -122,7 +122,7 @@ export function checkAdjacentsMatch(adjacentSides, placedTile) {
         // console.log(side);
         // console.log(placedTile.sides[i]);
         // console.log(side == null || side === placedTile.sides[i]);
-        if (side == null || side === placedTile.sides[i]) {
+        if (side === null || side === placedTile.sides[i]) {
             if (match === false) {
                 match = false;
             } else {

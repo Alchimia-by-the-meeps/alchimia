@@ -1,6 +1,7 @@
 // import the tiles
 import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, getAdjacentTiles, checkAdjacentsMatch, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
+import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
 
 //on load
@@ -103,8 +104,8 @@ grid.addEventListener('click', (e) => {
     
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
     if (!tileValidMatch){
-        currentTile.classList.add('shake');
-        setTimeout(function(){currentTile.classList.remove('shake');}, 800);
+        currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
+        setTimeout(function(){currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360));}, 420);
         
         return false;
     }
@@ -121,6 +122,7 @@ grid.addEventListener('click', (e) => {
     //render tile in grid, update background image
     currentTile.style.opacity = 1;
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
+    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     currentTile.classList.add('placed-tile');
 
 
@@ -139,6 +141,7 @@ grid.addEventListener('mouseover', (e) => {
     if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
         myCell.style.opacity = 0.5;
         myCell.style.transition = 'none';
+        myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
         myCell.style.backgroundImage = `url('../tiles/${topDeckTile.image}')`;
     }
 });
@@ -146,6 +149,7 @@ grid.addEventListener('mouseout', (e) => {
     const myCell = e.target;
     if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
         myCell.style.opacity = 1;
+        myCell.style.transform = 'rotate(0deg)';
         myCell.style.backgroundImage = 'none';
     }
 });
@@ -223,6 +227,7 @@ function renderTopDeckTile() {
 
     //update and display random tile background 
     div.style.opacity = 1;
+    div.style.transform = 'rotate(0deg)';
     div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     div.style.backgroundSize = 'cover';
 }
@@ -289,3 +294,17 @@ function displayGameOver() {
     const tileStack = document.getElementById('tile-stack');
     tileStack.style.visibility = 'hidden';
 }
+
+
+const rightButton = document.getElementById('rotate-right');
+const leftButton = document.getElementById('rotate-left');
+
+rightButton.addEventListener('click', () => {
+   // console.log(topDeckTile);
+    topDeckTile = rotateTile(topDeckTile, 'right');
+  //  console.log(topDeckTile);
+});
+
+leftButton.addEventListener('click', () => {
+    topDeckTile = rotateTile(topDeckTile, 'left');
+});
