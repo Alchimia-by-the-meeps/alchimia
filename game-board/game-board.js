@@ -165,14 +165,14 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-document.addEventListener('wheel', (e) => {
-    if (e.deltaY > 0) { rightButton.click(); } 
-    else if (e.deltaY < 0) { leftButton.click(); }
+// document.addEventListener('wheel', (e) => {
+//     if (e.deltaY > 0) { rightButton.click(); } 
+//     else if (e.deltaY < 0) { leftButton.click(); }
     
-    if (e.deltaY !== 0 && myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
-        myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-    }
-});
+//     if (e.deltaY !== 0 && myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
+//         myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+//     }
+// });
 
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
