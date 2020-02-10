@@ -100,7 +100,7 @@ grid.addEventListener('click', (e) => {
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
     if (!tileValidMatch) {
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
-        setTimeout(function () { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
+        setTimeout(function() { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
 
         return false;
     }
@@ -146,7 +146,7 @@ grid.addEventListener('mouseout', (e) => {
         myCell.style.opacity = 1;
         myCell.style.transform = 'rotate(0deg)';
         myCell.style.backgroundImage = 'none';
-        myCell.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360))
+        myCell.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
     }
 });
 
