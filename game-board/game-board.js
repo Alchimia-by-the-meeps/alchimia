@@ -2,7 +2,7 @@
 import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
-import { countConnections, renderConnections } from '../utils/scoring.js';
+import { renderConnections } from '../utils/scoring.js';
 
 //on load
 // reset gameState onload, for now
@@ -70,10 +70,6 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
 grid.addEventListener('click', (e) => {
-
-    // If clicked element was one of the containers (grid/row), exit
-    //if (!e.target.classList.contains('cell'));
-
     // Grab click location, div id
     const currentTile = e.target;
     let currentTileId = currentTile.id;
@@ -90,6 +86,7 @@ grid.addEventListener('click', (e) => {
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
+    // Validate and Score
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
     if (!tileValidMatch) {
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
@@ -98,25 +95,29 @@ grid.addEventListener('click', (e) => {
     }
 
     // Update score
-    countConnections(row, column, topDeckTile);
+    // countConnections(row, column, topDeckTile);
 
     // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
     updatePlacedTiles(topDeckTile);
     gameState[row][column] = topDeckTile.id;
     updateGameState(gameState);
 
-    // Render tile in grid, update background image
-    currentTile.style.opacity = 1;
-    currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
-    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-    currentTile.classList.add('placed-tile');
-
+    renderPlacedTile(currentTile);
+    
     // Draw and display new tile at bottom of page
     renderTopDeckTile();
-
+    
     // Draw and display new connections
     renderConnections();
 });
+
+function renderPlacedTile(currentTile){
+      // Render tile in grid, update background image
+    currentTile.style.opacity = 1;
+    currentTile.style.backgroundImage = `url("../assets/tiles/${topDeckTile.image}")`;
+    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+    currentTile.classList.add('placed-tile');
+}
 
 let myCell;
 
@@ -126,7 +127,7 @@ grid.addEventListener('mouseover', (e) => {
         myCell.style.opacity = 0.5;
         myCell.style.transition = 'none';
         myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-        myCell.style.backgroundImage = `url('../tiles/${topDeckTile.image}')`;
+        myCell.style.backgroundImage = `url('../assets/tiles/${topDeckTile.image}')`;
     }
 });
 
@@ -198,7 +199,7 @@ function renderTopDeckTile() {
 
     if (!topDeckTile) {
         div.style.opacity = 1;
-        div.style.backgroundImage = `url("../tiles/Null1.png")`;
+        div.style.backgroundImage = `url("../assets/tiles/Null1.png")`;
         div.style.backgroundSize = 'cover';
         displayGameOver();
         return false;
@@ -207,7 +208,7 @@ function renderTopDeckTile() {
     //update and display random tile background 
     div.style.opacity = 1;
     div.style.transform = 'rotate(0deg)';
-    div.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
+    div.style.backgroundImage = `url("../assets/tiles/${topDeckTile.image}")`;
     div.style.backgroundSize = 'cover';
 }
 
@@ -222,14 +223,14 @@ export function renderRiver() {
     const river7 = document.getElementById('grid-5-6');
     const river8 = document.getElementById('grid-5-7');
     //place river tiles in selected grid tiles
-    river1.style.backgroundImage = 'url("../tiles/River0.png")';
-    river2.style.backgroundImage = 'url("../tiles/River1.png")';
-    river3.style.backgroundImage = 'url("../tiles/River2.png")';
-    river4.style.backgroundImage = 'url("../tiles/River7-rotated.png")';
-    river5.style.backgroundImage = 'url("../tiles/River8-rotated.png")';
-    river6.style.backgroundImage = 'url("../tiles/River4-rotated.png")';
-    river7.style.backgroundImage = 'url("../tiles/River6.png")';
-    river8.style.backgroundImage = 'url("../tiles/River9.png")';
+    river1.style.backgroundImage = 'url("../assets/tiles/River0.png")';
+    river2.style.backgroundImage = 'url("../assets/tiles/River1.png")';
+    river3.style.backgroundImage = 'url("../assets/tiles/River2.png")';
+    river4.style.backgroundImage = 'url("../assets/tiles/River7-rotated.png")';
+    river5.style.backgroundImage = 'url("../assets/tiles/River8-rotated.png")';
+    river6.style.backgroundImage = 'url("../assets/tiles/River4-rotated.png")';
+    river7.style.backgroundImage = 'url("../assets/tiles/River6.png")';
+    river8.style.backgroundImage = 'url("../assets/tiles/River9.png")';
     //updated placed river tiles to have placed-tile class
     river1.classList.add('placed-tile');
     river2.classList.add('placed-tile');

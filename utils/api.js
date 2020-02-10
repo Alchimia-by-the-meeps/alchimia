@@ -95,20 +95,7 @@ export function initializePlacedTiles() {
 }
 
 export function getTileValidation(row, column, topDeckTile) {
-    const toBePlacedTile = topDeckTile;
-    const toBePlacedTileSides = toBePlacedTile.sides;
-    
-    const tileAboveRow = row - 1;
-    const tileAboveColumn = column;
-
-    const tileRightRow = row;
-    const tileRightColumn = column + 1;
-
-    const tileBottomRow = row + 1;
-    const tileBottomColumn = column;
-
-    const tileLeftRow = row;
-    const tileLeftColumn = column - 1;
+    const topDeckTileSides = topDeckTile.sides;
  
     // get id's of surrounding tiles from local storage
     //getGameState = array of arrays of ids
@@ -120,28 +107,28 @@ export function getTileValidation(row, column, topDeckTile) {
 
     //checking for above tile
 
-    if (currentGameState[tileAboveRow]) {
+    if (currentGameState[row - 1]) {
         //if tile above exists, store its id
-        tileAboveId = currentGameState[tileAboveRow][tileAboveColumn];
+        tileAboveId = currentGameState[row - 1][column];
     } // checking for right tile
-    if (currentGameState[tileRightRow][tileRightColumn]) {
+    if (currentGameState[row][column + 1]) {
         //if tile right exists, store its id
-        tileRightId = currentGameState[tileRightRow][tileRightColumn];
+        tileRightId = currentGameState[row][column + 1];
     }   
-    if (currentGameState[tileBottomRow]) {
+    if (currentGameState[row + 1]) {
         //if tile Bottom exists, store its id
-        tileBottomId = currentGameState[tileBottomRow][tileBottomColumn];
+        tileBottomId = currentGameState[row + 1][column];
     }
-    if (currentGameState[tileLeftRow][tileLeftColumn]) {
+    if (currentGameState[row][column - 1]) {
         //if tile Left exists, store its id
-        tileLeftId = currentGameState[tileLeftRow][tileLeftColumn];
+        tileLeftId = currentGameState[row][column - 1];
     }
 
     const aboveTileSides = tileAboveId ? exisitingPlacedTiles[tileAboveId].sides : null;
     const rightTileSides = tileRightId ? exisitingPlacedTiles[tileRightId].sides : null;
     const bottomTileSides = tileBottomId ? exisitingPlacedTiles[tileBottomId].sides : null;
     const leftTileSides = tileLeftId ? exisitingPlacedTiles[tileLeftId].sides : null;
-// ["grass", "city", "road", "city"]
+    // ["grass", "city", "road", "city"]
 
     if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
         return false;
@@ -153,25 +140,35 @@ export function getTileValidation(row, column, topDeckTile) {
     let match3 = true;
 
     if (aboveTileSides) {
-        if (aboveTileSides[2] !== toBePlacedTileSides[0]) {
+        if (aboveTileSides[2] !== topDeckTileSides[0]) {
             match0 = false;
-        } 
+        } else { //if match
+            countSides(topDeckTileSides[0]);
+        }
     } 
     if (rightTileSides) {
-        if (rightTileSides[3] !== toBePlacedTileSides[1]) {
+        if (rightTileSides[3] !== topDeckTileSides[1]) {
             match1 = false;
-        } 
+        } else {
+            countSides(topDeckTileSides[1]);
+        }
     } 
     if (bottomTileSides) {
-        if (bottomTileSides[0] !== toBePlacedTileSides[2]) {
+        if (bottomTileSides[0] !== topDeckTileSides[2]) {
             match2 = false;
+        } else {
+            countSides(topDeckTileSides[2]);
         }
     } 
     if (leftTileSides) {
-        if (leftTileSides[1] !== toBePlacedTileSides[3]) {
+        if (leftTileSides[1] !== topDeckTileSides[3]) {
             match3 = false;
-        } 
+        } else {
+            countSides(topDeckTileSides[3]);
+        }
     }
+
+    countMonasteries(topDeckTile);
      
     if (match0 && match1 && match2 && match3) {
         return true;
@@ -179,4 +176,26 @@ export function getTileValidation(row, column, topDeckTile) {
         return false;
     }
 
+}
+
+function countMonasteries(topDeckTile) {
+    const user = getUser();
+
+    if (topDeckTile.monastery) {
+        user.monasteries++;
+    }
+
+    saveUser(user);
+}
+
+function countSides(sideToCheck) {
+    const user = getUser();
+
+    if (sideToCheck === 'city') {
+        user.cityConnections++;
+    } else if (sideToCheck === 'road') {
+        user.roadConnections++;
+    }
+
+    saveUser(user);
 }
