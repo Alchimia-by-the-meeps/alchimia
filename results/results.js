@@ -1,12 +1,11 @@
 //import { maxRows, maxColumns } from '../game-board/game-board.js';
 import { tiles } from '../data/tiles.js';
-import { getUser, getGameState, getPlacedTiles } from '../utils/api.js';
+import { getGameState, getPlacedTiles, maxColumns, maxRows } from '../utils/api.js';
 import { renderResultsScore } from '../utils/scoring.js';
+import { getUser } from '../utils/user-stuff.js';
 
 
 function renderGameBoard(parent) {
-    const maxColumns = 12;
-    const maxRows = 8;
     
     // Get boardState from localStorage
     const gameState = getGameState();
@@ -38,8 +37,6 @@ function renderGameBoard(parent) {
         parent.appendChild(row);
     }
 }  
-
-
 
 // Run On Load
 

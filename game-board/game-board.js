@@ -1,8 +1,9 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
+import { getUser } from '../utils/user-stuff.js';
 
 //on load
 // reset gameState onload, for now
@@ -49,7 +50,7 @@ function instructionsModal() {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = 'none';
             container.classList.remove('is-blurred');
 
@@ -91,33 +92,33 @@ grid.addEventListener('click', (e) => {
     const column = Number(currentTileId[1]);
 
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
-    if (!tileValidMatch) {
+    if (tileValidMatch) {
+               // Update score
+        countConnections(row, column, topDeckTile);
+
+               // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
+        updatePlacedTiles(topDeckTile);
+        gameState[row][column] = topDeckTile.id;
+        updateGameState(gameState);
+       
+               // Render tile in grid, update background image
+        currentTile.style.opacity = 1;
+        currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
+        currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+        currentTile.classList.add('placed-tile');
+           
+               // Draw and display new tile at bottom of page
+        renderTopDeckTile();
+       
+               // Draw and display new connections
+        renderConnections();
+    } else {
+        
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
         setTimeout(function() { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
-        return false;
     }
-
-    // Update score
-    countConnections(row, column, topDeckTile);
-
-    // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
-    updatePlacedTiles(topDeckTile);
-    gameState[row][column] = topDeckTile.id;
-    updateGameState(gameState);
-
-    // Render tile in grid, update background image
-    currentTile.style.opacity = 1;
-    currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
-    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-    currentTile.classList.add('placed-tile');
-
-    // Draw and display new tile at bottom of page
-    renderTopDeckTile();
-
-    // Draw and display new connections
-    renderConnections();
 });
-
+// has to be global aka "any" so that the image can rotate despite the fixed target cell
 let myCell;
 
 grid.addEventListener('mouseover', (e) => {
@@ -260,7 +261,6 @@ export function renderGrid(parent) {
         parent.appendChild(row);
     }
 }
-
 
 function displayGameOver() {
     const gameOverDiv = document.getElementById('game-over');

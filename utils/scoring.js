@@ -1,4 +1,5 @@
-import { getUser, saveUser, getGameState, getPlacedTiles } from './api.js';
+import { getGameState, getPlacedTiles } from './api.js';
+import { saveUser, getUser } from './user-stuff.js';
 
 // Calculate 'connections' to neighbor tiles for scoring
 export function countConnections(row, column, topDeckTile) {
