@@ -79,29 +79,27 @@ a:hover {
 }
 
 button.button {
-    font-family: 'Jim Nightshade', cursive;
-    background-color: rgba(71, 77, 46, .9);
+    font-family: 'EB Garamond', serif;
+    background-color: rgba(71, 77, 46);
     border: none;
     color: #eddcb5;
-    padding: 8px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 2rem;
-    /* text-transform: uppercase; */
-    font-weight: bold;
+    font-size: 1.3rem;
+/*    font-weight: bold; */
     margin: 1rem auto;
+    padding: 6px 30px 10px 30px;
     border-radius: 6px;
     box-shadow: rgba(0,0,0,0.3) 2px 2px 3px;
     user-select: none;
 }
 
 button.button:hover {
-    background-color: rgba(71, 77, 46, .9);
-    color: #eddcb5;
+    background-color: rgba(71, 77, 46);
     transform: scale(1.05);
-    transition: scale ease-in-out 0.3s;
-    box-shadow: rgba(0,0,0,0.3) 4px 4px 5px;
+    transition: all ease-in-out 0.2s;
+    box-shadow: rgba(0,0,0,0.3) 4px 4px 3px;
 }
 
 footer{

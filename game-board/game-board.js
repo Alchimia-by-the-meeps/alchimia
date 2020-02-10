@@ -61,39 +61,32 @@ instructionsModal();
 container.classList.add('is-blurred');
 
 const userProfile = getUser();
-
 const meepChoice = document.getElementById('meepChoice');
 const userName = document.getElementById('userName');
 
 userName.textContent = userProfile.name;
-
 meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
 
 grid.addEventListener('click', (e) => {
 
-    //if clicked element was one of the containers (grid/row), exit
+    // If clicked element was one of the containers (grid/row), exit
+    //if (!e.target.classList.contains('cell'));
 
-    if (!e.target.classList.contains('cell'));
-
-
-    //if topDeckTile returned false, aka no more tiles to draw, do this
-    if (!topDeckTile);
-
-    //grab click location, div id
+    // Grab click location, div id
     const currentTile = e.target;
     let currentTileId = currentTile.id;
     gameState = getGameState();
 
-    //if tile already has a placed tile, do not continue click event
+    // If tile already has a placed tile, do not continue click event
     if (currentTile.classList.contains('placed-tile')) return;
 
-    //change 'grid-#-#' string to '#-#'
+    // Change 'grid-#-#' string to '#-#'
     currentTileId = currentTileId.replace('grid-', '');
-    //change '#-#' to ["#", "#"]
+    // Change '#-#' to ["#", "#"]
     currentTileId = currentTileId.split('-');
-    //store ["#", "#"][0] to row, ["#", "#"][1] to column
+    // Store ["#", "#"][0] to row, ["#", "#"][1] to column
     const row = Number(currentTileId[0]);
     const column = Number(currentTileId[1]);
 
@@ -101,35 +94,31 @@ grid.addEventListener('click', (e) => {
     if (!tileValidMatch) {
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
         setTimeout(function() { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
-
         return false;
     }
 
+    // Update score
     countConnections(row, column, topDeckTile);
 
-    //add currently drawn tile id to placed tiles
+    // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
     updatePlacedTiles(topDeckTile);
-
-    //update gameState with currently drawn tile id
     gameState[row][column] = topDeckTile.id;
     updateGameState(gameState);
 
-    //render tile in grid, update background image
+    // Render tile in grid, update background image
     currentTile.style.opacity = 1;
     currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
     currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     currentTile.classList.add('placed-tile');
 
-    //draw and display new tile at bottom of page
+    // Draw and display new tile at bottom of page
     renderTopDeckTile();
 
-    //draw and display new connections
+    // Draw and display new connections
     renderConnections();
-
 });
 
 let myCell;
-
 
 grid.addEventListener('mouseover', (e) => {
     myCell = e.target;
@@ -140,6 +129,7 @@ grid.addEventListener('mouseover', (e) => {
         myCell.style.backgroundImage = `url('../tiles/${topDeckTile.image}')`;
     }
 });
+
 grid.addEventListener('mouseout', (e) => {
     myCell = e.target;
     if (myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
