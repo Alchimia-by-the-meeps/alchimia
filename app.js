@@ -1,5 +1,5 @@
-import { saveUser, initializeGameState, initializePlacedTiles, addRiverToPlacedTiles } from './utils/api.js';
-import makeUser from './utils/make-user.js';
+import { initializeGameState, initializePlacedTiles, addRiverToPlacedTiles } from './utils/api.js';
+import { saveUser, makeUser } from './utils/user-stuff.js';
 
 //grab our form from home page so we can access on submit
 const userSignUp = document.getElementById('user-sign-up');

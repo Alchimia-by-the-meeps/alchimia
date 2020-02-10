@@ -1,8 +1,16 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getTileValidation } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
+import { getUser } from '../utils/user-stuff.js';
+
+const userProfile = getUser();
+const meepChoice = document.getElementById('meepChoice');
+const userName = document.getElementById('userName');
+
+userName.textContent = userProfile.name;
+meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 //on load
 // reset gameState onload, for now
@@ -36,20 +44,20 @@ const container = document.getElementById('container');
 function instructionsModal() {
     const modal = document.getElementById('instructionsModal');
     const instructionsButton = document.getElementById('instructionsButton');
-    const span = document.getElementById('close');
+    const closeModalButton = document.getElementById('close');
 
     instructionsButton.addEventListener('click', () => {
         modal.style.display = 'block';
         container.classList.add('is-blurred');
     });
 
-    span.addEventListener('click', () => {
+    closeModalButton.addEventListener('click', () => {
         modal.style.display = 'none';
         container.classList.remove('is-blurred');
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = 'none';
             container.classList.remove('is-blurred');
 
@@ -59,15 +67,6 @@ function instructionsModal() {
 
 instructionsModal();
 container.classList.add('is-blurred');
-
-const userProfile = getUser();
-const meepChoice = document.getElementById('meepChoice');
-const userName = document.getElementById('userName');
-
-userName.textContent = userProfile.name;
-meepChoice.src = `../assets/meeples/${userProfile.meep}`;
-
-
 
 grid.addEventListener('click', (e) => {
 
@@ -79,45 +78,45 @@ grid.addEventListener('click', (e) => {
     let currentTileId = currentTile.id;
     gameState = getGameState();
 
-    // If tile already has a placed tile, do not continue click event
-    if (currentTile.classList.contains('placed-tile')) return;
-
-    // Change 'grid-#-#' string to '#-#'
-    currentTileId = currentTileId.replace('grid-', '');
-    // Change '#-#' to ["#", "#"]
-    currentTileId = currentTileId.split('-');
-    // Store ["#", "#"][0] to row, ["#", "#"][1] to column
-    const row = Number(currentTileId[0]);
-    const column = Number(currentTileId[1]);
-
+    const idArray = getCoordinates();
+    const row = Number(idArray[0]);
+    const column = Number(idArray[1]);
+    
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
-    if (!tileValidMatch) {
+    if (tileValidMatch) {
+        // Update score
+        countConnections(row, column, topDeckTile);
+        
+        // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
+        updatePlacedTiles(topDeckTile);
+        gameState[row][column] = topDeckTile.id;
+        updateGameState(gameState);
+        
+        // Render tile in grid, update background image
+        renderTileInGrid(currentTile);
+        
+        // Draw and display new tile at bottom of page
+        renderTopDeckTile();
+        
+        // Draw and display new connections
+        renderConnections();
+    } else {
+        
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
         setTimeout(function() { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
-        return false;
     }
-
-    // Update score
-    countConnections(row, column, topDeckTile);
-
-    // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
-    updatePlacedTiles(topDeckTile);
-    gameState[row][column] = topDeckTile.id;
-    updateGameState(gameState);
-
-    // Render tile in grid, update background image
-    currentTile.style.opacity = 1;
-    currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
-    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
-    currentTile.classList.add('placed-tile');
-
-    // Draw and display new tile at bottom of page
-    renderTopDeckTile();
-
-    // Draw and display new connections
-    renderConnections();
+    function getCoordinates() {
+        // If tile already has a placed tile, do not continue click event
+        if (currentTile.classList.contains('placed-tile')) return;
+    
+        // Change 'grid-#-#' string to '#-#'
+        currentTileId = currentTileId.replace('grid-', '');
+        // Change '#-#' to ["#", "#"]
+        currentTileId = currentTileId.split('-');
+        // Store ["#", "#"][0] to row, ["#", "#"][1] to column
+    }
 });
-
+// has to be global aka "any" so that the image can rotate despite the fixed target cell
 let myCell;
 
 grid.addEventListener('mouseover', (e) => {
@@ -147,6 +146,13 @@ document.addEventListener('keydown', (e) => {
         myCell.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     }
 });
+
+function renderTileInGrid(currentTile) {
+    currentTile.style.opacity = 1;
+    currentTile.style.backgroundImage = `url("../tiles/${topDeckTile.image}")`;
+    currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
+    currentTile.classList.add('placed-tile');
+}
 
 // returns array of unplayed tile ids
 function getUnplayedTiles() {
@@ -260,7 +266,6 @@ export function renderGrid(parent) {
         parent.appendChild(row);
     }
 }
-
 
 function displayGameOver() {
     const gameOverDiv = document.getElementById('game-over');
