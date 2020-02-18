@@ -4,6 +4,8 @@ import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
 
+// nice single responsibility principle! might have been nice to put these all in a single 'build board' function
+
 //on load
 // reset gameState onload, for now
 initializeGameState();
@@ -33,7 +35,7 @@ quitButton.addEventListener('click', () => {
 
 const container = document.getElementById('container');
 
-function instructionsModal() {
+function launchInstructionsModal() {
     const modal = document.getElementById('instructionsModal');
     const instructionsButton = document.getElementById('instructionsButton');
     const span = document.getElementById('close');
@@ -49,7 +51,7 @@ function instructionsModal() {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == modal) {
+        if (event.target == modal) { // are the double-equals necessary here?
             modal.style.display = 'none';
             container.classList.remove('is-blurred');
 
@@ -57,7 +59,7 @@ function instructionsModal() {
     });
 }
 
-instructionsModal();
+launchInstructionsModal();
 container.classList.add('is-blurred');
 
 const userProfile = getUser();
@@ -69,7 +71,7 @@ meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
 
-grid.addEventListener('click', (e) => {
+grid.addEventListener('click', (e) => { // It would have been nice to modularize this anonymous function out somewhere
 
     // If clicked element was one of the containers (grid/row), exit
     //if (!e.target.classList.contains('cell'));
@@ -92,6 +94,7 @@ grid.addEventListener('click', (e) => {
 
     const tileValidMatch = getTileValidation(row, column, topDeckTile);
     if (!tileValidMatch) {
+        // this is tough to read and could benefit from being abstracted out into a function with a declarative name
         currentTile.classList.add('shake' + (((topDeckTile.rotation % 360) + 360) % 360));
         setTimeout(function() { currentTile.classList.remove('shake' + (((topDeckTile.rotation % 360) + 360) % 360)); }, 420);
         return false;
@@ -141,6 +144,7 @@ grid.addEventListener('mouseout', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
+    // i think e.key has 'Enter' and 'F' and stuff these days instead of having to lean on the weird keyCodes
     if (e.keyCode === 37) leftButton.click();
     if (e.keyCode === 39) rightButton.click();
     if (myCell && myCell.classList.contains('cell') && !myCell.classList.contains('placed-tile')) {
@@ -158,14 +162,11 @@ function getUnplayedTiles() {
 
     //The filter() method creates a new array with all elements that pass the test implemented by the provided function.
     //.filter() will loop through all tile Ids from our {tiles} object, and test it with an 'if' function, and if truthy, then push that to a new array via 'return' (in this case, unplayedTiles).
-    let unplayedTiles = allTileIds.filter(tileId => {
+    return allTileIds.filter(tileId =>
         //.indexOf() will return -1 if an item is not in the array. If the current looped tile Id has not been placed (and is not in the placedTiles array), this function will return true with "-1 is < 0", and add that tile Id to the unplayedTiles array.
-        return placedTilesIds.indexOf(tileId) < 0;
-    });
+        placedTilesIds.indexOf(tileId) < 0); // implicit return works here
 
     // console.log('unplayedTiles: ' + unplayedTiles);
-
-    return unplayedTiles;
 }
 
 function getTileFromDeck() {
@@ -178,7 +179,7 @@ function getTileFromDeck() {
     let unplayedTilesRandomIndex = Math.floor(Math.random() * unplayedTiles.length);
     let unplayedTileId = unplayedTiles[unplayedTilesRandomIndex];
     // if the river property exists
-    if (tiles[unplayedTileId].river) {
+    if (tiles[unplayedTileId].river) { // do we need both the if and the while block here?
         //while it has the property
         while (tiles[unplayedTileId].river) {
             // redo random index 
@@ -212,6 +213,7 @@ function renderTopDeckTile() {
 }
 
 export function renderRiver() {
+    // can't help but feel there's a dryer way to do this with arrays of strings
     //choose grid tiles for river
     const river1 = document.getElementById('grid-2-3');
     const river2 = document.getElementById('grid-2-4');
@@ -231,6 +233,7 @@ export function renderRiver() {
     river7.style.backgroundImage = 'url("../tiles/River6.png")';
     river8.style.backgroundImage = 'url("../tiles/River9.png")';
     //updated placed river tiles to have placed-tile class
+    // this could definitely just be iterated over and called
     river1.classList.add('placed-tile');
     river2.classList.add('placed-tile');
     river3.classList.add('placed-tile');

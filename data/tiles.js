@@ -1,3 +1,4 @@
+// cool data structure! I feel like the rotation could have been added procedurally later, since it defaults to 0;
 export const tiles = {
     1: {
         id: 1,
