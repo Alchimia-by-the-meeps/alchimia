@@ -92,7 +92,6 @@ export function countConnections(row, column, topDeckTile) {
             }
         } 
     }
-
     if (toBePlacedTile.monastery) {
         user.monasteries++;
     }
@@ -130,8 +129,6 @@ export function renderResultsScore() {
     totalScoreSpan.textContent = totalScore;
 }
 
-// Additional scoring stretch goals in progress!
-
 export function getMonasteryArray() {
     const exisitingPlacedTiles = getPlacedTiles();
     //loop thrugh and find monisteries
@@ -152,23 +149,18 @@ export function loopThroughMonasteryArray() {
 }
 
 export function scoreMonastery(monasteryTileId) {
-
     let gameState = getGameState();
     let row;
     let column;
     
-    
     for(let i = 0; i < gameState.length; i++){ 
         console.log(row, column)
         const gameStateResult = gameState[i].indexOf(Number(monasteryTileId));
-        console.log(row, column)
         if (gameStateResult != -1) {
             row = i;
             column = gameStateResult;
-            
         }
     }
-    console.log(row, column)
     const tileAboveRow = row - 1;
     const tileAboveColumn = column;
     
@@ -193,14 +185,9 @@ export function scoreMonastery(monasteryTileId) {
     const tileAboveLeftRow = row - 1;
     const tileAboveLeftColumn = column - 1;
     
-    // const exisitingPlacedTiles = getPlacedTiles();
-
-    
     let monasteryScore = 1;
-    // //checking for above tile
-    // //if neighboring tile exists, store its id
-    function surroundingCheck(row, column) {
 
+    function surroundingCheck(row, column) {
         if (gameState[row][column]) {
             monasteryScore++;
         } 
@@ -213,9 +200,6 @@ export function scoreMonastery(monasteryTileId) {
     surroundingCheck(tileBottomRightRow, tileBottomRightColumn);
     surroundingCheck(tileLeftRow, tileLeftColumn);
     surroundingCheck(tileBottomRow, tileBottomColumn);
-    
-    console.log('individual score', monasteryScore)
-    return monasteryScore;
-    
 
+    return monasteryScore;
 }
