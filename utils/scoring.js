@@ -16,7 +16,7 @@ export function countConnections(row, column, topDeckTile) {
 
     const tileLeftRow = row;
     const tileLeftColumn = column - 1;
- 
+
     const currentGameState = getGameState();
     const exisitingPlacedTiles = getPlacedTiles();
     const user = getUser();
@@ -121,7 +121,7 @@ export function renderResultsScore() {
 
     const cityScore = user.cityConnections * 2;
     const roadScore = user.roadConnections;
-    const monasteryScore = user.monasteries * 4;
+    const monasteryScore = loopThroughMonasteryArray();
     const totalScore = cityScore + roadScore + monasteryScore;
 
     cityScoreSpan.textContent = cityScore;
@@ -130,104 +130,92 @@ export function renderResultsScore() {
     totalScoreSpan.textContent = totalScore;
 }
 
-
-
-
-
 // Additional scoring stretch goals in progress!
 
-// export function getMonasteryArray() {
-//     const exisitingPlacedTiles = getPlacedTiles();
-//     //loop thrugh and find monisteries
+export function getMonasteryArray() {
+    const exisitingPlacedTiles = getPlacedTiles();
+    //loop thrugh and find monisteries
     
-//     let newArray = Object.keys(exisitingPlacedTiles).filter(tile => {
-//         return exisitingPlacedTiles[tile].monastery === true;
-//     });
-//     return newArray;
-// }
+    let newArray = Object.keys(exisitingPlacedTiles).filter(tile => {
+        return exisitingPlacedTiles[tile].monastery === true;
+    });
+    return newArray;
+}
 
-// export function loopThroughMonasteryArray() {
-//     const array = getMonasteryArray();
-//     array.forEach(monastery => {
-//         scoreMonastery(monastery);
-//     }); 
-// }
+export function loopThroughMonasteryArray() {
+    const array = getMonasteryArray();
+    let monasteryScore = 0;
+    array.forEach(monastery => {
+        monasteryScore += scoreMonastery(monastery);
+    }); 
+    return monasteryScore;
+}
 
-// export function scoreMonastery(monasteryTileId) {
+export function scoreMonastery(monasteryTileId) {
 
-//     // let monasteryScore = 0;
-
-//     //get row column coordnates from gamestate
-//     const row 
-//     const column
-
-//     //get monastery object with id thats passed
-//     const monasteryTileSides = monasteryTile.sides;
+    let gameState = getGameState();
+    let row;
+    let column;
     
-//     const tileAboveRow = row - 1;
-//     const tileAboveColumn = column;
-
-//     const tileAboveRightRow = row - 1;
-//     const tileAboveRightColumn = column + 1;
-
-//     const tileRightRow = row;
-//     const tileRightColumn = column + 1;
-
-//     const tileBottomRightRow = row + 1;
-//     const tileBottomRightColumn = column + 1;
-
-//     const tileBottomRow = row + 1;
-//     const tileBottomColumn = column;
-
-//     const tileBottomLeftRow = row + 1;
-//     const tileBottomLeftColumn = column - 1;
-
-//     const tileLeftRow = row;
-//     const tileLeftColumn = column - 1;
- 
-//     const tileAboveLeftRow = row - 1;
-//     const tileAboveLeftColumn = column - 1;
-
-//     const currentGameState = getGameState();
-//     const exisitingPlacedTiles = getPlacedTiles();
-//     const user = getUser();
-
-//     let tileAboveId, 
-//         tileAboveRightId, 
-//         tileRightId, 
-//         tileBottomRightId, 
-//         tileBottomId, 
-//         tileBottomLeftId, 
-//         tileLeftId,
-//         tileAboveLeftId;
-
-//     //checking for above tile
-
-//     //if neighboring tile exists, store its id
-//     if (currentGameState[tileAboveRow][tileAboveColumn]) {
-//         monasteryScore++;
-//     }
-//     if (currentGameState[tileAboveRightRow]) {
-//         tileAboveRightId = currentGameState[tileAboveRightRow][tileAboveRightColumn];
-//     }
-//     if (currentGameState[tileRightRow][tileRightColumn]) {
-//         tileRightId = currentGameState[tileRightRow][tileRightColumn];
-//     }   
-//     if (currentGameState[tileBottomRightRow]) {
-//         tileBottomRightId = currentGameState[tileBottomRightRow][tileBottomRightColumn];
-//     }
-//     if (currentGameState[tileBottomRow]) {
-//         tileBottomId = currentGameState[tileBottomRow][tileBottomColumn];
-//     }
-//     if (currentGameState[tileBottomLeftRow]) {
-//         tileBottomLeftId = currentGameState[tileBottomLeftRow][tileBottomLeftColumn];
-//     }
-//     if (currentGameState[tileLeftRow][tileLeftColumn]) {
-//         tileLeftId = currentGameState[tileLeftRow][tileLeftColumn];
-//     }
-//     if (currentGameState[tileAboveLeftRow]) {
-//         tileAboveLeftId = currentGameState[tileAboveLeftRow][tileAboveLeftColumn];
-//     }
     
-     
-// }
+    for(let i = 0; i < gameState.length; i++){ 
+        console.log(row, column)
+        const gameStateResult = gameState[i].indexOf(Number(monasteryTileId));
+        console.log(row, column)
+        if (gameStateResult != -1) {
+            row = i;
+            column = gameStateResult;
+            
+        }
+    }
+    console.log(row, column)
+    const tileAboveRow = row - 1;
+    const tileAboveColumn = column;
+    
+    const tileAboveRightRow = row - 1;
+    const tileAboveRightColumn = column + 1;
+    
+    const tileRightRow = row;
+    const tileRightColumn = column + 1;
+    
+    const tileBottomRightRow = row + 1;
+    const tileBottomRightColumn = column + 1;
+    
+    const tileBottomRow = row + 1;
+    const tileBottomColumn = column;
+    
+    const tileBottomLeftRow = row + 1;
+    const tileBottomLeftColumn = column - 1;
+    
+    const tileLeftRow = row;
+    const tileLeftColumn = column - 1;
+    
+    const tileAboveLeftRow = row - 1;
+    const tileAboveLeftColumn = column - 1;
+    
+    // const exisitingPlacedTiles = getPlacedTiles();
+
+    
+    let monasteryScore = 1;
+    // //checking for above tile
+    // //if neighboring tile exists, store its id
+    function surroundingCheck(row, column) {
+
+        if (gameState[row][column]) {
+            monasteryScore++;
+        } 
+    }
+    surroundingCheck(tileAboveLeftRow, tileAboveLeftColumn);
+    surroundingCheck(tileAboveRightRow, tileAboveRightColumn);
+    surroundingCheck(tileAboveRow, tileAboveColumn);
+    surroundingCheck(tileRightRow, tileRightColumn);
+    surroundingCheck(tileBottomLeftRow, tileBottomLeftColumn);
+    surroundingCheck(tileBottomRightRow, tileBottomRightColumn);
+    surroundingCheck(tileLeftRow, tileLeftColumn);
+    surroundingCheck(tileBottomRow, tileBottomColumn);
+    
+    console.log('individual score', monasteryScore)
+    return monasteryScore;
+    
+
+}
