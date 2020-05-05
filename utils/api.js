@@ -94,86 +94,70 @@ export function initializePlacedTiles() {
     localStorage.setItem('placedTiles', '{}');
 }
 
-export function getTileValidation(row, column, topDeckTile) {
-    const toBePlacedTile = topDeckTile;
-    const toBePlacedTileSides = toBePlacedTile.sides;
+export function getTileValidation(row, column, toBePlacedTile) {
     
-    const tileAboveRow = row - 1;
-    const tileAboveColumn = column;
-
-    const tileRightRow = row;
-    const tileRightColumn = column + 1;
-
-    const tileBottomRow = row + 1;
-    const tileBottomColumn = column;
-
-    const tileLeftRow = row;
-    const tileLeftColumn = column - 1;
- 
     // get id's of surrounding tiles from local storage
-    //getGameState = array of arrays of ids
+    // getGameState = array of arrays of ids
     const currentGameState = getGameState();
     //placed tiles is object of objects with tile properties
-    const exisitingPlacedTiles = getPlacedTiles();
+    const existingPlacedTiles = getPlacedTiles();
     
-    let tileAboveId, tileRightId, tileBottomId, tileLeftId;
+    let tileAboveId = null; 
+    let tileToRightId = null;
+    let tileBelowId = null;
+    let tileToLeftId = null;
 
-    //checking for above tile
+    let tileAbove = null;
+    let tileToRight = null;
+    let tileBelow = null;
+    let tileToLeft = null;
 
-    if (currentGameState[tileAboveRow]) {
-        //if tile above exists, store its id
-        tileAboveId = currentGameState[tileAboveRow][tileAboveColumn];
-    } // checking for right tile
-    if (currentGameState[tileRightRow][tileRightColumn]) {
-        //if tile right exists, store its id
-        tileRightId = currentGameState[tileRightRow][tileRightColumn];
+    let matchAbove = true;
+    let matchToRight = true;
+    let matchBelow = true;
+    let matchToLeft = true;
+
+    // Checking for neighboring tiles, find their IDs, and see if the sides match
+    // Above
+    if (row > 0 && currentGameState[row - 1][column]) {
+        tileAboveId = currentGameState[row - 1][column];
+        tileAbove = existingPlacedTiles[tileAboveId];
+        if (tileAbove.sides[2] !== toBePlacedTile.sides[0]) {
+            matchAbove = false;
+        } 
+    } 
+    // To the right
+    if (column < maxColumns && currentGameState[row][column + 1]) {
+        tileToRightId = currentGameState[row][column + 1];
+        tileToRight = existingPlacedTiles[tileToRightId];
+        if (tileToRight.sides[3] !== toBePlacedTile.sides[1]) {
+            matchToRight = false;
+        } 
     }   
-    if (currentGameState[tileBottomRow]) {
-        //if tile Bottom exists, store its id
-        tileBottomId = currentGameState[tileBottomRow][tileBottomColumn];
+    // Below
+    if (row < maxRows && currentGameState[row + 1][column]) {
+        tileBelowId = currentGameState[row + 1][column];
+        tileBelow = existingPlacedTiles[tileBelowId];
+        if (tileBelow.sides[0] !== toBePlacedTile.sides[2]) {
+            matchBelow = false;
+        }
     }
-    if (currentGameState[tileLeftRow][tileLeftColumn]) {
-        //if tile Left exists, store its id
-        tileLeftId = currentGameState[tileLeftRow][tileLeftColumn];
+    // To the left
+    if (column > 0 && currentGameState[row][column - 1]) {
+        tileToLeftId = currentGameState[row][column - 1];
+        tileToLeft = existingPlacedTiles[tileToLeftId];
+        if (tileToLeft.sides[1] !== toBePlacedTile.sides[3]) {
+            matchToLeft = false;
+        } 
     }
 
-    const aboveTileSides = tileAboveId ? exisitingPlacedTiles[tileAboveId].sides : null;
-    const rightTileSides = tileRightId ? exisitingPlacedTiles[tileRightId].sides : null;
-    const bottomTileSides = tileBottomId ? exisitingPlacedTiles[tileBottomId].sides : null;
-    const leftTileSides = tileLeftId ? exisitingPlacedTiles[tileLeftId].sides : null;
-// ["grass", "city", "road", "city"]
-
-    if (!aboveTileSides && !rightTileSides && !bottomTileSides && !leftTileSides){
+    // Can't place a tile without a neighbor
+    if (!tileAbove && !tileToRight && !tileBelow && !tileToLeft){
         return false;
     }
-// if we have a tile above, grab its sides
-    let match0 = true;
-    let match1 = true;
-    let match2 = true;
-    let match3 = true;
-
-    if (aboveTileSides) {
-        if (aboveTileSides[2] !== toBePlacedTileSides[0]) {
-            match0 = false;
-        } 
-    } 
-    if (rightTileSides) {
-        if (rightTileSides[3] !== toBePlacedTileSides[1]) {
-            match1 = false;
-        } 
-    } 
-    if (bottomTileSides) {
-        if (bottomTileSides[0] !== toBePlacedTileSides[2]) {
-            match2 = false;
-        }
-    } 
-    if (leftTileSides) {
-        if (leftTileSides[1] !== toBePlacedTileSides[3]) {
-            match3 = false;
-        } 
-    }
-     
-    if (match0 && match1 && match2 && match3) {
+    
+    // Return whether it's a valid tile
+    if (matchAbove && matchToRight && matchBelow && matchToLeft) {
         return true;
     } else {
         return false;
