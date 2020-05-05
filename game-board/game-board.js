@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation, initializeCities, addCity } from '../utils/api.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
@@ -11,6 +11,7 @@ let gameState = getGameState();
 
 // reset placedTiles localStorage onload, for now. 
 initializePlacedTiles();
+
 // add preset river tiles to placedTiles onload, for now.
 addRiverToPlacedTiles();
 
@@ -20,6 +21,9 @@ renderGrid(grid);
 
 //render the preset river tile layout
 renderRiver();
+
+// add cities to user object from river tiles
+initializeCities();
 
 //topDeckTile probably should be in storage... but globalize it here to use in eventListener on every new draw
 let topDeckTile;
@@ -49,7 +53,7 @@ function instructionsModal() {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = 'none';
             container.classList.remove('is-blurred');
 
@@ -97,9 +101,6 @@ grid.addEventListener('click', (e) => {
         return false;
     }
 
-    // Update score
-    countConnections(row, column, topDeckTile);
-
     // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
     updatePlacedTiles(topDeckTile);
     gameState[row][column] = topDeckTile.id;
@@ -111,6 +112,10 @@ grid.addEventListener('click', (e) => {
     currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     currentTile.classList.add('placed-tile');
 
+    // Update score
+    countConnections(row, column, topDeckTile);
+    addCity(row, column, topDeckTile.id);
+    
     // Draw and display new tile at bottom of page
     renderTopDeckTile();
 

@@ -37,11 +37,9 @@ export function getGameState() {
     
 }
 
-export function initializeGameState() {
-    
-    const riverTiles = tiles;
+export function initializeGameState() {   
     let gameState = [];
-
+    
     for (let i = 0; i < maxRows; i++) {
         //make new array for every row in grid array
         gameState.push(new Array());
@@ -51,19 +49,155 @@ export function initializeGameState() {
         }
     } 
 
-    gameState[2][3] = riverTiles['73'].id;
-    gameState[2][4] = riverTiles['74'].id;
-    gameState[2][5] = riverTiles['76'].id;
-    gameState[3][5] = riverTiles['82'].id;
-    gameState[4][5] = riverTiles['83'].id;
-    gameState[5][5] = riverTiles['79'].id;
-    gameState[5][6] = riverTiles['81'].id;
-    gameState[5][7] = riverTiles['84'].id;
-    
+    gameState[2][3] = tiles['73'].id;
+    gameState[2][4] = tiles['74'].id;
+    gameState[2][5] = tiles['76'].id;
+    gameState[3][5] = tiles['82'].id;
+    gameState[4][5] = tiles['83'].id;
+    gameState[5][5] = tiles['79'].id;
+    gameState[5][6] = tiles['81'].id;
+    gameState[5][7] = tiles['84'].id;
 
     gameState = JSON.stringify(gameState);
     localStorage.setItem('gameState', gameState);
     return JSON.parse(gameState);
+}
+
+export function initializeCities() {
+
+    // Add in city information from existing river tiles
+    addCity(3, 5, 82);
+    addCity(5, 5, 79);
+
+    // addClassToGameBoard(3, 5, 'city-1');
+    // addClassToGameBoard(3, 5, 'city-2');
+    // addClassToGameBoard(5, 5, 'city-3');
+    // addClassToGameBoard(5, 6, 'city-4');
+}
+
+const tileAboveId = (row, column) => {
+    const currentGameState = getGameState();
+    if (row > 0 && currentGameState[row - 1][column])
+        return currentGameState[row - 1][column];
+    else return null;
+};       
+
+const tileAtRightId = (row, column) => {
+    const currentGameState = getGameState();
+    if (column < (maxColumns - 1) && currentGameState[row][column + 1])
+        return currentGameState[row][column + 1];
+    else return null;
+};       
+
+const tileBelowId = (row, column) => {
+    const currentGameState = getGameState();
+    if (row < (maxRows - 1) && currentGameState[row + 1][column])
+        return currentGameState[row + 1][column];
+    else return null;
+};       
+
+const tileAtLeftId = (row, column) => {
+    const currentGameState = getGameState();
+    if (column > 0 && currentGameState[row][column - 1])
+        return currentGameState[row][column - 1];
+    else return null;
+};       
+
+
+export function addCity(row, column, tileId) {
+        
+    const user = getUser();
+    const placedTiles = getPlacedTiles();
+    let clusterNumber;
+
+    function processExtendingCity(gridAboveClassesList, direction) {
+        console.log('processing from the', direction);
+        const gridAboveClasses = [...gridAboveClassesList];
+        if (gridAboveClasses.length > 1) {
+            // Or use a regex?
+            const splitClasses = [];
+            gridAboveClasses.map((oneClass, index) => splitClasses[index] = oneClass.split('-'));
+            splitClasses.forEach(oneClass => { 
+                if (oneClass[0] === 'cluster') {
+                    const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
+                    user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
+                    user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
+                    user.cities[clusterNumber].tileIds.push(tileId);
+                    user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
+                    addClassToGameBoard(row, column, clusterNumber);
+                    extend = true;
+                    console.log(`Extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
+                }
+            });
+        }
+    }
+
+
+    console.log('-----');
+    // Initializing first city in user
+    if (!user.cities) {
+        clusterNumber = 'cluster-1';
+        const cityObj = { 
+            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
+            tileIds: [tileId],
+            gridIds: [`grid-${row}-${column}`]
+        };
+        user.cities = {};
+        user.cities[clusterNumber] = cityObj;
+        addClassToGameBoard(row, column, clusterNumber);
+        console.log('Initializing first city in user');
+    }
+    
+    // Assume valid placement
+    // Check for adjacency
+    let extend = false;
+    placedTiles[tileId].sides.forEach((side, index) => {
+        if (side === 'city') {
+            // Use switch here instead?
+            // Top is city, check above tile for a city?
+            console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileAtRightId(row, column), tileBelowId(row, column), tileAtLeftId(row, column))
+            if (index === 0 && tileAboveId(row, column))
+                if (placedTiles[tileAboveId(row, column)].sides[2] === 'city') {
+                    const gridAboveClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
+                    processExtendingCity(gridAboveClassesList, 'top');
+                }
+            if (index === 1 && tileAtRightId(row, column))
+                if (placedTiles[tileAtRightId(row, column)].sides[3] === 'city') {
+                    const gridAboveClassesList = document.getElementById(`grid-${row}-${column + 1}`).classList;                
+                    processExtendingCity(gridAboveClassesList, 'right');
+                }
+            if (index === 2 && tileBelowId(row, column))
+                if (placedTiles[tileBelowId(row, column)].sides[0] === 'city') {
+                    const gridAboveClassesList = document.getElementById(`grid-${row + 1}-${column}`).classList;                
+                    processExtendingCity(gridAboveClassesList, 'bottom');
+                }
+            if (index === 3 && tileAtLeftId(row, column))
+                if (placedTiles[tileAtLeftId(row, column)].sides[1] === 'city') {
+                    const gridAboveClassesList = document.getElementById(`grid-${row}-${column - 1}`).classList;                
+                    processExtendingCity(gridAboveClassesList, 'left');
+                }
+        }
+    });
+    
+    // Not adjacent, so start a new city cluster                
+    if (!extend) {
+        const citiesLength = Object.keys(user.cities).length;
+        clusterNumber = `cluster-${citiesLength + 1}`;
+        const cityObj = { 
+            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
+            tileIds: [tileId],
+            gridIds: [`grid-${row}-${column}`]
+        };
+        user.cities[clusterNumber] = cityObj;
+        addClassToGameBoard(row, column, clusterNumber);
+        console.log('Adding a new city to user');
+    }
+    saveUser(user);
+}
+
+function addClassToGameBoard(row, column, className) {
+    const targetTile = document.getElementById(`grid-${row}-${column}`);
+    targetTile.classList.add(className);
 }
 
 export function updateGameState(gameState) {
@@ -127,7 +261,7 @@ export function getTileValidation(row, column, toBePlacedTile) {
         } 
     } 
     // To the right
-    if (column < maxColumns && currentGameState[row][column + 1]) {
+    if (column < (maxColumns - 1) && currentGameState[row][column + 1]) {
         tileToRightId = currentGameState[row][column + 1];
         tileToRight = existingPlacedTiles[tileToRightId];
         if (tileToRight.sides[3] !== toBePlacedTile.sides[1]) {
@@ -135,7 +269,7 @@ export function getTileValidation(row, column, toBePlacedTile) {
         } 
     }   
     // Below
-    if (row < maxRows && currentGameState[row + 1][column]) {
+    if (row < (maxRows - 1) && currentGameState[row + 1][column]) {
         tileBelowId = currentGameState[row + 1][column];
         tileBelow = existingPlacedTiles[tileBelowId];
         if (tileBelow.sides[0] !== toBePlacedTile.sides[2]) {
