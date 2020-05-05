@@ -82,7 +82,7 @@ const tileAboveId = (row, column) => {
     else return null;
 };       
 
-const tileAtRightId = (row, column) => {
+const tileToRightId = (row, column) => {
     const currentGameState = getGameState();
     if (column < (maxColumns - 1) && currentGameState[row][column + 1])
         return currentGameState[row][column + 1];
@@ -96,7 +96,7 @@ const tileBelowId = (row, column) => {
     else return null;
 };       
 
-const tileAtLeftId = (row, column) => {
+const tileToLeftId = (row, column) => {
     const currentGameState = getGameState();
     if (column > 0 && currentGameState[row][column - 1])
         return currentGameState[row][column - 1];
@@ -110,14 +110,16 @@ export function addCity(row, column, tileId) {
     const placedTiles = getPlacedTiles();
     let clusterNumber;
 
-    function processExtendingCity(gridAboveClassesList, direction) {
+    function processExtendingCity(adjacentClassesList, direction) {
         console.log('processing from the', direction);
-        const gridAboveClasses = [...gridAboveClassesList];
-        if (gridAboveClasses.length > 1) {
+        // Get simple array from weird classList object
+        const adjacentClasses = [...adjacentClassesList];
+        if (adjacentClasses.length > 1) {
             // Or use a regex?
             const splitClasses = [];
-            gridAboveClasses.map((oneClass, index) => splitClasses[index] = oneClass.split('-'));
+            adjacentClasses.map((oneClass, index) => splitClasses[index] = oneClass.split('-'));
             splitClasses.forEach(oneClass => { 
+                // If split class shows a city cluster...
                 if (oneClass[0] === 'cluster') {
                     const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
                     user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
@@ -148,33 +150,32 @@ export function addCity(row, column, tileId) {
         console.log('Initializing first city in user');
     }
     
-    // Assume valid placement
-    // Check for adjacency
+    // Placement has already been validated
+    // Check for adjacency to other cities and extend, if possible
     let extend = false;
     placedTiles[tileId].sides.forEach((side, index) => {
         if (side === 'city') {
-            // Use switch here instead?
             // Top is city, check above tile for a city?
-            console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileAtRightId(row, column), tileBelowId(row, column), tileAtLeftId(row, column))
+            console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileToRightId(row, column), tileBelowId(row, column), tileToLeftId(row, column))
             if (index === 0 && tileAboveId(row, column))
                 if (placedTiles[tileAboveId(row, column)].sides[2] === 'city') {
-                    const gridAboveClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
-                    processExtendingCity(gridAboveClassesList, 'top');
+                    const adjacentClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
+                    processExtendingCity(adjacentClassesList, 'top');
                 }
-            if (index === 1 && tileAtRightId(row, column))
-                if (placedTiles[tileAtRightId(row, column)].sides[3] === 'city') {
-                    const gridAboveClassesList = document.getElementById(`grid-${row}-${column + 1}`).classList;                
-                    processExtendingCity(gridAboveClassesList, 'right');
+            if (index === 1 && tileToRightId(row, column))
+                if (placedTiles[tileToRightId(row, column)].sides[3] === 'city') {
+                    const adjacentClassesList = document.getElementById(`grid-${row}-${column + 1}`).classList;                
+                    processExtendingCity(adjacentClassesList, 'right');
                 }
             if (index === 2 && tileBelowId(row, column))
                 if (placedTiles[tileBelowId(row, column)].sides[0] === 'city') {
-                    const gridAboveClassesList = document.getElementById(`grid-${row + 1}-${column}`).classList;                
-                    processExtendingCity(gridAboveClassesList, 'bottom');
+                    const adjacentClassesList = document.getElementById(`grid-${row + 1}-${column}`).classList;                
+                    processExtendingCity(adjacentClassesList, 'bottom');
                 }
-            if (index === 3 && tileAtLeftId(row, column))
-                if (placedTiles[tileAtLeftId(row, column)].sides[1] === 'city') {
-                    const gridAboveClassesList = document.getElementById(`grid-${row}-${column - 1}`).classList;                
-                    processExtendingCity(gridAboveClassesList, 'left');
+            if (index === 3 && tileToLeftId(row, column))
+                if (placedTiles[tileToLeftId(row, column)].sides[1] === 'city') {
+                    const adjacentClassesList = document.getElementById(`grid-${row}-${column - 1}`).classList;                
+                    processExtendingCity(adjacentClassesList, 'left');
                 }
         }
     });
@@ -230,60 +231,32 @@ export function initializePlacedTiles() {
 
 export function getTileValidation(row, column, toBePlacedTile) {
     
-    // get id's of surrounding tiles from local storage
-    // getGameState = array of arrays of ids
-    const currentGameState = getGameState();
     //placed tiles is object of objects with tile properties
     const existingPlacedTiles = getPlacedTiles();
     
-    let tileAboveId = null; 
-    let tileToRightId = null;
-    let tileBelowId = null;
-    let tileToLeftId = null;
-
-    let tileAbove = null;
-    let tileToRight = null;
-    let tileBelow = null;
-    let tileToLeft = null;
+    let tileAbove = existingPlacedTiles[tileAboveId(row, column)];
+    let tileToRight = existingPlacedTiles[tileToRightId(row, column)];
+    let tileBelow = existingPlacedTiles[tileBelowId(row, column)];
+    let tileToLeft = existingPlacedTiles[tileToLeftId(row, column)];
 
     let matchAbove = true;
     let matchToRight = true;
     let matchBelow = true;
     let matchToLeft = true;
 
-    // Checking for neighboring tiles, find their IDs, and see if the sides match
-    // Above
-    if (row > 0 && currentGameState[row - 1][column]) {
-        tileAboveId = currentGameState[row - 1][column];
-        tileAbove = existingPlacedTiles[tileAboveId];
-        if (tileAbove.sides[2] !== toBePlacedTile.sides[0]) {
+    // Checking for neighboring tiles and see if the sides match
+    if (tileAbove)
+        if (tileAbove.sides[2] !== toBePlacedTile.sides[0])
             matchAbove = false;
-        } 
-    } 
-    // To the right
-    if (column < (maxColumns - 1) && currentGameState[row][column + 1]) {
-        tileToRightId = currentGameState[row][column + 1];
-        tileToRight = existingPlacedTiles[tileToRightId];
-        if (tileToRight.sides[3] !== toBePlacedTile.sides[1]) {
+    if (tileToRight)
+        if (tileToRight.sides[3] !== toBePlacedTile.sides[1])
             matchToRight = false;
-        } 
-    }   
-    // Below
-    if (row < (maxRows - 1) && currentGameState[row + 1][column]) {
-        tileBelowId = currentGameState[row + 1][column];
-        tileBelow = existingPlacedTiles[tileBelowId];
-        if (tileBelow.sides[0] !== toBePlacedTile.sides[2]) {
+    if (tileBelow)
+        if (tileBelow.sides[0] !== toBePlacedTile.sides[2])
             matchBelow = false;
-        }
-    }
-    // To the left
-    if (column > 0 && currentGameState[row][column - 1]) {
-        tileToLeftId = currentGameState[row][column - 1];
-        tileToLeft = existingPlacedTiles[tileToLeftId];
-        if (tileToLeft.sides[1] !== toBePlacedTile.sides[3]) {
+    if (tileToLeft)
+        if (tileToLeft.sides[1] !== toBePlacedTile.sides[3])
             matchToLeft = false;
-        } 
-    }
 
     // Can't place a tile without a neighbor
     if (!tileAbove && !tileToRight && !tileBelow && !tileToLeft){
