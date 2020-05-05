@@ -68,6 +68,7 @@ export function initializeCities() {
     // Add in city information from existing river tiles
     addCity(3, 5, 82);
     addCity(5, 5, 79);
+    addCity(5, 6, 81);
 
     // addClassToGameBoard(3, 5, 'city-1');
     // addClassToGameBoard(3, 5, 'city-2');
@@ -121,6 +122,7 @@ export function addCity(row, column, tileId) {
             splitClasses.forEach(oneClass => { 
                 // If split class shows a city cluster...
                 if (oneClass[0] === 'cluster') {
+                    console.log(`Extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
                     const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
                     user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
                     user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
@@ -128,7 +130,10 @@ export function addCity(row, column, tileId) {
                     user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
                     addClassToGameBoard(row, column, clusterNumber);
                     extend = true;
-                    console.log(`Extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
+                    if (user.cities[clusterNumber].openConnections === 0) {
+                        console.log(`Completing ${oneClass[0]}-${oneClass[1]}!`);
+                        user.cityCompleted++;
+                    }
                 }
             });
         }

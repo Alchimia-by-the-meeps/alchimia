@@ -531,6 +531,7 @@ export const tiles = {
 
 // Omitted tiles (use for expansion?): 
 // CastleMini0.png
+// CastleCenterSides0.png
 // CastleSidesEdgeRoad0.png
 // CastleSidesQuad0.png
 // CastleSidesRoad0.png

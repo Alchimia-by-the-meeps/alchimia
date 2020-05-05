@@ -26,6 +26,7 @@ renderRiver();
 initializeCities();
 
 //topDeckTile probably should be in storage... but globalize it here to use in eventListener on every new draw
+let turnNumber = 0;
 let topDeckTile;
 renderTopDeckTile();
 
@@ -72,7 +73,6 @@ userName.textContent = userProfile.name;
 meepChoice.src = `../assets/meeples/${userProfile.meep}`;
 
 
-
 grid.addEventListener('click', (e) => {
 
     // If clicked element was one of the containers (grid/row), exit
@@ -102,6 +102,7 @@ grid.addEventListener('click', (e) => {
     }
 
     // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
+    turnNumber++;
     updatePlacedTiles(topDeckTile);
     gameState[row][column] = topDeckTile.id;
     updateGameState(gameState);
@@ -121,6 +122,7 @@ grid.addEventListener('click', (e) => {
 
     // Draw and display new connections
     renderConnections();
+
 });
 
 let myCell;
@@ -173,6 +175,7 @@ function getUnplayedTiles() {
     return unplayedTiles;
 }
 
+// Refactor this for better performance
 function getTileFromDeck() {
     //get array of unplayed tile Ids
     const unplayedTiles = getUnplayedTiles();
@@ -198,9 +201,15 @@ function getTileFromDeck() {
 function renderTopDeckTile() {
     //random tile deck at bottom of page
     const div = document.getElementById('player-tile');
-    //select random tile
-    topDeckTile = getTileFromDeck();
 
+    // Select random tile
+    // For testing purposes: Get first tiles from explicit array of tiles.
+    const testingDeck = [5, 27, 28, 35, 36, 29];
+    if (turnNumber < testingDeck.length) {
+        topDeckTile = tiles[testingDeck[turnNumber]];
+    } else topDeckTile = getTileFromDeck();
+
+    // All out of tiles, game over!
     if (!topDeckTile) {
         div.style.opacity = 1;
         div.style.backgroundImage = `url("../tiles/Null1.png")`;

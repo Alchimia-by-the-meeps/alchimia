@@ -102,10 +102,34 @@ export function countConnections(row, column, topDeckTile) {
 export function renderConnections() {
     const user = getUser();
     const cityCount = document.getElementById('city-count');
+    const cityCompletedCount = document.getElementById('city-completed-count');
+    const cityCompletedPoints = document.getElementById('city-completed-points');
     const roadCount = document.getElementById('road-count');
     const monasteryCount = document.getElementById('monastery-count');
 
+    const completedCityPoints = () => {
+        let allClusters = Object.keys(user.cities);
+        let completedClusters = [];
+        allClusters.forEach(cluster => {
+            if (user.cities[cluster].openConnections === 0) {
+                completedClusters.push(cluster);
+            }
+        });
+
+        let points = 0;
+        console.log('=====');
+        console.log('Scoring... allClusters:', allClusters);
+        console.log('Scoring... completedClusters:', completedClusters);
+        completedClusters.forEach(cluster => { 
+            points += user.cities[cluster].tileIds.length * 2;
+        });
+        return points;
+    };
+
     cityCount.textContent = user.cityConnections * 2;
+    // Refactor this? cityCompleted key seems unnecessary -- see comments above.
+    cityCompletedCount.textContent = user.cityCompleted;
+    cityCompletedPoints.textContent = completedCityPoints();
     roadCount.textContent = user.roadConnections;
     monasteryCount.textContent = user.monasteries;
 }
@@ -131,8 +155,7 @@ export function renderResultsScore() {
 
 export function getMonasteryArray() {
     const exisitingPlacedTiles = getPlacedTiles();
-    //loop thrugh and find monisteries
-    
+    //loop though and find monasteries
     let newArray = Object.keys(exisitingPlacedTiles).filter(tile => {
         return exisitingPlacedTiles[tile].monastery === true;
     });
@@ -148,6 +171,7 @@ export function loopThroughMonasteryArray() {
     return monasteryScore;
 }
 
+// Refactor this!
 export function scoreMonastery(monasteryTileId) {
     let gameState = getGameState();
     let row;
