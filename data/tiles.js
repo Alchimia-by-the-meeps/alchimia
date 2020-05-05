@@ -111,30 +111,35 @@ export const tiles = {
         id: 19,
         image: 'CastleSides0.png',
         sides: ['city', 'grass', 'city', 'grass'],
+        cities: ['A', null, 'B', null],
         rotation: 0
     },
     20: {
         id: 20,
         image: 'CastleSides0.png',
         sides: ['city', 'grass', 'city', 'grass'],
+        cities: ['A', null, 'B', null],
         rotation: 0
     },
     21: {
         id: 21,
         image: 'CastleSides0.png',
         sides: ['city', 'grass', 'city', 'grass'],
+        cities: ['A', null, 'B', null],
         rotation: 0
     },
     22: {
         id: 22,
         image: 'CastleSidesEdge0.png',
         sides: ['city', 'grass', 'grass', 'city'],
+        cities: ['A', 'B', null, null],
         rotation: 0
     },
     23: {
         id: 23,
         image: 'CastleSidesEdge0.png',
         sides: ['city', 'grass', 'grass', 'city'],
+        cities: ['A', 'B', null, null],
         rotation: 0
     },
     24: {
@@ -504,6 +509,7 @@ export const tiles = {
         id: 82,
         image: 'River7-rotated.png',
         sides: ['river', 'city', 'river', 'city'],
+        cities: [null, 'A', null, 'B'],
         rotation: 0,
         river: true
     },
@@ -522,3 +528,21 @@ export const tiles = {
         river: true
     }
 };
+
+// Omitted tiles (use for expansion?): 
+// CastleMini0.png
+// CastleSidesEdgeRoad0.png
+// CastleSidesQuad0.png
+// CastleSidesRoad0.png
+// CastleTubeEntries0.png
+// CastleTubeEntry0.png
+// CastleWallEntry0.png
+// CastleWallEntryLeft0.png
+// CastleWallEntryRight0.png
+// CastleWallJunction0.png
+// MonasteryCastle0.png
+// MonasteryJunction0.png
+// RoadCrossLarge0.png
+// RoadEnd0.png
+// RoadJunctionLarge0.png
+// RoadJunctionSmall0.png
