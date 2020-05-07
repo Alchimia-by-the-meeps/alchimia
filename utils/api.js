@@ -1,4 +1,5 @@
 import { tiles } from '../data/tiles.js';
+import { addCity } from './city-utils.js';
 
 export const maxColumns = 12;
 export const maxRows = 8;
@@ -76,132 +77,35 @@ export function initializeCities() {
     // addClassToGameBoard(5, 6, 'city-4');
 }
 
-const tileAboveId = (row, column) => {
+export const tileAboveId = (row, column) => {
     const currentGameState = getGameState();
     if (row > 0 && currentGameState[row - 1][column])
         return currentGameState[row - 1][column];
     else return null;
 };       
 
-const tileToRightId = (row, column) => {
+export const tileToRightId = (row, column) => {
     const currentGameState = getGameState();
     if (column < (maxColumns - 1) && currentGameState[row][column + 1])
         return currentGameState[row][column + 1];
     else return null;
 };       
 
-const tileBelowId = (row, column) => {
+export const tileBelowId = (row, column) => {
     const currentGameState = getGameState();
     if (row < (maxRows - 1) && currentGameState[row + 1][column])
         return currentGameState[row + 1][column];
     else return null;
 };       
 
-const tileToLeftId = (row, column) => {
+export const tileToLeftId = (row, column) => {
     const currentGameState = getGameState();
     if (column > 0 && currentGameState[row][column - 1])
         return currentGameState[row][column - 1];
     else return null;
 };       
 
-
-export function addCity(row, column, tileId) {
-        
-    const user = getUser();
-    const placedTiles = getPlacedTiles();
-    let clusterNumber;
-
-    function processExtendingCity(adjacentClassesList, direction) {
-        console.log('processing from the', direction);
-        // Get simple array from weird classList object
-        const adjacentClasses = [...adjacentClassesList];
-        if (adjacentClasses.length > 1) {
-            // Or use a regex?
-            const splitClasses = [];
-            adjacentClasses.map((oneClass, index) => splitClasses[index] = oneClass.split('-'));
-            splitClasses.forEach(oneClass => { 
-                // If split class shows a city cluster...
-                if (oneClass[0] === 'cluster') {
-                    console.log(`Extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
-                    const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
-                    user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
-                    user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
-                    user.cities[clusterNumber].tileIds.push(tileId);
-                    user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
-                    addClassToGameBoard(row, column, clusterNumber);
-                    extend = true;
-                    if (user.cities[clusterNumber].openConnections === 0) {
-                        console.log(`Completing ${oneClass[0]}-${oneClass[1]}!`);
-                        user.cityCompleted++;
-                    }
-                }
-            });
-        }
-    }
-
-
-    console.log('-----');
-    // Initializing first city in user
-    if (!user.cities) {
-        clusterNumber = 'cluster-1';
-        const cityObj = { 
-            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
-            tileIds: [tileId],
-            gridIds: [`grid-${row}-${column}`]
-        };
-        user.cities = {};
-        user.cities[clusterNumber] = cityObj;
-        addClassToGameBoard(row, column, clusterNumber);
-        console.log('Initializing first city in user');
-    }
-    
-    // Placement has already been validated
-    // Check for adjacency to other cities and extend, if possible
-    let extend = false;
-    placedTiles[tileId].sides.forEach((side, index) => {
-        if (side === 'city') {
-            // Top is city, check above tile for a city?
-            console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileToRightId(row, column), tileBelowId(row, column), tileToLeftId(row, column))
-            if (index === 0 && tileAboveId(row, column))
-                if (placedTiles[tileAboveId(row, column)].sides[2] === 'city') {
-                    const adjacentClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
-                    processExtendingCity(adjacentClassesList, 'top');
-                }
-            if (index === 1 && tileToRightId(row, column))
-                if (placedTiles[tileToRightId(row, column)].sides[3] === 'city') {
-                    const adjacentClassesList = document.getElementById(`grid-${row}-${column + 1}`).classList;                
-                    processExtendingCity(adjacentClassesList, 'right');
-                }
-            if (index === 2 && tileBelowId(row, column))
-                if (placedTiles[tileBelowId(row, column)].sides[0] === 'city') {
-                    const adjacentClassesList = document.getElementById(`grid-${row + 1}-${column}`).classList;                
-                    processExtendingCity(adjacentClassesList, 'bottom');
-                }
-            if (index === 3 && tileToLeftId(row, column))
-                if (placedTiles[tileToLeftId(row, column)].sides[1] === 'city') {
-                    const adjacentClassesList = document.getElementById(`grid-${row}-${column - 1}`).classList;                
-                    processExtendingCity(adjacentClassesList, 'left');
-                }
-        }
-    });
-    
-    // Not adjacent, so start a new city cluster                
-    if (!extend) {
-        const citiesLength = Object.keys(user.cities).length;
-        clusterNumber = `cluster-${citiesLength + 1}`;
-        const cityObj = { 
-            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
-            tileIds: [tileId],
-            gridIds: [`grid-${row}-${column}`]
-        };
-        user.cities[clusterNumber] = cityObj;
-        addClassToGameBoard(row, column, clusterNumber);
-        console.log('Adding a new city to user');
-    }
-    saveUser(user);
-}
-
-function addClassToGameBoard(row, column, className) {
+export function addClassToGameBoard(row, column, className) {
     const targetTile = document.getElementById(`grid-${row}-${column}`);
     targetTile.classList.add(className);
 }

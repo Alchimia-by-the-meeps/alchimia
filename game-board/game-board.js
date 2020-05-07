@@ -1,5 +1,6 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation, initializeCities, addCity } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation, initializeCities } from '../utils/api.js';
+import { addCity } from '../utils/city-utils.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
 import { countConnections, renderConnections } from '../utils/scoring.js';
