@@ -1,5 +1,5 @@
 // import the tiles
-import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation, initializeCities } from '../utils/api.js';
+import { maxRows, maxColumns, getGameState, updateGameState, initializeGameState, getPlacedTiles, updatePlacedTiles, initializePlacedTiles, addRiverToPlacedTiles, getUser, getTileValidation, initializeCities, resetUser, wipeGameBoard, renderGameBoard } from '../utils/api.js';
 import { addCity } from '../utils/city-utils.js';
 import { tiles } from '../data/tiles.js';
 import { rotateTile } from './rotate.js';
@@ -35,6 +35,23 @@ renderTopDeckTile();
 const quitButton = document.getElementById('quit-button');
 quitButton.addEventListener('click', () => {
     location.href = '../results';
+});
+
+// Reset user local storage and game state
+const resetButton = document.getElementById('reset-button');
+resetButton.addEventListener('click', () => {
+    localStorage.removeItem('gameState');
+    localStorage.removeItem('placedTiles');
+    resetUser();
+    initializeGameState();
+    gameState = getGameState();
+    initializePlacedTiles();
+    addRiverToPlacedTiles();
+    wipeGameBoard(grid);
+    renderGameBoard(grid);
+    initializeCities();
+    turnNumber = 0;
+    renderTopDeckTile();
 });
 
 const container = document.getElementById('container');

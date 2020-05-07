@@ -28,6 +28,17 @@ export function getUser() {
     return user;
 }
 
+// Delete user stats
+export function resetUser() {
+    const user = getUser();
+    user.cityConnections = 0;
+    user.cityCompleted = 0;
+    user.roadConnections = 0; 
+    user.monasteries = 0;
+    delete user.cities;
+    saveUser(user);
+}
+
 export function getGameState() {
     //if gameState exists in localStorage, set gameState to that function, else initialize and set it to new gameState
     const gameStateData = localStorage.getItem('gameState') ? JSON.parse(localStorage.getItem('gameState')) : initializeGameState();
@@ -180,3 +191,43 @@ export function getTileValidation(row, column, toBePlacedTile) {
     }
 
 }
+
+// Delete any existing rows from game board (i.e. resetting)
+export function wipeGameBoard(parent) {
+    parent.querySelectorAll('section').forEach(element => element.remove());
+}
+
+export function renderGameBoard(parent) {
+    const maxColumns = 12;
+    const maxRows = 8;
+    
+    // Get boardState from localStorage
+    const gameState = getGameState();
+    const placedTiles = getPlacedTiles();
+
+    // Loop through maxRows and create rows
+    for (let i = 0; i < maxRows; i++) {
+        const row = document.createElement('section');
+        row.id = `row-${i}`;
+        row.classList.add('row');
+        
+        // Loop through each row and create columns
+        for (let j = 0; j < maxColumns; j++) {
+            const cell = document.createElement('div');
+            cell.id = `grid-${i}-${j}`;
+            cell.classList.add('cell');
+            // Get ID of corresponding gameState array of arrays
+            
+            if (gameState[i][j]) {
+                const thisCellId = gameState[i][j];
+                // console.log(thisCellId);
+                cell.style.transform = 'rotate(' + placedTiles[thisCellId].rotation + 'deg)'
+                cell.style.backgroundImage = `url('../tiles/${tiles[thisCellId].image}')`;
+                cell.classList.add('placed-tile');
+            }
+            row.appendChild(cell);
+        }
+        // Add row to parent / passed element
+        parent.appendChild(row);
+    }
+}  

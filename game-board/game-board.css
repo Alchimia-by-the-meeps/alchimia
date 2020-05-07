@@ -161,7 +161,7 @@
     width: 40px;
 }
     
-#quit-button, #instructionsButton {
+#quit-button, #instructionsButton, #reset-button {
     /* font-family: 'Jim Nightshade', cursive;
     background-color: rgb(71, 77, 46);
     border: none;
@@ -179,7 +179,7 @@
     box-shadow: rgba(0,0,0,0.3) 2px 2px 3px; */
 }
 
-#instructionsButton:hover, #quit-button:hover {
+#instructionsButton:hover, #quit-button:hover, #reset-button:hover {
     /* background-color: rgba(71, 77, 46, .9); */
     /* color: #eddcb5;
     transform: scale(1.05);
