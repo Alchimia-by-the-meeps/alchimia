@@ -3,6 +3,7 @@ export default function makeUser(formData){
     const user = {
         name: formData.get('name'),
         meep: formData.get('meep'), 
+        cities: {},
         cityConnections: 0,
         cityCompleted: 0,
         roadConnections: 0, 

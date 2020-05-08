@@ -16,64 +16,21 @@ export function addCity(row, column, tileId) {
         
     const user = getUser();
     const placedTiles = getPlacedTiles();
+    let processedSides = 0;
     let clusterNumber;
+    let cityClusters = Object.keys(user.cities).length;
+    clusterNumber = `cluster-${cityClusters}`;
 
-  // Initializing first city in user
-  // REFACTOR: Does the first city need to be a separate case?
-    if (!user.cities) {
-        let clusterNumber;
-        // If a complex tile with different individual cities on it...
-        if (tiles[tileId].cities) {
-            let reduceObj = {};
-            console.log('Processing multiple cities on tile to be placed');
-            tiles[tileId].cities.forEach((separateCity, index) => {
-                console.log(`separateCity[${index}] is ${separateCity}`);
-                if (separateCity) 
-                    if (!reduceObj[separateCity]) {
-                        reduceObj[separateCity] = 1;
-                    } else reduceObj[separateCity]++;
-            });
-            const reduceArr = Object.keys(reduceObj);
-            console.log('reduceObj is', reduceObj);
-            console.log('reduceArr is', reduceArr);
-            reduceArr.forEach((separateCity, index) => {
-            // Add a new city
-                clusterNumber = `cluster-${index}`;
-                const cityObj = { 
-                    openConnections: tileConnections(tileId),
-                    tileIds: [tileId],
-                    gridIds: [`grid-${row}-${column}`]
-                };
-                if (!user.cities) user.cities = {};
-                user.cities[clusterNumber] = cityObj;
-                addClassToGameBoard(row, column, clusterNumber);
-                console.log('Adding a new complex city to user:', clusterNumber, cityObj);      
-            });
-        } else {
-        // Simple city tile
-            clusterNumber = 'cluster-1';
-            const cityObj = { 
-                openConnections: tileConnections(tileId),
-                tileIds: [tileId],
-                gridIds: [`grid-${row}-${column}`]
-            };
-            user.cities = {};
-            user.cities[clusterNumber] = cityObj;
-            addClassToGameBoard(row, column, clusterNumber);
-            console.log('Initializing first city in user');
-        }
-        // Our job is done here.
-        saveUser(user);
-        return;
-    }
+    // Either extend a city or add a new city (i.e. no adjaciencies)
+    // Note: Placement has already been validated
 
+    console.log('---');
+    console.log(`Starting to processing tile ${tileId}`);
 
-  // Check for adjacency to other cities and extend, if possible
-  // Note: Placement has already been validated
-    let extend = false;
+    // First, check for adjacency to other cities and extend, if possible
     placedTiles[tileId].sides.forEach((side, index) => {
         if (side === 'city') {
-            console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileToRightId(row, column), tileBelowId(row, column), tileToLeftId(row, column))
+            console.log(`Checking adjacencies. tileID: ${tileId} side: ${index} has neighbors ${tileAboveId(row, column)} ${tileToRightId(row, column)} ${tileBelowId(row, column)} ${tileToLeftId(row, column)}`);
             // If top (i.e. [0]) of new tile is a city, and there's a tile above... 
             if (index === 0 && tileAboveId(row, column))
                 // ... is the adjacent bottom (i.e. [2]) of it a city?
@@ -101,13 +58,22 @@ export function addCity(row, column, tileId) {
                     const adjacentClasses = [...adjacentClassesList];
                     processExtendingCity(adjacentClasses, 'left');
                 }
-        }
+        } else processedSides += 1;
     });
-  
-  // Not adjacent, so start a new city cluster                
-    if (!extend) {
-        const cityClusters = Object.keys(user.cities).length;
-        clusterNumber = `cluster-${cityClusters}`;
+
+    // Check if all cities on tile have been processed (extended). 
+    // If so, save and skip rest of function.
+    console.log('processedSides:', processedSides);
+    if (processedSides === 4) {
+        console.log('Saving user and exiting function early');
+        saveUser(user);
+        return;
+    }
+
+    // Then, add a new city if no adjacencies 
+    console.log('Checking to make a new city cluster');
+    if (!tiles[tileId].cities) {
+		// Simple city tile
         const cityObj = { 
             openConnections: tileConnections(tileId),
             tileIds: [tileId],
@@ -115,10 +81,42 @@ export function addCity(row, column, tileId) {
         };
         user.cities[clusterNumber] = cityObj;
         addClassToGameBoard(row, column, clusterNumber);
-        console.log('Adding a new city to user', clusterNumber, cityObj);
+        console.log(`Adding ${clusterNumber} to user from simple tile ${tileId}`);
+
+    } else {
+		// If a complex tile with different individual cities on it...
+        console.log('Processing multiple cities on tile to be placed');
+        let reduceObj = {};
+        tiles[tileId].cities.forEach((separateCity, index) => {
+            console.log(`separateCity[${index}] is ${separateCity}`);
+            if (separateCity) 
+                if (!reduceObj[separateCity]) {
+                    reduceObj[separateCity] = 1;
+                } else reduceObj[separateCity]++;
+        });
+        const reduceArr = Object.keys(reduceObj);
+        console.log('reduceObj is', reduceObj);
+        console.log('reduceArr is', reduceArr);
+        reduceArr.forEach(separateCity => {
+        // Add a new city
+            cityClusters = Object.keys(user.cities).length;
+            clusterNumber = `cluster-${cityClusters}`;
+            const cityObj = { 
+                openConnections: reduceObj[separateCity],
+                tileIds: [tileId],
+                gridIds: [`grid-${row}-${column}`]
+            };
+            user.cities[clusterNumber] = cityObj;
+            addClassToGameBoard(row, column, clusterNumber);
+            console.log('Adding a new complex city to user:', clusterNumber, cityObj);      
+        });
     }
+
+    // Our job is done here.
+    console.log('Saving user');
     saveUser(user);
 
+	
 
     // Helper function. 
     // Placed inside addCity() scope to prevent passing tons of variables, and only necessary to addCity.
@@ -138,7 +136,8 @@ export function addCity(row, column, tileId) {
             user.cities[clusterNumber].tileIds.push(tileId);
             user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
             addClassToGameBoard(row, column, clusterNumber);
-            extend = true;
+            // extend = true;
+            processedSides += tileConnections(tileId, direction);
             if (user.cities[clusterNumber].openConnections === 0) {
                 console.log(`Completing ${splitClass[0]}-${splitClass[1]}!`);
                 user.cityCompleted++;
@@ -150,7 +149,7 @@ export function addCity(row, column, tileId) {
             // 'Start' a cluster by extending the first cluster without connections
             // REFACTOR? Simply count length of tileIds for each cluster?
             const neighborMatches = [];
-            // Use a for loop to break out early once a cluster is assigned
+          // Use a for loop to break out early once a cluster is assigned
             for (let i = 0; i < splitClasses.length; i++) {
                 const oneClass = splitClasses[i];
                 neighborMatches[`${oneClass[0]}-${oneClass[1]}`] = 0;
@@ -235,11 +234,13 @@ export function addCity(row, column, tileId) {
                     console.log(`Multi-matches and extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
                     const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
                     user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
+                    console.log(`Calculated tile connections from ${direction} (tile rotated ${tiles[tileId].rotation}) is ${tileConnections(tileId, direction)}`);
                     user.cities[clusterNumber].openConnections += tileConnections(tileId, direction);
                     user.cities[clusterNumber].tileIds.push(tileId);
                     user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
                     addClassToGameBoard(row, column, clusterNumber);
-                    extend = true;
+                    // extend = true;
+                    processedSides += tileConnections(tileId, direction);
                     if (user.cities[clusterNumber].openConnections === 0) {
                         console.log(`Completing ${oneClass[0]}-${oneClass[1]}!`);
                         user.cityCompleted++;
@@ -295,6 +296,5 @@ const tileConnections = (tileId, direction) => {
         if (direction === 'left') cityLetter = tiles[tileId].cities[3];
         openConnections = tiles[tileId].cities.filter(city => city === cityLetter);    
     }
-    console.log(`Calculated tile connections from ${direction} (tile rotated ${tiles[tileId].rotation}) is ${openConnections}`);
     return openConnections;
 };

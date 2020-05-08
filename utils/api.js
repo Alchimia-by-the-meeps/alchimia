@@ -35,7 +35,7 @@ export function resetUser() {
     user.cityCompleted = 0;
     user.roadConnections = 0; 
     user.monasteries = 0;
-    delete user.cities;
+    user.cities = {};
     saveUser(user);
 }
 
