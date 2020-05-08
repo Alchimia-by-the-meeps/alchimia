@@ -1,5 +1,8 @@
 import { tiles } from '../data/tiles.js';
-import { getUser,
+import { 
+    maxRows, 
+    maxColumns,
+    getUser,
     saveUser,
     getPlacedTiles, 
     addClassToGameBoard, 
@@ -110,7 +113,7 @@ export function addCity(row, column, tileId) {
         };
         user.cities[clusterNumber] = cityObj;
         addClassToGameBoard(row, column, clusterNumber);
-        console.log('Adding a new city to user');
+        console.log('Adding a new city to user', clusterNumber, cityObj);
     }
     saveUser(user);
 
@@ -118,14 +121,115 @@ export function addCity(row, column, tileId) {
     // Helper function. 
     // Placed inside addCity() scope to prevent passing tons of variables, and only necessary to addCity.
     function processExtendingCity(adjacentClasses, direction) {
-        if (adjacentClasses.length > 1) {
-        // Or use a regex?
-            const splitClasses = [];
-            adjacentClasses.map((oneClass, index) => splitClasses[index] = oneClass.split('-'));
-            splitClasses.forEach(oneClass => { 
-            // If split class shows a city cluster...
-                if (oneClass[0] === 'cluster') {
-                    console.log(`Extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
+        const splitClassesRaw = [];
+        adjacentClasses.map((oneClass, index) => splitClassesRaw[index] = oneClass.split('-'));
+        console.log('splitClassesRaw is', splitClassesRaw);
+        const splitClasses = splitClassesRaw.filter(item => item[0] === 'cluster');
+        console.log('splitClasses is', splitClasses, 'and has length', splitClasses.length);
+        // If there's only one city cluster to extend...
+        if (splitClasses.length === 1) {
+            const splitClass = splitClasses.flat();
+            console.log(`Extending ${splitClass[0]}-${splitClass[1]} from the ${direction}`);
+            const clusterNumber = `${splitClass[0]}-${splitClass[1]}`;
+            user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
+            user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
+            user.cities[clusterNumber].tileIds.push(tileId);
+            user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
+            addClassToGameBoard(row, column, clusterNumber);
+            extend = true;
+            if (user.cities[clusterNumber].openConnections === 0) {
+                console.log(`Completing ${splitClass[0]}-${splitClass[1]}!`);
+                user.cityCompleted++;
+            }
+        } else {
+            console.log(`===`);
+            console.log(`Negotiating multiple city clusters...`);
+            // Neighbor contains multiple city clusters.
+            // 'Start' a cluster by extending the first cluster without connections
+            const neighborMatches = [];
+            // Use a for loop to break out early once a cluster is assigned
+            for (let i = 0; i < splitClasses.length; i++) {
+                const oneClass = splitClasses[i];
+                neighborMatches[`${oneClass[0]}-${oneClass[1]}`] = 0;
+                if (direction === 'top' && row > 1) {
+                    console.log('looking above for', `${oneClass[0]}-${oneClass[1]}`);
+                    console.log('above: ', gridAboveNeighborClasses(row - 1, column), 
+                        'right: ', gridToRightNeighborClasses(row - 1, column), 
+                        'left: ', gridToLeftNeighborClasses(row - 1, column));
+                    if (gridAboveNeighborClasses(row - 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`top neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridToRightNeighborClasses(row - 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`right neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridToLeftNeighborClasses(row - 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`left neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                }
+
+                if (direction === 'right' && column < (maxColumns - 2)) {
+                    console.log('looking to the right for', `${oneClass[0]}-${oneClass[1]}`);
+                    console.log('above: ', gridAboveNeighborClasses(row, column + 1), 
+                        'right: ', gridToRightNeighborClasses(row, column + 1), 
+                        'below: ', gridBelowNeighborClasses(row, column + 1));
+                    if (gridAboveNeighborClasses(row, column + 1).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`top neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridToRightNeighborClasses(row, column + 1).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`right neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridBelowNeighborClasses(row, column + 1).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                }
+
+                if (direction === 'bottom' && row < (maxRows - 2)) {
+                    console.log('looking below for', `${oneClass[0]}-${oneClass[1]}`);
+                    console.log('right: ', gridToRightNeighborClasses(row + 1, column), 
+                        'below: ', gridBelowNeighborClasses(row + 1, column), 
+                        'left: ', gridToLeftNeighborClasses(row + 1, column));
+                    if (gridToRightNeighborClasses(row + 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`right neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridBelowNeighborClasses(row + 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridToLeftNeighborClasses(row + 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
+                        console.log(`left neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                }
+
+                if (direction === 'left' && column > 1) {
+                    console.log('looking to the left for', `${oneClass[0]}-${oneClass[1]}`);
+                    console.log('above: ', gridAboveNeighborClasses(row, column - 1), 
+                        'below: ', gridBelowNeighborClasses(row, column - 1), 
+                        'left: ', gridToLeftNeighborClasses(row, column - 1));
+                    if (gridAboveNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
+                        console.log(`top neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridBelowNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
+                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                    if (gridToLeftNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
+                        console.log(`left neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
+                    }
+                }
+
+                console.log('neighborMatches is', neighborMatches);
+                if (neighborMatches[`${oneClass[0]}-${oneClass[1]}`] === 0) {
+                    console.log(`Multi-matches and extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
                     const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
                     user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
                     user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
@@ -137,9 +241,40 @@ export function addCity(row, column, tileId) {
                         console.log(`Completing ${oneClass[0]}-${oneClass[1]}!`);
                         user.cityCompleted++;
                     }
+                    break;
                 }
-            });
+
+            }
         }
     }
+
 }
 
+const gridAboveNeighborClasses = (row, column) => {
+    if (row > 0) {
+        const neighbor = document.getElementById(`grid-${row - 1}-${column}`);
+        console.log(neighbor.classList);
+        return neighbor.classList;
+    } else return null;
+};       
+
+const gridToRightNeighborClasses = (row, column) => {
+    if (column < (maxColumns - 1)) {
+        const neighbor = document.getElementById(`grid-${row}-${column + 1}`);
+        return neighbor.classList;
+    } else return null;
+};       
+
+const gridBelowNeighborClasses = (row, column) => {
+    if (row < (maxRows - 1)) {
+        const neighbor = document.getElementById(`grid-${row + 1}-${column}`);
+        return neighbor.classList;
+    } else return null;
+};       
+
+const gridToLeftNeighborClasses = (row, column) => {
+    if (column > 0) {
+        const neighbor = document.getElementById(`grid-${row}-${column - 1}`);
+        return neighbor.classList;
+    } else return null;
+};       

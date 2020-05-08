@@ -9,12 +9,14 @@ export function rotateTile(topDeckTile, direction) {
     const tileToRotate = topDeckTile;
     if (direction === 'right') {
         tileToRotate.sides.unshift(tileToRotate.sides.pop());
+        if (tileToRotate.cities) tileToRotate.cities.unshift(tileToRotate.cities.pop());
         tileToRotate.rotation = tileToRotate.rotation + 90;
         getPlayerTile.style.transform = 'rotate(' + tileToRotate.rotation + 'deg)';
         getPlayerTile.style.transition = '.3s';
 
     } else if (direction === 'left') {
         tileToRotate.sides.push(tileToRotate.sides.shift());
+        if (tileToRotate.cities) tileToRotate.cities.push(tileToRotate.cities.shift());
         tileToRotate.rotation = tileToRotate.rotation - 90;
         getPlayerTile.style.transform = 'rotate(' + tileToRotate.rotation + 'deg)';
         getPlayerTile.style.transition = '.3s';
