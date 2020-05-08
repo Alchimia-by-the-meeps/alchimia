@@ -224,7 +224,7 @@ function renderTopDeckTile() {
 
     // Select random tile
     // For testing purposes: Get first tiles from explicit array of tiles.
-    const testingDeck = [5, 27, 28, 35, 36, 29];
+    const testingDeck = [19, 20, 5, 27, 28, 35, 36, 29];
     if (turnNumber < testingDeck.length) {
         topDeckTile = tiles[testingDeck[turnNumber]];
     } else topDeckTile = getTileFromDeck();
