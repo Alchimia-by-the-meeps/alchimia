@@ -18,8 +18,8 @@ export function addCity(row, column, tileId) {
     const placedTiles = getPlacedTiles();
     let clusterNumber;
 
-    console.log('-----');
   // Initializing first city in user
+  // REFACTOR: Does the first city need to be a separate case?
     if (!user.cities) {
         let clusterNumber;
         // If a complex tile with different individual cities on it...
@@ -40,7 +40,7 @@ export function addCity(row, column, tileId) {
             // Add a new city
                 clusterNumber = `cluster-${index}`;
                 const cityObj = { 
-                    openConnections: reduceObj[separateCity],
+                    openConnections: tileConnections(tileId),
                     tileIds: [tileId],
                     gridIds: [`grid-${row}-${column}`]
                 };
@@ -53,7 +53,7 @@ export function addCity(row, column, tileId) {
         // Simple city tile
             clusterNumber = 'cluster-1';
             const cityObj = { 
-                openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
+                openConnections: tileConnections(tileId),
                 tileIds: [tileId],
                 gridIds: [`grid-${row}-${column}`]
             };
@@ -66,20 +66,22 @@ export function addCity(row, column, tileId) {
         saveUser(user);
         return;
     }
-  // Placement has already been validated
+
+
   // Check for adjacency to other cities and extend, if possible
+  // Note: Placement has already been validated
     let extend = false;
     placedTiles[tileId].sides.forEach((side, index) => {
         if (side === 'city') {
             console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileToRightId(row, column), tileBelowId(row, column), tileToLeftId(row, column))
-            // If top of new tile is a city, and there's a tile above... 
+            // If top (i.e. [0]) of new tile is a city, and there's a tile above... 
             if (index === 0 && tileAboveId(row, column))
-                // ... is the adjacent bottom of it a city?
+                // ... is the adjacent bottom (i.e. [2]) of it a city?
                 if (placedTiles[tileAboveId(row, column)].sides[2] === 'city') {
                     const adjacentClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
                     // Derive simple array from weird classList object
                     const adjacentClasses = [...adjacentClassesList];
-                    processExtendingCity(adjacentClasses, 'top');
+                    processExtendingCity(adjacentClasses, 'above');
                 }
             if (index === 1 && tileToRightId(row, column))
                 if (placedTiles[tileToRightId(row, column)].sides[3] === 'city') {
@@ -91,7 +93,7 @@ export function addCity(row, column, tileId) {
                 if (placedTiles[tileBelowId(row, column)].sides[0] === 'city') {
                     const adjacentClassesList = document.getElementById(`grid-${row + 1}-${column}`).classList;                
                     const adjacentClasses = [...adjacentClassesList];
-                    processExtendingCity(adjacentClasses, 'bottom');
+                    processExtendingCity(adjacentClasses, 'below');
                 }
             if (index === 3 && tileToLeftId(row, column))
                 if (placedTiles[tileToLeftId(row, column)].sides[1] === 'city') {
@@ -105,9 +107,9 @@ export function addCity(row, column, tileId) {
   // Not adjacent, so start a new city cluster                
     if (!extend) {
         const cityClusters = Object.keys(user.cities).length;
-        clusterNumber = `cluster-${cityClusters + 1}`;
+        clusterNumber = `cluster-${cityClusters}`;
         const cityObj = { 
-            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
+            openConnections: tileConnections(tileId),
             tileIds: [tileId],
             gridIds: [`grid-${row}-${column}`]
         };
@@ -131,8 +133,8 @@ export function addCity(row, column, tileId) {
             const splitClass = splitClasses.flat();
             console.log(`Extending ${splitClass[0]}-${splitClass[1]} from the ${direction}`);
             const clusterNumber = `${splitClass[0]}-${splitClass[1]}`;
-            user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
-            user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
+            user.cities[clusterNumber].openConnections -= 2; // Subtract one per connecting side per tile
+            user.cities[clusterNumber].openConnections += tileConnections(tileId, direction);
             user.cities[clusterNumber].tileIds.push(tileId);
             user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
             addClassToGameBoard(row, column, clusterNumber);
@@ -146,18 +148,19 @@ export function addCity(row, column, tileId) {
             console.log(`Negotiating multiple city clusters...`);
             // Neighbor contains multiple city clusters.
             // 'Start' a cluster by extending the first cluster without connections
+            // REFACTOR? Simply count length of tileIds for each cluster?
             const neighborMatches = [];
             // Use a for loop to break out early once a cluster is assigned
             for (let i = 0; i < splitClasses.length; i++) {
                 const oneClass = splitClasses[i];
                 neighborMatches[`${oneClass[0]}-${oneClass[1]}`] = 0;
-                if (direction === 'top' && row > 1) {
+                if (direction === 'above' && row > 1) {
                     console.log('looking above for', `${oneClass[0]}-${oneClass[1]}`);
                     console.log('above: ', gridAboveNeighborClasses(row - 1, column), 
                         'right: ', gridToRightNeighborClasses(row - 1, column), 
                         'left: ', gridToLeftNeighborClasses(row - 1, column));
                     if (gridAboveNeighborClasses(row - 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
-                        console.log(`top neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        console.log(`above neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridToRightNeighborClasses(row - 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
@@ -184,12 +187,12 @@ export function addCity(row, column, tileId) {
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridBelowNeighborClasses(row, column + 1).contains(`${oneClass[0]}-${oneClass[1]}`)) {
-                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        console.log(`below neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                 }
 
-                if (direction === 'bottom' && row < (maxRows - 2)) {
+                if (direction === 'below' && row < (maxRows - 2)) {
                     console.log('looking below for', `${oneClass[0]}-${oneClass[1]}`);
                     console.log('right: ', gridToRightNeighborClasses(row + 1, column), 
                         'below: ', gridBelowNeighborClasses(row + 1, column), 
@@ -199,7 +202,7 @@ export function addCity(row, column, tileId) {
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridBelowNeighborClasses(row + 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
-                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        console.log(`below neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridToLeftNeighborClasses(row + 1, column).contains(`${oneClass[0]}-${oneClass[1]}`)) {
@@ -214,11 +217,11 @@ export function addCity(row, column, tileId) {
                         'below: ', gridBelowNeighborClasses(row, column - 1), 
                         'left: ', gridToLeftNeighborClasses(row, column - 1));
                     if (gridAboveNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
-                        console.log(`top neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        console.log(`above neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridBelowNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
-                        console.log(`bottom neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
+                        console.log(`below neighbor matches - ${oneClass[0]}-${oneClass[1]}`);
                         neighborMatches[`${oneClass[0]}-${oneClass[1]}`]++;
                     }
                     if (gridToLeftNeighborClasses(row, column - 1).contains(`${oneClass[0]}-${oneClass[1]}`)) { 
@@ -232,7 +235,7 @@ export function addCity(row, column, tileId) {
                     console.log(`Multi-matches and extending ${oneClass[0]}-${oneClass[1]} from the ${direction}`);
                     const clusterNumber = `${oneClass[0]}-${oneClass[1]}`;
                     user.cities[clusterNumber].openConnections -= 2; // Subtract one per each connecting side
-                    user.cities[clusterNumber].openConnections += tiles[tileId].sides.filter(item => item === 'city').length;
+                    user.cities[clusterNumber].openConnections += tileConnections(tileId, direction);
                     user.cities[clusterNumber].tileIds.push(tileId);
                     user.cities[clusterNumber].gridIds.push(`grid-${row}-${column}`);
                     addClassToGameBoard(row, column, clusterNumber);
@@ -278,3 +281,20 @@ const gridToLeftNeighborClasses = (row, column) => {
         return neighbor.classList;
     } else return null;
 };       
+
+const tileConnections = (tileId, direction) => {
+    let openConnections;
+    if (!tiles[tileId].cities || !direction) {
+        openConnections = tiles[tileId].sides.filter(item => item === 'city').length;
+    } else {
+      // Multiple cities on a tile
+        let cityLetter;
+        if (direction === 'above') cityLetter = tiles[tileId].cities[0];
+        if (direction === 'right') cityLetter = tiles[tileId].cities[1];
+        if (direction === 'below') cityLetter = tiles[tileId].cities[2];
+        if (direction === 'left') cityLetter = tiles[tileId].cities[3];
+        openConnections = tiles[tileId].cities.filter(city => city === cityLetter);    
+    }
+    console.log(`Calculated tile connections from ${direction} (tile rotated ${tiles[tileId].rotation}) is ${openConnections}`);
+    return openConnections;
+};

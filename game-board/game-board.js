@@ -120,7 +120,9 @@ grid.addEventListener('click', (e) => {
     }
 
     // Add currently drawn tile id to placed tiles and update gameState with currently drawn tile id
+    console.log('======');
     turnNumber++;
+    console.log('TURN NUMBER ', turnNumber);
     updatePlacedTiles(topDeckTile);
     gameState[row][column] = topDeckTile.id;
     updateGameState(gameState);

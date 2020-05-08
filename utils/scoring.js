@@ -117,7 +117,7 @@ export function renderConnections() {
         });
 
         let points = 0;
-        console.log('=====');
+        console.log('---');
         console.log('Scoring... allClusters:', allClusters);
         console.log('Scoring... completedClusters:', completedClusters);
         completedClusters.forEach(cluster => { 
