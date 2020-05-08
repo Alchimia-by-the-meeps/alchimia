@@ -9,7 +9,6 @@ import { getUser,
     tileBelowId 
 } from './api.js';
 
-
 export function addCity(row, column, tileId) {
         
     const user = getUser();
@@ -19,29 +18,63 @@ export function addCity(row, column, tileId) {
     console.log('-----');
   // Initializing first city in user
     if (!user.cities) {
-        clusterNumber = 'cluster-1';
-        const cityObj = { 
-            openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
-            tileIds: [tileId],
-            gridIds: [`grid-${row}-${column}`]
-        };
-        user.cities = {};
-        user.cities[clusterNumber] = cityObj;
-        addClassToGameBoard(row, column, clusterNumber);
-        console.log('Initializing first city in user');
+        let clusterNumber;
+        // If a complex tile with different individual cities on it...
+        if (tiles[tileId].cities) {
+            let reduceObj = {};
+            console.log('Processing multiple cities on tile to be placed');
+            tiles[tileId].cities.forEach((separateCity, index) => {
+                console.log(`separateCity[${index}] is ${separateCity}`);
+                if (separateCity) 
+                    if (!reduceObj[separateCity]) {
+                        reduceObj[separateCity] = 1;
+                    } else reduceObj[separateCity]++;
+            });
+            const reduceArr = Object.keys(reduceObj);
+            console.log('reduceObj is', reduceObj);
+            console.log('reduceArr is', reduceArr);
+            reduceArr.forEach((separateCity, index) => {
+            // Add a new city
+                clusterNumber = `cluster-${index}`;
+                const cityObj = { 
+                    openConnections: reduceObj[separateCity],
+                    tileIds: [tileId],
+                    gridIds: [`grid-${row}-${column}`]
+                };
+                if (!user.cities) user.cities = {};
+                user.cities[clusterNumber] = cityObj;
+                addClassToGameBoard(row, column, clusterNumber);
+                console.log('Adding a new complex city to user:', clusterNumber, cityObj);      
+            });
+        } else {
+        // Simple city tile
+            clusterNumber = 'cluster-1';
+            const cityObj = { 
+                openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
+                tileIds: [tileId],
+                gridIds: [`grid-${row}-${column}`]
+            };
+            user.cities = {};
+            user.cities[clusterNumber] = cityObj;
+            addClassToGameBoard(row, column, clusterNumber);
+            console.log('Initializing first city in user');
+        }
+        // Our job is done here.
+        saveUser(user);
+        return;
     }
-  
   // Placement has already been validated
   // Check for adjacency to other cities and extend, if possible
     let extend = false;
     placedTiles[tileId].sides.forEach((side, index) => {
         if (side === 'city') {
-          // Top is city, check above tile for a city?
             console.log('index:', index, 'and neighbors:', tileAboveId(row, column), tileToRightId(row, column), tileBelowId(row, column), tileToLeftId(row, column))
+            // If top of new tile is a city, and there's a tile above... 
             if (index === 0 && tileAboveId(row, column))
+                // ... is the adjacent bottom of it a city?
                 if (placedTiles[tileAboveId(row, column)].sides[2] === 'city') {
                     const adjacentClassesList = document.getElementById(`grid-${row - 1}-${column}`).classList;                
-                    // Get simple array from weird classList object
+                    // Derive simple array from weird classList object
                     const adjacentClasses = [...adjacentClassesList];
                     processExtendingCity(adjacentClasses, 'top');
                 }
@@ -68,8 +101,8 @@ export function addCity(row, column, tileId) {
   
   // Not adjacent, so start a new city cluster                
     if (!extend) {
-        const citiesLength = Object.keys(user.cities).length;
-        clusterNumber = `cluster-${citiesLength + 1}`;
+        const cityClusters = Object.keys(user.cities).length;
+        clusterNumber = `cluster-${cityClusters + 1}`;
         const cityObj = { 
             openConnections: tiles[tileId].sides.filter(item => item === 'city').length,
             tileIds: [tileId],
