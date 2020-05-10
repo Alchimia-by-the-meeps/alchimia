@@ -133,9 +133,11 @@ grid.addEventListener('click', (e) => {
     currentTile.style.transform = 'rotate(' + topDeckTile.rotation + 'deg)';
     currentTile.classList.add('placed-tile');
 
+    // Process any possible cities on the tile
+    addCity(row, column, topDeckTile.id);
+    
     // Update score
     countConnections(row, column, topDeckTile);
-    addCity(row, column, topDeckTile.id);
     
     // Draw and display new tile at bottom of page
     renderTopDeckTile();

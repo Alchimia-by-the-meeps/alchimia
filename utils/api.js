@@ -140,8 +140,12 @@ export function updatePlacedTiles(lastPlacedTile) {
         id: lastPlacedTile.id,
         sides: lastPlacedTile.sides,
         rotation: lastPlacedTile.rotation,
+        cities: lastPlacedTile.cities,
         monastery: lastPlacedTile.monastery ? true : false
     };
+    // if (lastPlacedTile.cities) {
+    //     placedTiles[lastPlacedTile.id].cities = lastPlacedTile.cities;    
+    // }
     localStorage.setItem('placedTiles', JSON.stringify(placedTiles));
 }
 
