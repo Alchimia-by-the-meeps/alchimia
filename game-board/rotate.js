@@ -2,22 +2,25 @@
 // on click transform the image per button selection (left/right)
     // on rotation, need to update the sides [0, 1, 2, 3]
     // get the current rotation 
-
+// cool function! it seems like there are only a few differences between left and right, so maybe this refactor would make sense . . .
 //import function to game-board (only call in gameboard)
-export function rotateTile(topDeckTile, direction) {
+export function rotateTile(tileToRotate, direction) {
     const getPlayerTile = document.getElementById('player-tile');
-    const tileToRotate = topDeckTile;
+    // const tileToRotate = topDeckTile; // does this need to be redeclared?
+
     if (direction === 'right') {
         tileToRotate.sides.unshift(tileToRotate.sides.pop());
-        tileToRotate.rotation = tileToRotate.rotation + 90;
-        getPlayerTile.style.transform = 'rotate(' + tileToRotate.rotation + 'deg)';
-        getPlayerTile.style.transition = '.3s';
 
-    } else if (direction === 'left') {
+    } else { // does this need the else if?
         tileToRotate.sides.push(tileToRotate.sides.shift());
-        tileToRotate.rotation = tileToRotate.rotation - 90;
-        getPlayerTile.style.transform = 'rotate(' + tileToRotate.rotation + 'deg)';
-        getPlayerTile.style.transition = '.3s';
     } 
+
+    tileToRotate.rotation = direction === 'right' 
+        ? tileToRotate.rotation + 90
+        : tileToRotate.rotation - 90;
+
+    getPlayerTile.style.transform = 'rotate(' + tileToRotate.rotation + 'deg)';
+    getPlayerTile.style.transition = '.3s';
+    
     return tileToRotate;
 }

@@ -29,6 +29,7 @@ function renderGameBoard(parent) {
                 const thisCellId = gameState[i][j];
                 // console.log(thisCellId);
                 cell.style.transform = 'rotate(' + placedTiles[thisCellId].rotation + 'deg)'
+                // nice!
                 cell.style.backgroundImage = `url('../tiles/${tiles[thisCellId].image}')`;
                 cell.classList.add('placed-tile');
             }
